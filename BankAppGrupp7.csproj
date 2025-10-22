@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="AccountClasses\" />
-    <Folder Include="EconomicsClasses\" />
     <Folder Include="Usersklasses\" />
   </ItemGroup>
 
