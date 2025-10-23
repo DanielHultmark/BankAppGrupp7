@@ -83,6 +83,7 @@ namespace BankAppGrupp7.EconomicsClasses
             amount = amount * 0.86;
             return amount;
         }
+
         public double TCFromEuroToSek(double amount)
         {
             amount = amount * 10.87;
