@@ -7,9 +7,6 @@ namespace BankAppGrupp7
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
-            Console.WriteLine("Welcome to BankAppGrupp7!");
-            Currency currency = new Currency();
-            currency.CurrencyConversion();
         }
     }
 }
