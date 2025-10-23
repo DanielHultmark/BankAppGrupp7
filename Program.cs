@@ -1,4 +1,6 @@
-﻿namespace BankAppGrupp7
+﻿using BankAppGrupp7.EconomicsClasses;
+
+namespace BankAppGrupp7
 {
     internal class Program
     {
@@ -6,6 +8,8 @@
         {
             Console.WriteLine("Hello, World!");
             Console.WriteLine("Welcome to BankAppGrupp7!");
+            Currency currency = new Currency();
+            currency.CurrencyConversion();
         }
     }
 }
