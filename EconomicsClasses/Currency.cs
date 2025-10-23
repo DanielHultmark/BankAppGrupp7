@@ -78,12 +78,12 @@ namespace BankAppGrupp7.EconomicsClasses
         }
     
         //TransactionCurrency methods that converts it from one currency to the other
+        //These conversions might not be accurate in the future as this was made with the 23/10/2025 currencies in mind
         public double TCFromEuroToPound(double amount)
         {
             amount = amount * 0.86;
             return amount;
         }
-
         public double TCFromEuroToSek(double amount)
         {
             amount = amount * 10.87;
