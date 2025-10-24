@@ -42,12 +42,12 @@ namespace BankAppGrupp7.UsersClasses
             users.DelteteCustomerInRegister();
         }
 
-        public void CheckIfUnique()
+        public void CheckIfUniqueUsername()
         {
             //Help to check if username/password is unique when adding a customer, compare with already excisting in CustomerRegister
         }
 
-        public void SetCurrency(Currecy currecy)
+        public void SetDailyExchangeRate(Currecy currecy)
         {
             //UI till admin, skickar/sparar data till currency
 

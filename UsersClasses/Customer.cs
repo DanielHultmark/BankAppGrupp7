@@ -9,12 +9,6 @@ namespace BankAppGrupp7.UsersClasses
 {
     internal class Customer : User
     {
-
-        public List<Account> Accounts { get; set; } = new List<Account>();
-
-
-        public List<Loan> Loans { get; set; } = new List<Loan>();
-
         //Constructor; set IsAdmin to falsem also making sure that evert customer har username, password and a fullname.
         public Customer(string userName, string password, string fullName)
         {
