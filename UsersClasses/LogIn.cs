@@ -9,11 +9,11 @@ namespace BankAppGrupp7.UsersClasses
     internal class LogIn
     {
 
-        //We need to save which customer/user is logging in to now which account to show in next menu
-        //Where do we create admin user?
+        //We need to save which customer/user is logging in somehow to know which account to show in next menu
+        
         public int LoginAttempts { get; set; } = 3;
 
-        public User User { get; set; }
+        public UserRegister Users { get; set; }
 
         public void LoginMethod()
         {
