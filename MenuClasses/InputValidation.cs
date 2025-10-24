@@ -44,6 +44,41 @@ namespace BankAppGrupp7.MenuClasses
             return value;
         }
 
+        public static decimal Decimal()
+        {
+            decimal value = 0;
+            bool wasSuccesful = false;
+            bool stillValidating = true;
+
+            while (stillValidating)
+            {
+                string? userInput = Console.ReadLine();
+                //Checks if there is something inside the string and that it isn't empty including just a space
+                if (!string.IsNullOrWhiteSpace(userInput))
+                {
+                    //Trim removes specific characters 
+                    string trimmedUserInput = userInput.Trim();
+                    //If the input is valid the bool will become successful
+                    wasSuccesful = decimal.TryParse(trimmedUserInput, out value);
+                }
+
+                if (wasSuccesful)
+                {
+                    //If the input is valid then stillValidating becomes false, ending the loop
+                    stillValidating = false;
+                }
+                else
+                {
+                    //If the input isn't valid then the loop restarts
+                    Thread.Sleep(1000);
+                    Console.WriteLine("Välj ett nummer, försök igen!");
+                }
+
+
+            }
+            return value;
+        }
+
         public static string TrimmedString()
         {
             string value = "";
