@@ -13,6 +13,13 @@ namespace BankAppGrupp7.UsersClasses
      
         public string FullName { get; set; }
 
-       
+        public int FailedLoginAttempts { get; set; } = 0;
+
+        public void IncreaseNumberLoginAttempts()
+        {
+            FailedLoginAttempts++;
+        }
+
+
     }
 }
