@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,12 +17,11 @@ namespace BankAppGrupp7.UsersClasses
 
         public UserRegister Users { get; set; } = new UserRegister();
 
-        //Obs!
-        public Menu menu { get; set; } = new Menu();
+        //OBS!
+        //public Menu menu { get; set; } = new Menu();
 
         public void LoginUI()
         {
-
             bool stillEnteringLoginDetails = true;
 
             while (stillEnteringLoginDetails)
@@ -29,43 +29,76 @@ namespace BankAppGrupp7.UsersClasses
                 Console.Clear();
 
                 Console.WriteLine("CIBA – där ekonomi möter innovation\n");
-                Console.WriteLine("Fyll i uppgifter för att logga in");
-
-                Console.Write("Användarnamn: ");
-                string? username = Console.ReadLine().Trim();
-
-                Console.Write("Lösenord: ");
-                string? password = Console.ReadLine().Trim();
+                Console.WriteLine("Fyll i inloggningsuppgifter");
 
                 User currentUser = null;
-                bool isLoginDetailsValid = ValidateLoginDetails(currentUser, username, password);
 
-                //OBS! Stopp för gjort 3 loggin försök
+                bool isLoginDetailsValid = AskForLoginDetails(currentUser);
+
+                
                 if (isLoginDetailsValid)
-                {
+                {                    
                     stillEnteringLoginDetails = false;
                     LoggedIn(currentUser);
                 }
             }
         }
 
-       
-
-        public bool ValidateLoginDetails(User CurrenUser, string username, string password)
+        public string ReadInput(string prompt)
         {
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            Console.Write(prompt + " ");
+            string? userInput = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(userInput))
             {
-                Console.WriteLine("Ogiltig input, försök igen!");
+                Console.Write("\nOgiltig input, försök igen!");
+                userInput = " ";
+
                 Thread.Sleep(1000);
+            }
+
+            else
+            {
+                Console.WriteLine();
+                userInput = userInput.Trim();
+            }
+
+            return userInput;
+        }
+
+        public bool AskForLoginDetails(User currentUser)
+        {
+            string username = ReadInput("Användarnamn:");
+            if (string.IsNullOrWhiteSpace (username))
+            {
+                return false;
             }          
           
             bool usernameExists = CheckUsername(username);
 
             if (usernameExists)
             {
-                User currentUser = Users.UserList.Find(u => u.LoginDetails["username"].Equals(username));
-                bool isPasswordCOrrect = CheckPassword(currentUser, password);
-                return true;
+                bool isLockedOut = CheckLoginAttempts(username);
+
+                if (isLockedOut)
+                {
+                    return false;
+                }
+
+                string password = ReadInput("Lösenord:");
+
+                if (string.IsNullOrWhiteSpace(password))
+                {
+                    return false;
+                }
+                                
+                bool isPasswordCorrect = CheckPassword(username, password);
+
+                if (isPasswordCorrect)
+                {
+                    currentUser = Users.UserList[username];
+                }
+                return isPasswordCorrect;
             }
 
             return false;
@@ -74,65 +107,79 @@ namespace BankAppGrupp7.UsersClasses
 
         public bool CheckUsername(string username)
         {
-                bool usernameExists = false;
+            bool usernameExists = Users.UserList.ContainsKey(username);
 
-                foreach (var user in Users.UserList)
-                {
-                    usernameExists = user.LoginDetails.ContainsKey(username);
+            if (!usernameExists)
+            {
+                Console.Write("Användarnamn saknas, försök igen!");
 
-                    if (usernameExists)
-                    {
-                        break;
-                    }
-                }
-
-                if (!usernameExists)
-                {
-                    Console.WriteLine("Användarnamn saknas, försök igen!");
-
-                    Thread.Sleep(1000);
-                }
+                Thread.Sleep(1000);
+            }
             
             return usernameExists;
 
         }
 
-        public bool CheckPassword(User currentUser, string password)
-        {                                                   
-                bool isPasswordCorrect = currentUser.LoginDetails["password"].Equals(password);
+        public bool CheckPassword(string username, string password)
+        {
+            bool isPasswordCorrect = false;
+
+            if (Users.UserList.TryGetValue(username, out User user))
+            {
+                isPasswordCorrect = user.Password.Equals(password);
 
                 if (!isPasswordCorrect)
                 {
-                int attemptsLeft = MaxLoginAttempts - currentUser.FailedLoginAttempts;
+                    int attemptsLeft = MaxLoginAttempts - user.FailedLoginAttempts;
 
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Lösenordet är felaktigt, du har {attemptsLeft} försök kvar!");
+                    Console.Write($"Lösenordet är felaktigt, du har {attemptsLeft} försök kvar!");
                     Console.ResetColor();
 
-                    currentUser.IncreaseNumberLoginAttempts();
+                    user.IncreaseNumberLoginAttempts();
 
                     Thread.Sleep(2000);
+                }
             }
-         
-
+            
             return isPasswordCorrect;
         }
 
-        public void LoggedIn(User LoggedInUser)
+        public bool CheckLoginAttempts(string username)
         {
-            Console.WriteLine("Inloggning lyckades!");
+            if (Users.UserList[username].FailedLoginAttempts == MaxLoginAttempts)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("Användarkonto är låst pga för många inloggningsförsök. Kontakta kundtjänst för att låsa upp kontot.");
+                Console.ResetColor();
+
+                Thread.Sleep(5000);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public void LoggedIn(User loggedInUser)
+        {
+            Console.WriteLine("\nInloggning lyckades!");
 
             Thread.Sleep(2000);
 
-            if (LoggedInUser.IsAdmin.Equals(true))
-            {
-                menu.AdminMenu(LoggedInUser);
-            }
+            //Testkod
+            //Console.WriteLine($"Username: {loggedInUser.Username.PadRight(15)} Password: {loggedInUser.Password.PadRight(15)} Full name: {loggedInUser.FullName.PadRight(15)}");
 
-            else
-            {
-                menu.CustomerMenu(LoggedInUser);
-            }
+            //OBS!
+            //if (loggedInUser.IsAdmin.Equals(true))
+            //{
+            //    menu.AdminMenu(LoggedInUser);
+            //}
+
+            //else
+            //{
+            //    menu.CustomerMenu(loggedInUser);
+            //}
         }
     }
 }

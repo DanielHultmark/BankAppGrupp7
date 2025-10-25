@@ -47,11 +47,13 @@ namespace BankAppGrupp7.UsersClasses
             //Help to check if username/password is unique when adding a customer, compare with already excisting in CustomerRegister
         }
 
-        public void SetDailyExchangeRate(Currecy currecy)
-        {
-            //UI till admin, skickar/sparar data till currency
+        //OBS!
 
-        }
+        //public void SetDailyExchangeRate(Currecy currecy)
+        //{
+        //    //UI till admin, skickar/sparar data till currency
+
+        //}
 
     }
 }

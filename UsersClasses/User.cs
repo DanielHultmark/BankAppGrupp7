@@ -9,8 +9,8 @@ namespace BankAppGrupp7.UsersClasses
     internal class User
     {
         public bool IsAdmin { get; set; }
-        public Dictionary<string , string > LoginDetails { get; set; } = new Dictionary<string, string>();
-     
+        public string Username { get; set; }
+        public string Password { get; set; }
         public string FullName { get; set; }
 
         public int FailedLoginAttempts { get; set; } = 0;
