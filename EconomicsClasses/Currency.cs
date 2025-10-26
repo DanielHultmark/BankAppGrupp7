@@ -1,6 +1,8 @@
-﻿using System;
+﻿using BankAppGrupp7.MenuClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,7 +10,7 @@ namespace BankAppGrupp7.EconomicsClasses
 {
     public class Currency
     {
-        //Variables for currency, so the amount and the name(sek, euro or pound)
+        //Variables for currency, so the currencyExchangeRate and the name(sek, euro or pound)
         public double _Currency { get; set; }
         public string? _CurrencyName { get; set; }
 
@@ -76,38 +78,63 @@ namespace BankAppGrupp7.EconomicsClasses
             }
             return _Currency;
         }
-    
-        //TransactionCurrency methods that converts it from one currency to the other
-        //These conversions might not be accurate in the future as this was made with the 23/10/2025 currencies in mind
-        public double TCFromEuroToPound(double amount)
+
+        public decimal CalculateCurrency(string fromCurrencyCode, decimal fromCurrencyAmount, string toCurrencyCode)
         {
-            amount = amount * 0.86;
-            return amount;
+            //Gets the currency exchange rate from the given currencycodes from the method
+            decimal currencyRate = getCurrencyExchangeRate(fromCurrencyCode, toCurrencyCode);
+            //The result is rounded up to a whole number like t.ex 45.79 becomes 46.00
+            decimal conversionResult = currencyRate * fromCurrencyAmount;
+            return conversionResult;
         }
-        public double TCFromEuroToSek(double amount)
+
+        public void CalculateCurrencyTest()
         {
-            amount = amount * 10.87;
-            return amount;
+            //Method to test the other methods
+            Console.WriteLine("Which currency do you want to choose from");
+            string fromCurrencyCode = InputValidation.TrimmedString();
+            Console.WriteLine("To which currency do you want to convert to");
+            string toCurrencyCode = InputValidation.TrimmedString();
+            Console.WriteLine("How much do you want to convert?");
+            decimal fromCurrencyAmount = InputValidation.Decimal();
+            decimal calculateCurrency = CalculateCurrency(fromCurrencyCode, fromCurrencyAmount, toCurrencyCode);
+            Console.WriteLine(calculateCurrency);
         }
-        public double TCFromSekToEuro(double amount)
+        private decimal getCurrencyExchangeRate(string fromCurrencyCode, string toCurrencyCode)
         {
-            amount = amount * 0.092;
-            return amount;
-        }
-        public double TCFromSekToPound(double amount)
-        {
-            amount = amount * 0.080;
-            return amount;
-        }
-        public double TCFromPoundToEuro(double amount)
-        {
-            amount = amount * 1.15;
-            return amount;
-        }
-        public double TCFromPoundToSek(double amount)
-        {
-            amount = amount * 12.55;
-            return amount;
+            //This method is acting as a database for different currency exchange rates
+            //If new currency exhange rates are to be added then new if/else if statement can be added
+            decimal currencyExchangeRate;
+            if (fromCurrencyCode == "kr" && toCurrencyCode == "euro")
+            {
+                currencyExchangeRate = (decimal)0.092;
+                
+            }
+            else if (fromCurrencyCode == "euro" && toCurrencyCode == "kr")
+            {
+                currencyExchangeRate = (decimal)10.87;
+            }
+            else if (fromCurrencyCode == "kr" && toCurrencyCode == "pund")
+            {
+                currencyExchangeRate = (decimal)0.080;
+            }
+            else if (fromCurrencyCode == "pund" && toCurrencyCode == "kr")
+            {
+                currencyExchangeRate = (decimal)12.55;
+            }
+            else if (fromCurrencyCode == "euro" && toCurrencyCode == "pund")
+            {
+                currencyExchangeRate = (decimal)0.086;
+            }
+            else if (fromCurrencyCode == "pund" && toCurrencyCode == "euro")
+            {
+                currencyExchangeRate = (decimal)1.15;
+            }
+            else
+            {
+                currencyExchangeRate = 0;
+            }
+                return currencyExchangeRate;
         }
     }
 }
