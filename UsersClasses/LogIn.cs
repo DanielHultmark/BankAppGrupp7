@@ -9,17 +9,16 @@ using System.Threading.Tasks;
 namespace BankAppGrupp7.UsersClasses
 {
     internal class LogIn
-    {
-        //Som systemägare vill jag att användare som misslyckas med inloggningen tre gånger ska låsas ute från att logga in i systemet.
-        //Som systemägare vill jag att alla användare ska logga in med ett unikt användarnamn och lösenord.
-
+    {    
         public int MaxLoginAttempts { get; set; } = 3;
 
         public UserRegister Users { get; set; } = new UserRegister();
 
         //OBS!
-        //public Menu menu { get; set; } = new Menu();
+        public Menu menu { get; set; } = new Menu();
 
+        // The log in view refreshes if the user has given invalid input in some way. 
+        // As it is now the only way to get out of the log in view is to give valid login details. 
         public void LoginUI()
         {
             bool stillEnteringLoginDetails = true;
@@ -31,16 +30,25 @@ namespace BankAppGrupp7.UsersClasses
                 Console.WriteLine("CIBA – där ekonomi möter innovation\n");
                 Console.WriteLine("Fyll i inloggningsuppgifter");
 
-                User currentUser = null;
+                string username = ReadInput("Användarnamn:");
 
-                bool isLoginDetailsValid = AskForLoginDetails(currentUser);
+                bool usernameExists = CheckUsername(username);
 
-                
-                if (isLoginDetailsValid)
-                {                    
-                    stillEnteringLoginDetails = false;
-                    LoggedIn(currentUser);
-                }
+                if (usernameExists)
+                {
+                    string password = ReadInput("Lösenord:");
+
+                    bool isPasswordCorrect = CheckPassword(username, password);
+
+                    if (isPasswordCorrect)
+                    {
+                        User currentUser = Users.UserList[username];
+
+                        stillEnteringLoginDetails = false;
+
+                        LoggedIn(currentUser);
+                    }
+                }                               
             }
         }
 
@@ -58,55 +66,20 @@ namespace BankAppGrupp7.UsersClasses
             }
 
             else
-            {
-                Console.WriteLine();
+            {                
                 userInput = userInput.Trim();
             }
 
             return userInput;
         }
-
-        public bool AskForLoginDetails(User currentUser)
-        {
-            string username = ReadInput("Användarnamn:");
-            if (string.IsNullOrWhiteSpace (username))
-            {
-                return false;
-            }          
-          
-            bool usernameExists = CheckUsername(username);
-
-            if (usernameExists)
-            {
-                bool isLockedOut = CheckLoginAttempts(username);
-
-                if (isLockedOut)
-                {
-                    return false;
-                }
-
-                string password = ReadInput("Lösenord:");
-
-                if (string.IsNullOrWhiteSpace(password))
-                {
-                    return false;
-                }
-                                
-                bool isPasswordCorrect = CheckPassword(username, password);
-
-                if (isPasswordCorrect)
-                {
-                    currentUser = Users.UserList[username];
-                }
-                return isPasswordCorrect;
-            }
-
-            return false;
-                         
-        }
-
+        
         public bool CheckUsername(string username)
         {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                return false;
+            }
+
             bool usernameExists = Users.UserList.ContainsKey(username);
 
             if (!usernameExists)
@@ -114,14 +87,29 @@ namespace BankAppGrupp7.UsersClasses
                 Console.Write("Användarnamn saknas, försök igen!");
 
                 Thread.Sleep(1000);
+
+                return false;
             }
-            
-            return usernameExists;
+
+            bool isLockedOut = CheckLoginAttempts(username);
+
+            if (isLockedOut)
+            {
+                return false;
+            }
+
+            return true;
 
         }
 
+        //Should user be sent back to start menu when the account has been locked?
         public bool CheckPassword(string username, string password)
         {
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                return false;
+            }
+
             bool isPasswordCorrect = false;
 
             if (Users.UserList.TryGetValue(username, out User user))
@@ -130,27 +118,41 @@ namespace BankAppGrupp7.UsersClasses
 
                 if (!isPasswordCorrect)
                 {
+                    user.IncreaseNumberLoginAttempts();
+
                     int attemptsLeft = MaxLoginAttempts - user.FailedLoginAttempts;
 
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write($"Lösenordet är felaktigt, du har {attemptsLeft} försök kvar!");
-                    Console.ResetColor();
 
-                    user.IncreaseNumberLoginAttempts();
+                    if (attemptsLeft>0)
+                    {                        
+                        Console.Write($"Lösenordet är felaktigt, du har {attemptsLeft} försök kvar!");
 
-                    Thread.Sleep(2000);
+                        Thread.Sleep(2000);
+                    }
+                    
+                    else
+                    {
+                        Console.Write($"Lösenordet är felaktigt, ditt användarkonto har nu låsts pga för många inloggningsförsök. " +
+                                    $"\nKontakta kundtjänst för att låsa upp kontot.");
+
+                        Thread.Sleep(5000);
+                    }
+
+                    Console.ResetColor();                    
                 }
             }
             
             return isPasswordCorrect;
         }
 
+        //Should user be sent back to start menu when the account is locked?
         public bool CheckLoginAttempts(string username)
         {
             if (Users.UserList[username].FailedLoginAttempts == MaxLoginAttempts)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write("Användarkonto är låst pga för många inloggningsförsök. Kontakta kundtjänst för att låsa upp kontot.");
+                Console.Write("\nAnvändarkonto är låst pga för många inloggningsförsök. Kontakta kundtjänst för att låsa upp kontot.");
                 Console.ResetColor();
 
                 Thread.Sleep(5000);
@@ -163,23 +165,22 @@ namespace BankAppGrupp7.UsersClasses
 
         public void LoggedIn(User loggedInUser)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\nInloggning lyckades!");
+            Console.ResetColor();
 
             Thread.Sleep(2000);
 
-            //Testkod
-            //Console.WriteLine($"Username: {loggedInUser.Username.PadRight(15)} Password: {loggedInUser.Password.PadRight(15)} Full name: {loggedInUser.FullName.PadRight(15)}");
-
             //OBS!
-            //if (loggedInUser.IsAdmin.Equals(true))
-            //{
-            //    menu.AdminMenu(LoggedInUser);
-            //}
+            if (loggedInUser.IsAdmin.Equals(true))
+            {
+                menu.AdminMenu(loggedInUser);
+            }
 
-            //else
-            //{
-            //    menu.CustomerMenu(loggedInUser);
-            //}
+            else
+            {
+                menu.CustomerMenu(loggedInUser);
+            }
         }
     }
 }

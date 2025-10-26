@@ -8,11 +8,6 @@ namespace BankAppGrupp7
         {
             Console.WriteLine("Hello, World!");
 
-            //Testkod
-
-            //LogIn startLogin = new LogIn();
-
-            //startLogin.LoginUI();
         }
     }
 }

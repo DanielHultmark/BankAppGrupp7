@@ -18,8 +18,6 @@ namespace BankAppGrupp7.UsersClasses
         public void IncreaseNumberLoginAttempts()
         {
             FailedLoginAttempts++;
-        }
-
-
+        }        
     }
 }
