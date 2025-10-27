@@ -1,4 +1,6 @@
-﻿namespace BankAppGrupp7
+﻿using BankAppGrupp7.EconomicsClasses;
+
+namespace BankAppGrupp7
 {
     internal class Program
     {
