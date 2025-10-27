@@ -8,10 +8,10 @@ namespace BankAppGrupp7.AccountClasses
     {
         public decimal InterestRate { get; set; }
 
-        public SavingsAccount(string accountNumber, Customer owner, decimal balance, Currency currency, decimal interestRate)
+        public SavingsAccount(string accountNumber, Customer owner, decimal balance, Currency currency)
             : base(accountNumber, owner, balance, currency)
-        {
-            InterestRate = interestRate;
+        {            
+            IntrestRate = 1.005M;
         }
 
         public override void Deposit(decimal amount)
