@@ -7,10 +7,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="AccountClasses\" />
-    <Folder Include="MenuClasses\" />
-    <Folder Include="EconomicsClasses\" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<Folder Include="AccountClasses\" />
+		<Folder Include="MenuClasses\" />
+		<Folder Include="EconomicsClasses\" />
+		<Folder Include="Usersklasses\" />
+	</ItemGroup>
+	
 </Project>
