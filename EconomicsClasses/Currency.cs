@@ -39,6 +39,7 @@ namespace BankAppGrupp7.EconomicsClasses
         {
             //This method is acting as a database for different currency exchange rates
             //If new currency exhange rates are to be added then new if/else if statement can be added
+            //If you misspell or get it wrong then your currency exchange rate will become 0
             decimal currencyExchangeRate;
             if (fromCurrencyCode == "kr" && toCurrencyCode == "euro")
             {
