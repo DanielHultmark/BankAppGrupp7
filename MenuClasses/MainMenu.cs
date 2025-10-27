@@ -23,7 +23,7 @@ namespace BankAppGrupp7.MenuClasses
 
                     case "2":
                         Console.WriteLine("Avslutar program...");
-                        Thread.Sleep(5000);
+                        Thread.Sleep(3000);
                         isRunning = false;
                         break;
                 }
