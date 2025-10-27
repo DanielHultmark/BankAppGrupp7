@@ -13,6 +13,7 @@ namespace BankAppGrupp7.MenuClasses
             bool isRunning = true;
             while (isRunning)
             {
+                Console.Clear();
                 Console.WriteLine("Välkommen till BankAppGrupp7! Vill du \n1. Logga in\n2. Avsluta programmet");
                 string? choice = InputValidation.TrimmedString();
                 switch (choice) 
