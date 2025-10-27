@@ -1,4 +1,4 @@
-﻿using BankAppGrupp7.UsersClasses;
+﻿using BankAppGrupp7.EconomicsClasses;
 
 namespace BankAppGrupp7
 {
