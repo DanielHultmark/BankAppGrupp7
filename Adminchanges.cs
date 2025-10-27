@@ -8,5 +8,6 @@ namespace BankAppGrupp7
 {
     internal class Adminchanges
     {
+        
     }
 }
