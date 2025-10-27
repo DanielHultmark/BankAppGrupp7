@@ -4,6 +4,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using BankAppGrupp7.UsersClasses;
+using BankAppGrupp7.MenuClasses;
+using BankAppGrupp7.AccountClasses;
+using BankAppGrupp7.EconomicsClasses;
 
 namespace BankAppGrupp7.MenuClasses
 {
@@ -18,7 +22,10 @@ namespace BankAppGrupp7.MenuClasses
             Console.WriteLine("3. Lån översikt");
             Console.WriteLine("4. Ansök för ett Lån");
             Console.WriteLine("5. Logga ut");
-            
+            Accounts account = new Accounts();
+            MainMenu mainMenu = new MainMenu();
+            Loans loan = new Loans();
+            LogIn login = new LogIn();
             bool run = true;
             while (run)
             { 
@@ -27,16 +34,16 @@ namespace BankAppGrupp7.MenuClasses
                 switch (choice)
                 {
                 case "1":
-                    Account.CreateAccount();
+                    account.CreateAccount();
                     break;
                 case "2":
-                    Account.ViewAccount();
+                    account.ViewAccount();
                     break;
                 case "3":
-                    Loan.ViewLoans();
+                    loan.ViewLoans();
                     break;
                 case "4":
-                    Loan.ApplyForLoan();
+                    loan.ApplyForLoan();
                     break;
                 case "5":
                     Console.WriteLine("Tack för att du använder Banken. Hejdå!");
@@ -44,12 +51,13 @@ namespace BankAppGrupp7.MenuClasses
                     break;
                 default:
                     Console.WriteLine("Felaktigt val, Försök igen.");
-                    DisplayMainMenu();
+                    
+                    mainMenu.DisplayMainMenu();
                     break;
                 }
             }
             //Return to login menu after logging out
-            Login.LoginMenu();
+            login.LoginMenu();
         }
         //Admin menu
         public void AdminMenu()
@@ -60,6 +68,9 @@ namespace BankAppGrupp7.MenuClasses
             Console.WriteLine("3. Sätt dagliga Valutakursen");
             Console.WriteLine("4. Logga ut");
 
+            User user = new User();
+            Currency currency = new Currency();
+            LogIn login = new LogIn();
             bool run = true;
             while (run)
             {
@@ -67,13 +78,13 @@ namespace BankAppGrupp7.MenuClasses
                 switch (choice)
                 {
                     case "1":
-                        User.CreateCustomer();
+                        user.CreateCustomer();
                         break;
                     case "2":
-                        User.ViewCustomers();
+                        user.ViewCustomers();
                         break;
                     case "3":
-                        Currency.SetDailyExchangeRate();
+                        currency.SetDailyExchangeRate();
                         break;
                     case "4":
                         Console.WriteLine("Du Loggas nu ut. Hejdå!");
@@ -86,7 +97,7 @@ namespace BankAppGrupp7.MenuClasses
                 }
             }
             //Return to login menu after logging out
-            Login.LoginMenu();
+            login.LoginMenu();
         }
     }
 }

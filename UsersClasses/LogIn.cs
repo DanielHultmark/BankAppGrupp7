@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using BankAppGrupp7.MenuClasses;
 
 namespace BankAppGrupp7.UsersClasses
 {
@@ -172,15 +173,15 @@ namespace BankAppGrupp7.UsersClasses
             Thread.Sleep(2000);
 
             //OBS!
-            if (loggedInUser.IsAdmin.Equals(true))
-            {
-                menu.AdminMenu(loggedInUser);
-            }
+            //if (loggedInUser.IsAdmin.Equals(true))
+            //{
+            //    menu.AdminMenu(loggedInUser);
+            //}
 
-            else
-            {
-                menu.CustomerMenu(loggedInUser);
-            }
+            //else
+            //{
+            //    menu.CustomerMenu(loggedInUser);
+            //}
         }
     }
 }

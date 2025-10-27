@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BankAppGrupp7.UsersClasses;
 
 namespace BankAppGrupp7.MenuClasses
 {
@@ -11,6 +12,7 @@ namespace BankAppGrupp7.MenuClasses
         public void DisplayMainMenu()
         {
             bool isRunning = true;
+            LogIn login = new LogIn();
             while (isRunning)
             {
                 Console.Clear();
