@@ -79,6 +79,28 @@ namespace BankAppGrupp7.MenuClasses
             return value;
         }
 
+        //Attempted inputvalidation for dictionary
+        public static Dictionary<string, string> DictionaryKey()
+        {
+           Dictionary<string, string> value = new Dictionary<string, string>();
+            HashSet<Dictionary<string, string>> seenValue = new HashSet<Dictionary<string, string>>();
+            bool wasSuccesful = false;
+            bool stillValidating = true;
+            while (stillValidating)
+            {
+
+            }
+
+            //foreach (Dictionary<string, string> key in value)
+            //{
+            //    if (!seenValue.Contains(key))
+            //    {
+
+            //    }
+            //}
+
+            return value;
+        }
         public static string TrimmedString()
         {
             string value = "";
