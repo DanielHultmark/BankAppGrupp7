@@ -24,6 +24,7 @@ namespace BankAppGrupp7.UsersClasses
             bool isRunning = true;
             while (isRunning)
             {
+                Console.Clear();
                 Console.WriteLine("Lägg till ny kund");
 
                 Console.Write("Användarnamn: ");
@@ -52,6 +53,7 @@ namespace BankAppGrupp7.UsersClasses
 
         public void DeleteCustomer(UserRegister users, string username)
         {
+            Console.Clear();
             Console.WriteLine("Ta bort kund");
             username = InputValidation.TrimmedString();
             if (DoesUsernameExist(users, username))
