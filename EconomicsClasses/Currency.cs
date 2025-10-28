@@ -18,7 +18,7 @@ namespace BankAppGrupp7.EconomicsClasses
         {
             //Gets the currency exchange rate from the given currencycodes from the method
             decimal currencyRate = getCurrencyExchangeRate(fromCurrencyCode, toCurrencyCode);
-            //The result is rounded up to a whole number like t.ex 45.79 becomes 46.00
+            //The result is rounded up to a number with decimals
             decimal conversionResult = decimal.Multiply(currencyRate, fromCurrencyAmount);
             return conversionResult;
         }
