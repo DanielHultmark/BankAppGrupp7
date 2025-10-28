@@ -41,12 +41,12 @@ namespace BankAppGrupp7.EconomicsClasses
             //If new currency exhange rates are to be added then new if/else if statement can be added
             //If you misspell or get it wrong then your currency exchange rate will become 0
             decimal currencyExchangeRate;
-            if (fromCurrencyCode == "kr" && toCurrencyCode == "euro")
+            if (fromCurrencyCode == "sek" && toCurrencyCode == "euro")
             {
                 currencyExchangeRate = (decimal)0.092;
                 
             }
-            else if (fromCurrencyCode == "euro" && toCurrencyCode == "kr")
+            else if (fromCurrencyCode == "euro" && toCurrencyCode == "sek")
             {
                 currencyExchangeRate = (decimal)10.87;
             }
@@ -54,7 +54,7 @@ namespace BankAppGrupp7.EconomicsClasses
             {
                 currencyExchangeRate = (decimal)0.080;
             }
-            else if (fromCurrencyCode == "pund" && toCurrencyCode == "kr")
+            else if (fromCurrencyCode == "pund" && toCurrencyCode == "sek")
             {
                 currencyExchangeRate = (decimal)12.55;
             }
@@ -71,6 +71,58 @@ namespace BankAppGrupp7.EconomicsClasses
                 currencyExchangeRate = 0;
             }
                 return currencyExchangeRate;
+        }
+
+        public decimal SetDailyExchangeRate(string fromCurrencyCode, string toCurrencyCode)
+        {
+            //Has two decimals for the currency exchange rate and then the change that the admin puts in
+            decimal currencyexchangeChange;
+            decimal currencyExchangeRate;
+            //Checks if the fromCurrencyCode and toCurrencyCode are valid 
+            if (fromCurrencyCode == "sek" && toCurrencyCode == "euro")
+            {
+                Console.WriteLine($"From {fromCurrencyCode} to {toCurrencyCode}\nCurrent difference is 1 sek is 0.092 euro\nWhat do you want to change it to?");
+                currencyexchangeChange = InputValidation.Decimal();
+                //InputValidation is there so you can't put in strings or null
+                currencyExchangeRate = (decimal)currencyexchangeChange;
+
+            }
+            else if (fromCurrencyCode == "euro" && toCurrencyCode == "sek")
+            {
+                Console.WriteLine($"From {fromCurrencyCode} to {toCurrencyCode}\nCurrent difference is 1 euro is 10.87 sek\nWhat do you want to change it to?");
+                currencyexchangeChange = InputValidation.Decimal();
+                currencyExchangeRate = (decimal)currencyexchangeChange;
+            }
+            else if (fromCurrencyCode == "kr" && toCurrencyCode == "pund")
+            {
+                Console.WriteLine($"From {fromCurrencyCode} to {toCurrencyCode}\nCurrent difference is 1 sek is 0.080 pound\nWhat do you want to change it to?");
+                currencyexchangeChange = InputValidation.Decimal();
+                currencyExchangeRate = (decimal)currencyexchangeChange;
+            }
+            else if (fromCurrencyCode == "pund" && toCurrencyCode == "sek")
+            {
+                Console.WriteLine($"From {fromCurrencyCode} to {toCurrencyCode}\nCurrent difference is 1 pound is 12.55 sek\nWhat do you want to change it to?");
+                currencyexchangeChange = InputValidation.Decimal();
+                currencyExchangeRate = (decimal)currencyexchangeChange;
+            }
+            else if (fromCurrencyCode == "euro" && toCurrencyCode == "pund")
+            {
+                Console.WriteLine($"From {fromCurrencyCode} to {toCurrencyCode}\nCurrent difference is 1 euro is 0,086 pund\nWhat do you want to change it to?");
+                currencyexchangeChange = InputValidation.Decimal();
+                currencyExchangeRate = (decimal)currencyexchangeChange;
+            }
+            else if (fromCurrencyCode == "pund" && toCurrencyCode == "euro")
+            {
+                Console.WriteLine($"From {fromCurrencyCode} to {toCurrencyCode}\nCurrent difference is 1 pound is 1.15 euro\nWhat do you want to change it to?");
+                currencyexchangeChange = InputValidation.Decimal();
+                currencyExchangeRate = (decimal)currencyexchangeChange;
+            }
+            //If the names of the values aren't valid then you get nothing
+            else
+            {
+                currencyExchangeRate = 0;
+            }
+            return currencyExchangeRate;
         }
     }
 }

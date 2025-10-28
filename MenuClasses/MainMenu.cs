@@ -9,7 +9,7 @@ namespace BankAppGrupp7.MenuClasses
 {
     internal class MainMenu
     {
-        public void DisplayMainMenu()
+        public static void DisplayMainMenu()
         {
             bool isRunning = true;
             LogIn login = new LogIn();

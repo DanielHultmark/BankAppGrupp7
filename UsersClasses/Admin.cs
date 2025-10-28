@@ -5,6 +5,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using BankAppGrupp7.EconomicsClasses;
+using BankAppGrupp7.MenuClasses;
 
 namespace BankAppGrupp7.UsersClasses
 {
@@ -18,18 +20,32 @@ namespace BankAppGrupp7.UsersClasses
 
         public void CreateCustomer(UserRegister users)
         {
-            Console.WriteLine("Lägg till ny kund");
+            bool isRunning = true;
+            while (isRunning)
+            {
+                Console.WriteLine("Lägg till ny kund");
 
-            Console.Write("Användarnamn: ");
-            string username = Console.ReadLine();
+                Console.Write("Användarnamn: ");
+                string username = InputValidation.TrimmedString();
+                if (!IsUsernameUnique(users, username))
+                {
+                    continue;
+                }
 
-            Console.Write("Lösenord: ");
-            string password = Console.ReadLine();
+                Console.Write("Lösenord: ");
+                string password = InputValidation.TrimmedString();
+                if(!IsPasswordValid(users, password))
+                {
+                    continue;
+                }
 
-            Console.Write("För- och efternamn: ");
-            string fullName = Console.ReadLine();
-            
-            users.AddCustomerInRegister(username, password, fullName);
+                Console.Write("För- och efternamn: ");
+                string fullName = InputValidation.TrimmedString();
+
+                users.AddCustomerInRegister(username, password, fullName);
+                isRunning = false;
+            }
+           
 
         }
 
@@ -39,21 +55,31 @@ namespace BankAppGrupp7.UsersClasses
 
             // Vilka argument ska DelteteCustomerInRegister() ta?
 
-            users.DelteteCustomerInRegister();
+            users.DeleteCustomerInRegister();
         }
 
-        public void CheckIfUniqueUsername()
+        public bool IsUsernameUnique(UserRegister users, string userName)
         {
             //Help to check if username/password is unique when adding a customer, compare with already excisting in CustomerRegister
+            //Checks if the dictionary contains the specified key Username
+            if (users.UserList.ContainsKey(userName)) 
+            {
+                Console.WriteLine($"{userName} already exists");
+                return false;
+            }
+            return true;
         }
 
-        //OBS!
-
-        //public void SetDailyExchangeRate(Currecy currecy)
-        //{
-        //    //UI till admin, skickar/sparar data till currency
-
-        //}
-
+        public bool IsPasswordValid(UserRegister users, string password)
+        {
+            const int minLength = 5;
+            if(minLength > password.Length)
+            {
+                Console.WriteLine($"Minimum length for password is: {minLength}\nYour password contains only {password.Length}");
+                return false;
+            }
+            return true;
+            
+        }
     }
 }
