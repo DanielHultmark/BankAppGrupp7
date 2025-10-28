@@ -72,5 +72,6 @@ namespace BankAppGrupp7.EconomicsClasses
             }
                 return currencyExchangeRate;
         }
+        
     }
 }
