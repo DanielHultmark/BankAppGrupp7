@@ -9,7 +9,7 @@ using System.Transactions;
 
 namespace BankAppGrupp7.AccountClasses
 {
-    internal class Accounts
+    internal class Account
     {
         public abstract class Account
         {
