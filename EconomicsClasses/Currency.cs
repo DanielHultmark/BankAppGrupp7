@@ -73,6 +73,7 @@ namespace BankAppGrupp7.EconomicsClasses
                 return currencyExchangeRate;
         }
 
+        //Changes the currency exchange rate that only admins have access to
         public decimal SetDailyExchangeRate(string fromCurrencyCode, string toCurrencyCode)
         {
             //Has two decimals for the currency exchange rate and then the change that the admin puts in
