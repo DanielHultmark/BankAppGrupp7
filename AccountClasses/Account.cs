@@ -9,7 +9,7 @@ using System.Transactions;
 
 namespace BankAppGrupp7.AccountClasses
 {
-    internal class Accounts
+    internal class Account
     {
         public abstract class Account
         {
@@ -35,5 +35,6 @@ namespace BankAppGrupp7.AccountClasses
             public abstract void Deposit(decimal amount);
             public abstract void Withdraw(decimal amount);
         }
+        
     }
 }

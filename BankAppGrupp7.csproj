@@ -8,9 +8,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<Folder Include="AccountClasses\" />
 		<Folder Include="MenuClasses\" />
-		<Folder Include="EconomicsClasses\" />
 		<Folder Include="UsersClasses\" />
 	</ItemGroup>
 	

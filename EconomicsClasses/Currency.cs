@@ -72,5 +72,9 @@ namespace BankAppGrupp7.EconomicsClasses
             }
                 return currencyExchangeRate;
         }
+        public void SetDailyExchangeRates()
+        {
+            //This method can be used to set daily exchange rates from an API in the future
+        }
     }
 }

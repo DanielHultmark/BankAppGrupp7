@@ -54,6 +54,8 @@ namespace BankAppGrupp7.UsersClasses
         //    //UI till admin, skickar/sparar data till currency
 
         //}
+        
+
 
     }
 }
