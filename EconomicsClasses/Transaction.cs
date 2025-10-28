@@ -14,7 +14,6 @@ namespace BankAppGrupp7.EconomicsClasses
         public Account FromAccount { get; set; }
         public Account ToAccount { get; set; }
         public DateTime Date { get; set; }
-        public static List<Transaction> AllTransactions { get; set; } //static list, updates independently from class instances
 
         public Transaction(decimal amount, Account fromAccount, Account toAccount)
         {
@@ -28,13 +27,12 @@ namespace BankAppGrupp7.EconomicsClasses
             ToAccount = toAccount;
             Date = DateTime.Now;
 
-            //add if-statement for currency conversion
+            //add method for currency conversion
 
             fromAccount.Balance -= amount;
             toAccount.Balance += amount;
-            toAccount.Transactions.Add(this);
-            fromAccount.Transactions.Add(this);
-            AllTransactions.Add(this);
+
+            BankRegister.AddTransaction(this);
         }
     }
 }
