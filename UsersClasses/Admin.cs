@@ -49,13 +49,14 @@ namespace BankAppGrupp7.UsersClasses
 
         }
 
-        public void DeleteCustomer(UserRegister users)
+        public void DeleteCustomer(UserRegister users, string username)
         {
             //Instruktioner för admin att ta bort en customer
 
             // Vilka argument ska DelteteCustomerInRegister() ta?
+            Console.WriteLine("Ta bort kund");
 
-            users.DeleteCustomerInRegister();
+            users.DeleteCustomerInRegister(username);
         }
 
         public bool IsUsernameUnique(UserRegister users, string userName)
