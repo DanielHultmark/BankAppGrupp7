@@ -55,6 +55,11 @@ namespace BankAppGrupp7.UsersClasses
 
             // Vilka argument ska DelteteCustomerInRegister() ta?
             Console.WriteLine("Ta bort kund");
+            username = InputValidation.TrimmedString();
+            if (!IsUsernameUnique(users, username))
+            {
+
+            }
 
             users.DeleteCustomerInRegister(username);
         }
