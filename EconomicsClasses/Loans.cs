@@ -49,5 +49,19 @@ namespace BankAppGrupp7.EconomicsClasses
             //Lägg till lånet i listan över lån
 
         }
+        public void ViewLoans()
+        {
+            List<Loan> listOfLoans = new List<Loan>();
+            if (listOfLoans.Count == 0)
+            {
+                Console.WriteLine("Du har inga lån för tillfället.");
+                return;
+            }
+            Console.WriteLine("Dina lån:");
+            foreach (var loan in listOfLoans)
+            {
+                Console.WriteLine($"Lånebelopp: {loan.Amount} kr, Ränta: {loan.InterestRate}%, Längd på lån: {loan.LengthOfLoan} månader");
+            }
+        }
     }
 }
