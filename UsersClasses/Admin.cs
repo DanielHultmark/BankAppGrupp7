@@ -18,6 +18,7 @@ namespace BankAppGrupp7.UsersClasses
             IsAdmin = true;
         }
 
+        //Method for creating customer
         public void CreateCustomer(UserRegister users)
         {
             bool isRunning = true;
@@ -27,6 +28,7 @@ namespace BankAppGrupp7.UsersClasses
 
                 Console.Write("Användarnamn: ");
                 string username = InputValidation.TrimmedString();
+                //Checks if the username exist and then skips if it does by resetting the loop
                 if (DoesUsernameExist(users, username))
                 {
                     Console.WriteLine($"{username} already exists");
@@ -50,9 +52,6 @@ namespace BankAppGrupp7.UsersClasses
 
         public void DeleteCustomer(UserRegister users, string username)
         {
-            //Instruktioner för admin att ta bort en customer
-
-            // Vilka argument ska DelteteCustomerInRegister() ta?
             Console.WriteLine("Ta bort kund");
             username = InputValidation.TrimmedString();
             if (DoesUsernameExist(users, username))
