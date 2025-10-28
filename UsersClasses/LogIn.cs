@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using BankAppGrupp7.MenuClasses;
 
 namespace BankAppGrupp7.UsersClasses
 {
@@ -42,10 +43,9 @@ namespace BankAppGrupp7.UsersClasses
                 if (!IsPasswordValid(username, password))
                 {
                     continue;
-                }
-  
-                var currentUser = Users.UserList[username];
-                LoggedIn(currentUser);
+                }  
+                
+                LoggedIn(username);
                 stillEnteringLoginDetails = false;
             }    
         }
@@ -151,7 +151,7 @@ namespace BankAppGrupp7.UsersClasses
             return true;            
         }
 
-        public void LoggedIn(User loggedInUser)
+        public void LoggedIn(string username)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\nInloggning lyckades!");
@@ -159,15 +159,20 @@ namespace BankAppGrupp7.UsersClasses
 
             Thread.Sleep(2000);
 
+            var loggedInUser = Users.UserList[username];
+
             //OBS!
             if (loggedInUser.IsAdmin.Equals(true))
             {
-                menu.AdminMenu(loggedInUser);
+                Admin loggedInAdmin = (Admin)loggedInUser;
+
+                menu.AdminMenu(loggedInAdmin);
             }
 
             else
             {
-                menu.CustomerMenu(loggedInUser);
+                Customer loggedInCustomer = (Customer)loggedInUser;
+                menu.CustomerMenu(loggedInCustomer);
             }
         }
     }
