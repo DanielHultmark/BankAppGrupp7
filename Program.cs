@@ -1,4 +1,4 @@
-﻿using BankAppGrupp7.EconomicsClasses;
+﻿using BankAppGrupp7.MenuClasses;
 
 namespace BankAppGrupp7
 {
@@ -7,7 +7,7 @@ namespace BankAppGrupp7
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
-
+            MainMenu.DisplayMainMenu();
         }
     }
 }

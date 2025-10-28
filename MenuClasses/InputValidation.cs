@@ -113,6 +113,7 @@ namespace BankAppGrupp7.MenuClasses
                 if (!string.IsNullOrWhiteSpace(userInput)) 
                 {
                     value = userInput.Trim();
+                    value = value.ToLower();
                     wasSuccesful = true;
                 }
 

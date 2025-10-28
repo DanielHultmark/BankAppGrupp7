@@ -27,10 +27,11 @@ namespace BankAppGrupp7.UsersClasses
             UserList.Add(username, new Customer (username, password, fullName));
         }
 
-        public void DelteteCustomerInRegister()
+        public void DeleteCustomerInRegister(string username)
         {
             //Tar emot parametrar från DeleteCustomer i Admin class
             //Faktiska raderingen i listan sker här
+            UserList.Remove(username);
         }
     }
 }
