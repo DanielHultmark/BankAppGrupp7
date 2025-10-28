@@ -33,54 +33,41 @@ namespace BankAppGrupp7.UsersClasses
 
                 string username = ReadInput("Användarnamn:");
 
-                bool usernameExists = CheckUsername(username);
-
-                if (usernameExists)
+                if (!IsUsernameValid(username))
                 {
-                    string password = ReadInput("Lösenord:");
+                    continue;
+                }
+                
+                string password = ReadInput("Lösenord:");
 
-                    bool isPasswordCorrect = CheckPassword(username, password);
-
-                    if (isPasswordCorrect)
-                    {
-                        User currentUser = Users.UserList[username];
-
-                        stillEnteringLoginDetails = false;
-
-                        LoggedIn(currentUser);
-                    }
-                }                               
-            }
+                if (!IsPasswordValid(username, password))
+                {
+                    continue;
+                }  
+                
+                LoggedIn(username);
+                stillEnteringLoginDetails = false;
+            }    
         }
 
         public string ReadInput(string prompt)
         {
             Console.Write(prompt + " ");
-            string? userInput = Console.ReadLine();
+            string? userInput = Console.ReadLine().Trim();
 
             if (string.IsNullOrWhiteSpace(userInput))
             {
                 Console.Write("\nOgiltig input, försök igen!");
-                userInput = " ";
 
                 Thread.Sleep(1000);
-            }
-
-            else
-            {                
-                userInput = userInput.Trim();
+                return string.Empty;
             }
 
             return userInput;
         }
         
-        public bool CheckUsername(string username)
-        {
-            if (string.IsNullOrWhiteSpace(username))
-            {
-                return false;
-            }
-
+        public bool IsUsernameValid(string username)
+        {         
             bool usernameExists = Users.UserList.ContainsKey(username);
 
             if (!usernameExists)
@@ -92,7 +79,7 @@ namespace BankAppGrupp7.UsersClasses
                 return false;
             }
 
-            bool isLockedOut = CheckLoginAttempts(username);
+            bool isLockedOut = IsAccountLocked(username);
 
             if (isLockedOut)
             {
@@ -104,9 +91,9 @@ namespace BankAppGrupp7.UsersClasses
         }
 
         //Should user be sent back to start menu when the account has been locked?
-        public bool CheckPassword(string username, string password)
+        public bool IsPasswordValid(string username, string password)
         {
-            if (string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrEmpty(password))
             {
                 return false;
             }
@@ -121,21 +108,20 @@ namespace BankAppGrupp7.UsersClasses
                 {
                     user.IncreaseNumberLoginAttempts();
 
-                    int attemptsLeft = MaxLoginAttempts - user.FailedLoginAttempts;
+                    int remainingAttempts = MaxLoginAttempts - user.FailedLoginAttempts;
 
                     Console.ForegroundColor = ConsoleColor.Red;
 
-                    if (attemptsLeft>0)
+                    if (remainingAttempts>0)
                     {                        
-                        Console.Write($"Lösenordet är felaktigt, du har {attemptsLeft} försök kvar!");
+                        Console.Write($"Lösenordet är felaktigt, du har {remainingAttempts} försök kvar!");
 
                         Thread.Sleep(2000);
                     }
                     
                     else
                     {
-                        Console.Write($"Lösenordet är felaktigt, ditt användarkonto har nu låsts pga för många inloggningsförsök. " +
-                                    $"\nKontakta kundtjänst för att låsa upp kontot.");
+                        Console.Write($"Användarkontot har låsts pga för många inloggningsförsök. Kontakta kundtjänst.");
 
                         Thread.Sleep(5000);
                     }
@@ -148,23 +134,24 @@ namespace BankAppGrupp7.UsersClasses
         }
 
         //Should user be sent back to start menu when the account is locked?
-        public bool CheckLoginAttempts(string username)
+        public bool IsAccountLocked(string username)
         {
-            if (Users.UserList[username].FailedLoginAttempts == MaxLoginAttempts)
+            User user = Users.UserList[username];
+            if (user.FailedLoginAttempts < MaxLoginAttempts)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write("\nAnvändarkonto är låst pga för många inloggningsförsök. Kontakta kundtjänst för att låsa upp kontot.");
-                Console.ResetColor();
-
-                Thread.Sleep(5000);
-
-                return true;
+                return false;
             }
 
-            return false;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("\nDitt användarkonto är låst pga för många inloggningsförsök. Kontakta kundtjänst.");
+            Console.ResetColor();
+
+            Thread.Sleep(5000);
+
+            return true;            
         }
 
-        public void LoggedIn(User loggedInUser)
+        public void LoggedIn(string username)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\nInloggning lyckades!");
@@ -172,16 +159,21 @@ namespace BankAppGrupp7.UsersClasses
 
             Thread.Sleep(2000);
 
-            //OBS!
-            //if (loggedInUser.IsAdmin.Equals(true))
-            //{
-            //    menu.AdminMenu(loggedInUser);
-            //}
+            var loggedInUser = Users.UserList[username];
 
-            //else
-            //{
-            //    menu.CustomerMenu(loggedInUser);
-            //}
+            //OBS!
+            if (loggedInUser.IsAdmin.Equals(true))
+            {
+                Admin loggedInAdmin = (Admin)loggedInUser;
+
+                menu.AdminMenu(loggedInAdmin);
+            }
+
+            else
+            {
+                Customer loggedInCustomer = (Customer)loggedInUser;
+                menu.CustomerMenu(loggedInCustomer);
+            }
         }
     }
 }
