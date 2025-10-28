@@ -53,12 +53,21 @@ namespace BankAppGrupp7.UsersClasses
 
         public void DeleteCustomer(UserRegister users, string username)
         {
-            Console.Clear();
-            Console.WriteLine("Ta bort kund");
-            username = InputValidation.TrimmedString();
-            if (DoesUsernameExist(users, username))
+            bool isRunning = true;
+            while (isRunning)
             {
-                users.DeleteCustomerInRegister(username);
+                Console.Clear();
+                Console.WriteLine("Ta bort kund");
+                username = InputValidation.TrimmedString();
+                if (DoesUsernameExist(users, username))
+                {
+                    users.DeleteCustomerInRegister(username);
+                    isRunning = false;
+                }
+                else
+                {
+                    Console.WriteLine($"{username} finns inte. Försök igen!");
+                }
             }
 
         }
