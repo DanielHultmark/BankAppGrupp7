@@ -15,7 +15,6 @@ namespace BankAppGrupp7.UsersClasses
 
         public UserRegister Users { get; set; } = new UserRegister();
 
-        //OBS!
         public Menu menu { get; set; } = new Menu();
 
         // The log in view refreshes if the user has given invalid input in some way. 
@@ -161,12 +160,12 @@ namespace BankAppGrupp7.UsersClasses
 
             var loggedInUser = Users.UserList[username];
 
-            //OBS!
+            
             if (loggedInUser.IsAdmin.Equals(true))
             {
                 Admin loggedInAdmin = (Admin)loggedInUser;
 
-                menu.AdminMenu(loggedInAdmin);
+                menu.AdminMenu(loggedInAdmin, Users);
             }
 
             else
