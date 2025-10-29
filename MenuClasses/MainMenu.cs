@@ -17,6 +17,7 @@ namespace BankAppGrupp7.MenuClasses
             {
                 Console.Clear();
                 Console.WriteLine("Välkommen till BankAppGrupp7! Vill du \n1. Logga in\n2. Avsluta programmet");
+                //Jag vill ändra felhanteringen, läsa in utan loop och parsa till int.
                 string? choice = InputValidation.TrimmedString();
                 switch (choice) 
                 {
