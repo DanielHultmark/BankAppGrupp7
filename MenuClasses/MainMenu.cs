@@ -12,22 +12,34 @@ namespace BankAppGrupp7.MenuClasses
         public static void DisplayMainMenu()
         {
             bool isRunning = true;
-            LogIn login = new LogIn();
+            LogIn start = new LogIn();
+
             while (isRunning)
             {
                 Console.Clear();
-                Console.WriteLine("Välkommen till BankAppGrupp7! Vill du \n1. Logga in\n2. Avsluta programmet");
-                string? choice = InputValidation.TrimmedString();
+
+                //Banner/logo here
+
+                Console.WriteLine("Välkommen till CIBA - C# Investeringsbank AB! " +
+                    "\n1. Logga in" +
+                    "\n2. Avsluta programmet");
+
+                int choice = InputValidation.ReadIntInput("Välj:");
+
                 switch (choice) 
                 {
-                    case "1":
-                        //LoginMenu here
+                    case 1:
+                        start.LoginUI();
                         break;
 
-                    case "2":
+                    case 2:
                         Console.WriteLine("Avslutar program...");
-                        Thread.Sleep(3000);
+                        Thread.Sleep(2000);
                         isRunning = false;
+                        break;
+
+                    default:
+                        Console.Write("Felaktigt val, försök igen.");
                         break;
                 }
             }

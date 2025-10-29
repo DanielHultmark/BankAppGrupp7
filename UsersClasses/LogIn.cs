@@ -49,22 +49,6 @@ namespace BankAppGrupp7.UsersClasses
             }    
         }
 
-        public string ReadInput(string prompt)
-        {
-            Console.Write(prompt + " ");
-            string? userInput = Console.ReadLine().Trim();
-
-            if (string.IsNullOrWhiteSpace(userInput))
-            {
-                Console.Write("\nOgiltig input, försök igen!");
-
-                Thread.Sleep(1000);
-                return string.Empty;
-            }
-
-            return userInput;
-        }
-        
         public bool IsUsernameValid(string username)
         {         
             bool usernameExists = Users.UserList.ContainsKey(username);

@@ -94,5 +94,10 @@ namespace BankAppGrupp7.UsersClasses
             return true;
             
         }
+
+        public void ViewCustomers(UserRegister users)
+        {
+            //Print all customers in rows. What info to print; username and name? Account/Loan also?
+        }
     }
 }

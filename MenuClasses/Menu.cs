@@ -12,92 +12,109 @@ using BankAppGrupp7.EconomicsClasses;
 namespace BankAppGrupp7.MenuClasses
 {
     internal class Menu
-    {        
-        //Kund menu
-        public void CostrumerMenu()
+    {
+        // Alla metoder är ännu inte implementerade och kan behöva uppdateras. DeleteCustomer behöver ta bort parameter username i Admin.
+
+        //Customer menu
+        public void CustomerMenu(Customer loggedInCustomer)
         {
-            Console.WriteLine("Welcome to the Bank Application!");
-            Console.WriteLine("1. Skapa ett konto");
-            Console.WriteLine("2. Kontoöversikt");
-            Console.WriteLine("3. Lån översikt");
-            Console.WriteLine("4. Ansök för ett Lån");
-            Console.WriteLine("5. Logga ut");
-            Accounts account = new Accounts();
-            MainMenu mainMenu = new MainMenu();
-            Loans loan = new Loans();
-            LogIn login = new LogIn();
-            bool run = true;
-            while (run)
+            bool isRunnning = true;
+            while (isRunnning)
             { 
-                string choice = Console.ReadLine();
+                Console.WriteLine($"Välkommen {loggedInCustomer.FullName}!");
+                Console.WriteLine("1. Skapa ett konto");
+                Console.WriteLine("2. Kontoöversikt");
+                Console.WriteLine("3. Låneöversikt");
+                Console.WriteLine("4. Ansök om lån");
+                Console.WriteLine("5. Logga ut");
+                
+                int choice = InputValidation.ReadIntInput("Välj:");
 
                 switch (choice)
                 {
-                case "1":
-                    account.CreateAccount();
+                case 1:
+                    BankRegister.CreateAccount(loggedInCustomer);
                     break;
-                case "2":
-                    account.ViewAccount();
+
+                case 2:
+                    BankRegister.ViewAccount(loggedInCustomer);
                     break;
-                case "3":
-                    loan.ViewLoans();
+
+                case 3:
+                    BankRegister.ViewLoans(loggedInCustomer);
                     break;
-                case "4":
-                    loan.ApplyForLoan();
+
+                case 4:
+                    BankRegister.ApplyForLoan(loggedInCustomer);
                     break;
-                case "5":
-                    Console.WriteLine("Tack för att du använder Banken. Hejdå!");
-                    run = false;
+
+                case 5:
+                    Console.WriteLine("Du loggas ut från kontot!");
+                    Thread.Sleep(2000);
+                    isRunnning = false;
                     break;
+
                 default:
-                    Console.WriteLine("Felaktigt val, Försök igen.");
-                    
-                    mainMenu.DisplayMainMenu();
+                    Console.WriteLine("Felaktigt val, försök igen.");
+                    Thread.Sleep(2000);
                     break;
                 }
             }
-            //Return to login menu after logging out
-            login.LoginMenu();
-        }
-        //Admin menu
-        public void AdminMenu()
-        {
-            Console.WriteLine("Admin Menu");
-            Console.WriteLine("1. Skapa en Kund");
-            Console.WriteLine("2. Kundöversikt");
-            Console.WriteLine("3. Sätt dagliga Valutakursen");
-            Console.WriteLine("4. Logga ut");
 
-            User user = new User();
-            Currency currency = new Currency();
-            LogIn login = new LogIn();
-            bool run = true;
-            while (run)
+            //Return to main menu after logging out
+            MainMenu.DisplayMainMenu();
+        }
+
+        //Admin menu
+        public void AdminMenu(Admin loggedInAdmin, UserRegister allUsers)
+        {
+            bool isRunning = true;
+            while (isRunning)
             {
-                string choice = Console.ReadLine();
+                Console.WriteLine($"Välkommen {loggedInAdmin.FullName}!");
+                Console.WriteLine("1. Kundöversikt ");
+                Console.WriteLine("2. Lägg till en kund");
+                Console.WriteLine("3. Ta bort en kund");
+                Console.WriteLine("4. Sätt dagens valutakurs");
+                Console.WriteLine("5. Logga ut");
+                
+                int choice = InputValidation.ReadIntInput("Välj:");
+
                 switch (choice)
                 {
-                    case "1":
-                        user.CreateCustomer();
+                    case 1:
+                        loggedInAdmin.ViewCustomers(allUsers);
+                        
                         break;
-                    case "2":
-                        user.ViewCustomers();
+
+                    case 2:
+                        loggedInAdmin.CreateCustomer(allUsers);                        
                         break;
-                    case "3":
-                        currency.SetDailyExchangeRate();
+                                              
+                    case 3:
+                        loggedInAdmin.DeleteCustomer(allUsers);
                         break;
-                    case "4":
-                        Console.WriteLine("Du Loggas nu ut. Hejdå!");
-                        run = false;
+
+                    // Fattas UI för sätta daily exchange rate
+                    case 4:
+                        var currencyConvert = new CurrencyConversion();
+                        currencyConvert.SetDailyExchangeRate();
                         break;
+
+                    case 5:
+                        Console.WriteLine("Du loggas ut!");
+                        isRunning = false;
+                        break;
+
                     default:
-                        Console.WriteLine("Felaktigt val, Försök igen.");
-                        AdminMenu();
+                        Console.WriteLine("Felaktigt val, försök igen.");
+                        Thread.Sleep(2000);
                         break;
                 }
             }
-            //Return to login menu after logging out
-            login.LoginMenu();
+
+            //Return to main menu after logging out
+            MainMenu.DisplayMainMenu();
         }
     }
 }
