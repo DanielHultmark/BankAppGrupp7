@@ -13,7 +13,9 @@ namespace BankAppGrupp7.MenuClasses
 {
     internal class Menu
     {
-        
+        // Alla metoder är ännu inte implementerade och kan behöva uppdateras. DeleteCustomer behöver ta bort parameter username i Admin.
+
+        //Customer menu
         public void CustomerMenu(Customer loggedInCustomer)
         {
             bool isRunnning = true;

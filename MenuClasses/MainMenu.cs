@@ -20,25 +20,26 @@ namespace BankAppGrupp7.MenuClasses
 
                 //Banner/logo here
 
-                Console.WriteLine("Välkommen till CIBA - C# Investeringsbank AB! \n1. Logga in\n2. Avsluta programmet");
-                Console.Write("Välj: ");
+                Console.WriteLine("Välkommen till CIBA - C# Investeringsbank AB! " +
+                    "\n1. Logga in" +
+                    "\n2. Avsluta programmet");
 
-                //Jag vill ändra felhanteringen, läsa in utan loop och parsa till int.
-                string? choice = InputValidation.TrimmedString();
+                int choice = InputValidation.ReadIntInput("Välj:");
+
                 switch (choice) 
                 {
-                    case "1":
+                    case 1:
                         start.LoginUI();
                         break;
 
-                    case "2":
+                    case 2:
                         Console.WriteLine("Avslutar program...");
                         Thread.Sleep(2000);
                         isRunning = false;
                         break;
 
                     default:
-                        Console.Write("Ange giltig siffra mellan 1-2.");
+                        Console.Write("Felaktigt val, försök igen.");
                         break;
                 }
             }
