@@ -95,9 +95,22 @@ namespace BankAppGrupp7.UsersClasses
             
         }
 
+        //Needs to be changed if we want to print Account and loan also?
         public void ViewCustomers(UserRegister users)
-        {
-            //Print all customers in rows. What info to print; username and name? Account/Loan also?
+        {            
+            Console.Clear();
+
+            List<Customer> allCustomers = users.UserList
+                .Values
+                .OfType<Customer>()
+                .ToList();
+
+            Console.WriteLine("Kundöversikt\n");
+            foreach (var customer in allCustomers)
+            {
+                Console.WriteLine($"Användarnamn: {customer.Username,-15} För- och efternamn: {customer.FullName,-15}");
+            }
+            
         }
     }
 }
