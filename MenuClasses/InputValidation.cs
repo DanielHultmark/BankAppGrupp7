@@ -104,7 +104,6 @@ namespace BankAppGrupp7.MenuClasses
         public static string TrimmedString()
         {
             string value = "";
-            bool wasSuccesful = false;
             bool stillValidating = true;
             while (stillValidating)
             {
@@ -114,11 +113,6 @@ namespace BankAppGrupp7.MenuClasses
                 {
                     value = userInput.Trim();
                     value = value.ToLower();
-                    wasSuccesful = true;
-                }
-
-                if (wasSuccesful)
-                {
                     stillValidating = false;
                 }
                 else

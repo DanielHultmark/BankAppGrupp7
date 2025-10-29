@@ -21,6 +21,7 @@ namespace BankAppGrupp7.UsersClasses
         //Method for creating customer
         public void CreateCustomer(UserRegister users)
         {
+            User user = new User();
             bool isRunning = true;
             while (isRunning)
             {
@@ -30,9 +31,9 @@ namespace BankAppGrupp7.UsersClasses
                 Console.Write("Användarnamn: ");
                 string username = InputValidation.TrimmedString();
                 //Checks if the username exist and then skips if it does by resetting the loop
-                if (DoesUsernameExist(users, username))
+                if (DoesUsernameExist(users, user))
                 {
-                    Console.WriteLine($"{username} already exists");
+                    Console.WriteLine($"{username} finns redan");
                     continue;
                 }
 
@@ -51,44 +52,61 @@ namespace BankAppGrupp7.UsersClasses
             }
         }
 
-        public void DeleteCustomer(UserRegister users, string username)
+        public void ViewCustomer(UserRegister users)
+        {
+            User currentUser = new();
+            //Doesn't show the password for user
+            foreach (KeyValuePair<string, User> userlist in users.UserList)
+            {
+                currentUser = userlist.Value;
+                Console.WriteLine($"Roll: {userlist.Key}, Användarnamn: {currentUser.Username}, Namn: {currentUser.FullName}\n");
+            }
+
+        }
+        public void DeleteCustomer(UserRegister users)
         {
             bool isRunning = true;
+            User user = new();
+            string username;
+            //Vad händer om man kommer hit av misstag, tar vi bort while-loopen eller lägger vi till en till else-if sats för att gå tillbaka
             while (isRunning)
             {
                 Console.Clear();
-                Console.WriteLine("Ta bort kund");
+                Console.WriteLine("Välj ett användarnamn som ska tas bort");
+
                 username = InputValidation.TrimmedString();
-                if (DoesUsernameExist(users, username))
+                username = user.Username;
+                if (DoesUsernameExist(users, user))
                 {
-                    users.DeleteCustomerInRegister(username);
+                    Thread.Sleep(1000);
+                    users.DeleteCustomerInRegister(user.Username);
                     isRunning = false;
                 }
                 else
                 {
                     Console.WriteLine($"{username} finns inte. Försök igen!");
+                    Thread.Sleep(1000);
                 }
             }
-
         }
 
-        public bool DoesUsernameExist(UserRegister users, string userName)
+        public bool DoesUsernameExist(UserRegister users, User username)
         {
             //Help to check if username/password is unique when adding a customer, compare with already excisting in CustomerRegister
-            //Checks if the dictionary contains the specified key Username
-            if (users.UserList.ContainsKey(userName)) 
+            //Checks if the dictionary contains the specified value Username
+
+            if (users.UserList.ContainsValue(username))
             {
                 return true;
             }
             return false;
         }
-
         public bool IsPasswordValid(UserRegister users, string password)
         {
             const int minLength = 5;
             if(minLength > password.Length)
             {
-                Console.WriteLine($"Minimum length for password is: {minLength}\nYour password contains only {password.Length}");
+                Console.WriteLine($"Minsta längden för ett lösenord är: {minLength}\nDitt lösenord har bara {password.Length} tecken");
                 return false;
             }
             return true;
