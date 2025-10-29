@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using static BankAppGrupp7.AccountClasses.Accounts;
+using static BankAppGrupp7.AccountClasses.Account;
 
 namespace BankAppGrupp7.AccountClasses
 {
-    internal class SavingAccounts
+    internal class SavingsAccount
     {
-        public class SavingsAccount : Account
+        public class SavingsAccount : Account.Account
         {
             public decimal InterestRate { get; set; }
 
