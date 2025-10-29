@@ -12,7 +12,8 @@ using BankAppGrupp7.EconomicsClasses;
 namespace BankAppGrupp7.MenuClasses
 {
     internal class Menu
-    {               
+    {
+        
         public void CustomerMenu(Customer loggedInCustomer)
         {
             bool isRunnning = true;
@@ -21,38 +22,43 @@ namespace BankAppGrupp7.MenuClasses
                 Console.WriteLine($"Välkommen {loggedInCustomer.FullName}!");
                 Console.WriteLine("1. Skapa ett konto");
                 Console.WriteLine("2. Kontoöversikt");
-                Console.WriteLine("3. Lån översikt");
-                Console.WriteLine("4. Ansök för ett Lån");
+                Console.WriteLine("3. Låneöversikt");
+                Console.WriteLine("4. Ansök om lån");
                 Console.WriteLine("5. Logga ut");
-           
-                // Hur felhantera? Parsa till int, skapa metod för int-input. 
-                string choice = Console.ReadLine();
+                
+                int choice = InputValidation.ReadIntInput("Välj:");
 
                 switch (choice)
                 {
-                case "1":
+                case 1:
                     BankRegister.CreateAccount(loggedInCustomer);
                     break;
-                case "2":
+
+                case 2:
                     BankRegister.ViewAccount(loggedInCustomer);
                     break;
-                case "3":
+
+                case 3:
                     BankRegister.ViewLoans(loggedInCustomer);
                     break;
-                case "4":
+
+                case 4:
                     BankRegister.ApplyForLoan(loggedInCustomer);
                     break;
-                case "5":
+
+                case 5:
                     Console.WriteLine("Du loggas ut från kontot!");
                     Thread.Sleep(2000);
-
                     isRunnning = false;
                     break;
+
                 default:
-                    Console.WriteLine("Felaktigt val, försök igen.");                    
+                    Console.WriteLine("Felaktigt val, försök igen.");
+                    Thread.Sleep(2000);
                     break;
                 }
             }
+
             //Return to main menu after logging out
             MainMenu.DisplayMainMenu();
         }
@@ -60,38 +66,42 @@ namespace BankAppGrupp7.MenuClasses
         //Admin menu
         public void AdminMenu(Admin loggedInAdmin, UserRegister allUsers)
         {
-            bool run = true;
-            while (run)
+            bool isRunning = true;
+            while (isRunning)
             {
                 Console.WriteLine($"Välkommen {loggedInAdmin.FullName}!");
-                Console.WriteLine("1. Lägg till en kund");
-                Console.WriteLine("2. Kundöversikt");
+                Console.WriteLine("1. Kundöversikt ");
+                Console.WriteLine("2. Lägg till en kund");
                 Console.WriteLine("3. Ta bort en kund");
-                Console.WriteLine("4. Sätt dagliga valutakursen");
+                Console.WriteLine("4. Sätt dagens valutakurs");
                 Console.WriteLine("5. Logga ut");
+                
+                int choice = InputValidation.ReadIntInput("Välj:");
 
-                Console.Write("Välj: ");
-                            
-                //Felhantering
-                string choice = Console.ReadLine();
                 switch (choice)
                 {
-                    case "1":
-                        loggedInAdmin.CreateCustomer(allUsers);
+                    case 1:
+                        loggedInAdmin.ViewCustomers(allUsers);
+                        
                         break;
 
-                    case "2":
-                        loggedInAdmin.ViewCustomers(allUsers);
+                    case 2:
+                        loggedInAdmin.CreateCustomer(allUsers);                        
                         break;
+                                              
+                    case 3:
+                        loggedInAdmin.DeleteCustomer(allUsers);
+                        break;
+
                     // Fattas UI för sätta daily exchange rate
-                    case "3":
+                    case 4:
                         var currencyConvert = new CurrencyConversion();
                         currencyConvert.SetDailyExchangeRate();
                         break;
 
-                    case "4":
+                    case 5:
                         Console.WriteLine("Du loggas ut!");
-                        run = false;
+                        isRunning = false;
                         break;
 
                     default:
@@ -100,6 +110,7 @@ namespace BankAppGrupp7.MenuClasses
                         break;
                 }
             }
+
             //Return to main menu after logging out
             MainMenu.DisplayMainMenu();
         }

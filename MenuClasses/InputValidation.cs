@@ -77,10 +77,7 @@ namespace BankAppGrupp7.MenuClasses
             string? userInput = Console.ReadLine().Trim();
 
             if (string.IsNullOrWhiteSpace(userInput))
-            {
-                Console.Write("\nOgiltig input, försök igen!");
-
-                Thread.Sleep(1000);
+            {                
                 return string.Empty;
             }
 
@@ -91,18 +88,14 @@ namespace BankAppGrupp7.MenuClasses
         public static int ReadIntInput(string prompt)
         {
             Console.Write(prompt + " ");
-            string? userInput = Console.ReadLine().Trim();
-            //Parse
-
-            if (string.IsNullOrWhiteSpace(userInput))
-            {
-                Console.Write("\nOgiltig input, försök igen!");
-
-                Thread.Sleep(1000);
-                return 0;
+            bool isNUmber = int.TryParse(Console.ReadLine().Trim(), out int number);
+            
+            if (!isNUmber)
+            {             
+                return -1;
             }
 
-            return 0;
+            return number;
         }
 
         //Input validation for double
