@@ -21,7 +21,6 @@ namespace BankAppGrupp7.UsersClasses
         //Method for creating customer
         public void CreateCustomer(UserRegister users)
         {
-            User user = new User();
             bool isRunning = true;
             while (isRunning)
             {
@@ -31,7 +30,7 @@ namespace BankAppGrupp7.UsersClasses
                 Console.Write("Användarnamn: ");
                 string username = InputValidation.TrimmedString();
                 //Checks if the username exist and then skips if it does by resetting the loop
-                if (DoesUsernameExist(users, user))
+                if (DoesUsernameExist(users, username))
                 {
                     Console.WriteLine($"{username} finns redan");
                     continue;
@@ -66,21 +65,40 @@ namespace BankAppGrupp7.UsersClasses
         public void DeleteCustomer(UserRegister users)
         {
             bool isRunning = true;
-            User user = new();
             string username;
             //Vad händer om man kommer hit av misstag, tar vi bort while-loopen eller lägger vi till en till else-if sats för att gå tillbaka
             while (isRunning)
             {
                 Console.Clear();
                 Console.WriteLine("Välj ett användarnamn som ska tas bort");
-
+                
                 username = InputValidation.TrimmedString();
-                username = user.Username;
-                if (DoesUsernameExist(users, user))
+                if (DoesUsernameExist(users, username))
                 {
-                    Thread.Sleep(1000);
-                    users.DeleteCustomerInRegister(user.Username);
-                    isRunning = false;
+                    //This foreach-loop prevents admins deletion
+                    foreach (KeyValuePair<string, User> userlist in users.UserList)
+                    {
+                        User currentUser = userlist.Value;
+                        string key = userlist.Key;
+                        if (currentUser.Username == username)
+                        {
+                            //Checks if the user is admin, admin class has it set to true so if the user trying to get removed is admin you come here
+                            if (currentUser.IsAdmin)
+                            {
+                                Console.WriteLine("Du får inte ta bort en admin!");
+                                isRunning = false;
+                            }
+                            else
+                            {
+                                //If it's a customer then it gets removed
+                                Thread.Sleep(1000);
+                                users.DeleteCustomerInRegister(key);
+                                isRunning = false;
+                            }
+                        }
+
+                    }
+
                 }
                 else
                 {
@@ -90,15 +108,21 @@ namespace BankAppGrupp7.UsersClasses
             }
         }
 
-        public bool DoesUsernameExist(UserRegister users, User username)
+        public bool DoesUsernameExist(UserRegister users, string username)
         {
             //Help to check if username/password is unique when adding a customer, compare with already excisting in CustomerRegister
             //Checks if the dictionary contains the specified value Username
-
-            if (users.UserList.ContainsValue(username))
+            //Goes through the dictionary to see if the userinput matches the username in UserList
+            foreach (KeyValuePair<string, User> userlist in users.UserList)
             {
-                return true;
+                User currentUser = userlist.Value;
+                if (currentUser.Username == username)
+                {
+                    return true;
+                }
+
             }
+
             return false;
         }
         public bool IsPasswordValid(UserRegister users, string password)
