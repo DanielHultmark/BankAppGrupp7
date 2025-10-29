@@ -12,23 +12,33 @@ namespace BankAppGrupp7.MenuClasses
         public static void DisplayMainMenu()
         {
             bool isRunning = true;
-            LogIn login = new LogIn();
+            LogIn start = new LogIn();
+
             while (isRunning)
             {
                 Console.Clear();
-                Console.WriteLine("Välkommen till BankAppGrupp7! Vill du \n1. Logga in\n2. Avsluta programmet");
+
+                //Banner/logo here
+
+                Console.WriteLine("Välkommen till CIBA - C# Investeringsbank AB! \n1. Logga in\n2. Avsluta programmet");
+                Console.Write("Välj: ");
+
                 //Jag vill ändra felhanteringen, läsa in utan loop och parsa till int.
                 string? choice = InputValidation.TrimmedString();
                 switch (choice) 
                 {
                     case "1":
-                        //LoginMenu here
+                        start.LoginUI();
                         break;
 
                     case "2":
                         Console.WriteLine("Avslutar program...");
-                        Thread.Sleep(3000);
+                        Thread.Sleep(2000);
                         isRunning = false;
+                        break;
+
+                    default:
+                        Console.Write("Ange giltig siffra mellan 1-2.");
                         break;
                 }
             }
