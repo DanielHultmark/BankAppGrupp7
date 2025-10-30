@@ -29,8 +29,7 @@ namespace BankAppGrupp7.AccountClasses
             Console.WriteLine($"Saldo för konto {AccountNumber}: {Balance} {Currency}");
         }
 
-        public abstract void Deposit(decimal amount);
-        public abstract void Withdraw(decimal amount);
+      
     }
     
 }
