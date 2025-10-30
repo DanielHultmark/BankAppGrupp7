@@ -18,7 +18,7 @@ namespace BankAppGrupp7.MenuClasses
             {
                 Console.Clear();
 
-                //Banner/logo here
+                Grafik.DisplayLogo();
 
                 Console.WriteLine("Välkommen till CIBA - C# Investeringsbank AB!\n" +
                     "\n1. Logga in" +
