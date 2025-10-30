@@ -11,8 +11,22 @@ namespace BankAppGrupp7.MenuClasses
 
         public static void DisplayLogo()
         {
-
-            Console.WriteLine("");
+            Console.WriteLine("\n\n\n\n\n");
+            Console.WriteLine("       C#C#C#C#C#          C#C#C#C#C#C#C#         C#C#C#C#C#C#                     C#C#C#C#");
+            Console.WriteLine("   C#C#C#C#C#C#C#C#C#         C#C#C#C#            C#C#C#C#C#C#C#                  C#C#C#C#C#");
+            Console.WriteLine("  C#C#C#        C#C#C#        C#C#C#C#            C#C#       C#C#                C#        C#");
+            Console.WriteLine(" C#C#                C#       C#C#C#C#            C#C#        C#C#              C#          C#");
+            Console.WriteLine("C#C#                          C#C#C#C#            C#C#       C#C#              C#            C#");
+            Console.WriteLine("C#C#                          C#C#C#C#            C#C#C#C#C#C#C#              C#              C#");
+            Console.WriteLine("C#C#                          C#C#C#C#            C#C#C#C#C#C#C#             C#                C#");
+            Console.WriteLine("C#C#                          C#C#C#C#            C#C#        C#C#          C#C#C#C#C#C#C#C#C#C#C#");
+            Console.WriteLine("C#C#                          C#C#C#C#            C#C#         C#C#         C#C#C#C#C#C#C#C#C#C#C#");
+            Console.WriteLine("C#C#                          C#C#C#C#            C#C#          C#C#       C#C#                C#C#");
+            Console.WriteLine(" C#C#               C#        C#C#C#C#            C#C#         C#C#       C#C#                  C#C#");
+            Console.WriteLine("  C#C#C#        C#C#C#        C#C#C#C#            C#C#        C#C#       C#C#                    C#C#");
+            Console.WriteLine("  C#C#C#C#C#C#C#C#C#C#        C#C#C#C#            C#C#C#C#C#C#          C#C#                      C#C#");
+            Console.WriteLine("      C#C#C#C#C#            C#C#C#C#C#C#          C#C#C#C#C#          C#C#C#C#                   C#C#C#C#");
+            Console.WriteLine("\nC# Investerings Bank AB");
         }
     }
 }
