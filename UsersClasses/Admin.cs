@@ -32,7 +32,7 @@ namespace BankAppGrupp7.UsersClasses
                 //Checks if the username exist and then skips if it does by resetting the loop
                 if (DoesUsernameExist(users, username))
                 {
-                    Console.WriteLine($"{username} finns redan");
+                    InputValidation.ShowFeedbackMessage($"{username} finns redan", ConsoleColor.Red, 2000);
                     continue;
                 }
 
@@ -47,6 +47,7 @@ namespace BankAppGrupp7.UsersClasses
                 string fullName = InputValidation.TrimmedString();
 
                 users.AddCustomerInRegister(username, password, fullName);
+                InputValidation.ShowFeedbackMessage("Kund tillagd!", ConsoleColor.Green, 2000);
                 isRunning = false;
             }
         }
@@ -81,8 +82,7 @@ namespace BankAppGrupp7.UsersClasses
                     User user = users.UserList[username];
                     if (user.IsAdmin)
                     {
-                        Thread.Sleep(1000);
-                        Console.WriteLine("Du kan inte ta bort admin!");
+                        InputValidation.ShowFeedbackMessage("Du kan inte ta bort admin!", ConsoleColor.Red, 2000);
                         isRunning=false;
                     }
                     else
@@ -117,8 +117,7 @@ namespace BankAppGrupp7.UsersClasses
                 }
                 else
                 {
-                    Console.WriteLine($"{username} finns inte. Försök igen!");
-                    Thread.Sleep(1000);
+                    InputValidation.ShowFeedbackMessage($"{username} finns inte. Försök igen!", ConsoleColor.Red, 2000);
                 }
             }
         }
@@ -152,7 +151,7 @@ namespace BankAppGrupp7.UsersClasses
             const int minLength = 5;
             if(minLength > password.Length)
             {
-                Console.WriteLine($"Minsta längden för ett lösenord är: {minLength}\nDitt lösenord har bara {password.Length} tecken");
+                InputValidation.ShowFeedbackMessage($"Minsta längden för ett lösenord är: {minLength}\nDitt lösenord har bara {password.Length} tecken", ConsoleColor.Red, 2000);
                 return false;
             }
             return true;
