@@ -24,14 +24,14 @@ namespace BankAppGrupp7.UsersClasses
 
         public void AddCustomerInRegister(string username, string password, string fullName)
         {
-            //Ska key och value.username verkligen vara lika?
+            //Should key and username be the same?
             UserList.Add(username, new Customer (username, password, fullName));
         }
 
         public void DeleteCustomerInRegister(string key)
         {
-            //Tar emot parametrar från DeleteCustomer i Admin class
-            //Faktiska raderingen i listan sker här
+            //Takes the perameters from Admin's DeleteCustomer method
+            //Removing from the specified userinput from the list 
             UserList.Remove(key);
         }
     }

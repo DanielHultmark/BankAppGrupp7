@@ -46,7 +46,24 @@ namespace BankAppGrupp7.UsersClasses
                 Console.Write("För- och efternamn: ");
                 string fullName = InputValidation.TrimmedString();
 
-                users.AddCustomerInRegister(username, password, fullName);
+                Console.Write("Är det en admin? Ja eller Nej");
+                string admin = InputValidation.TrimmedString();
+                if (admin == "ja")
+                {
+                    Console.WriteLine("Kan inte lägga till admin");
+                    Thread.Sleep(1000);
+                    continue;
+                }
+                else if (admin == "nej")
+                {
+                    Console.WriteLine("Skapar kund");
+                    users.AddCustomerInRegister(username, password, fullName);
+                }
+                else
+                {
+                    continue;
+                }
+                    
                 isRunning = false;
             }
         }
@@ -120,7 +137,6 @@ namespace BankAppGrupp7.UsersClasses
                 {
                     return true;
                 }
-
             }
 
             return false;
