@@ -40,7 +40,6 @@ namespace BankAppGrupp7.UsersClasses
                 string password = InputValidation.TrimmedString();
                 if(!IsPasswordValid(users, password))
                 {
-                    Thread.Sleep(1000);
                     continue;
                 }
 
