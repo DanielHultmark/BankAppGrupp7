@@ -13,11 +13,11 @@ namespace BankAppGrupp7.MenuClasses
         {
             bool isRunning = true;
             LogIn start = new LogIn();
-
+            
             while (isRunning)
             {
-                Console.Clear();
 
+                Console.Clear();
                 Grafik.DisplayLogo();
 
                 Console.WriteLine("Välkommen till CIBA - C# Investeringsbank AB!\n" +
@@ -34,8 +34,9 @@ namespace BankAppGrupp7.MenuClasses
 
                     case 2:
                         Console.WriteLine("Avslutar program...");
-                        Thread.Sleep(2000);
                         isRunning = false;
+                        Thread.Sleep(1000);
+                        Environment.Exit(0);
                         break;
 
                     default:

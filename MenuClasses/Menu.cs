@@ -80,7 +80,7 @@ namespace BankAppGrupp7.MenuClasses
             {
                 Console.Clear();
 
-                Console.WriteLine($"Välkommen {loggedInAdmin.FullName}\n!");
+                Console.WriteLine($"Välkommen {loggedInAdmin.FullName}!");
                 Console.WriteLine("1. Kundöversikt ");
                 Console.WriteLine("2. Lägg till en kund");
                 Console.WriteLine("3. Ta bort en kund");
@@ -93,7 +93,8 @@ namespace BankAppGrupp7.MenuClasses
                 {
                     case 1:
                         Console.Clear();
-                        loggedInAdmin.ViewCustomers(allUsers);                        
+                        loggedInAdmin.ViewCustomers(allUsers);
+                        Console.ReadKey();
                         break;
 
                     case 2:
@@ -103,7 +104,7 @@ namespace BankAppGrupp7.MenuClasses
                                               
                     case 3:
                         Console.Clear();
-                        //loggedInAdmin.DeleteCustomer(allUsers);
+                        loggedInAdmin.DeleteCustomer(allUsers);
                         break;
 
                     // Fattas UI för sätta daily exchange rate
