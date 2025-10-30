@@ -1,13 +1,11 @@
-﻿using BankAppGrupp7.EconomicsClasses;
+using BankAppGrupp7.EconomicsClasses;
 using BankAppGrupp7.UsersClasses;
 
 namespace BankAppGrupp7.AccountClasses
 {
-    public class SavingsAccount : Account
+    public class SalaryAccount : Account
     {
-        public decimal InterestRate { get; set; } = 1.005M;
-
-        public SavingsAccount(string accountNumber, Customer owner, decimal balance, Currency currency)
+        public SalaryAccount(string accountNumber, Customer owner, decimal balance, Currency currency)
             : base(accountNumber, owner, balance, currency)
         {
         }
@@ -34,11 +32,13 @@ namespace BankAppGrupp7.AccountClasses
             }
         }
 
-        public void ApplyInterest()
+        public void DepositSalary(decimal salaryAmount)
         {
-            var interest = Balance * (InterestRate - 1);
-            Balance += interest;
-            new Transaction(interest, this, this);
+            if (salaryAmount > 0)
+            {
+                Balance += salaryAmount;
+                new Transaction(salaryAmount, this, this);
+            }
         }
     }
 }
