@@ -20,11 +20,11 @@ namespace BankAppGrupp7.MenuClasses
 
                 //Banner/logo here
 
-                Console.WriteLine("Välkommen till CIBA - C# Investeringsbank AB! " +
+                Console.WriteLine("Välkommen till CIBA - C# Investeringsbank AB!\n" +
                     "\n1. Logga in" +
                     "\n2. Avsluta programmet");
 
-                int choice = InputValidation.ReadIntInput("Välj:");
+                int choice = InputValidation.ReadIntInput("\nVälj:");
 
                 switch (choice) 
                 {

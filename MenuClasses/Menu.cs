@@ -20,15 +20,17 @@ namespace BankAppGrupp7.MenuClasses
         {
             bool isRunnning = true;
             while (isRunnning)
-            { 
-                Console.WriteLine($"Välkommen {loggedInCustomer.FullName}!");
+            {
+                Console.Clear();
+
+                Console.WriteLine($"Välkommen {loggedInCustomer.FullName}\n!");
                 Console.WriteLine("1. Skapa ett konto");
                 Console.WriteLine("2. Kontoöversikt");
                 Console.WriteLine("3. Låneöversikt");
                 Console.WriteLine("4. Ansök om lån");
                 Console.WriteLine("5. Logga ut");
                 
-                int choice = InputValidation.ReadIntInput("Välj:");
+                int choice = InputValidation.ReadIntInput("\nVälj:");
 
                 switch (choice)
                 {
@@ -71,14 +73,16 @@ namespace BankAppGrupp7.MenuClasses
             bool isRunning = true;
             while (isRunning)
             {
-                Console.WriteLine($"Välkommen {loggedInAdmin.FullName}!");
+                Console.Clear();
+
+                Console.WriteLine($"Välkommen {loggedInAdmin.FullName}\n!");
                 Console.WriteLine("1. Kundöversikt ");
                 Console.WriteLine("2. Lägg till en kund");
                 Console.WriteLine("3. Ta bort en kund");
                 Console.WriteLine("4. Sätt dagens valutakurs");
                 Console.WriteLine("5. Logga ut");
                 
-                int choice = InputValidation.ReadIntInput("Välj:");
+                int choice = InputValidation.ReadIntInput("\nVälj:");
 
                 switch (choice)
                 {
