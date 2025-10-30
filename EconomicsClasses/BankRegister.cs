@@ -129,3 +129,30 @@ namespace BankAppGrupp7.EconomicsClasses
         }
     }
 }
+
+// public void Withdraw(decimal amount)
+//        {
+//            if (amount > 0 && amount <= Balance)
+//            {
+//                Balance -= amount;
+//                new Transaction(amount, this, this);
+//            }
+//        }
+
+// public void DepositSalary(decimal salaryAmount)
+//        {
+//            if (salaryAmount > 0)
+//            {
+//                Balance += salaryAmount;
+//                new Transaction(salaryAmount, this, this);
+//            }
+//        }
+
+//public void DepositSalary(decimal salaryAmount)
+// {
+//     if (salaryAmount > 0)
+//     {
+//         Balance += salaryAmount;
+//         new Transaction(salaryAmount, this, this);
+//     }
+// }
