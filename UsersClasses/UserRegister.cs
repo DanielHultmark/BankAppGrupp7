@@ -24,7 +24,6 @@ namespace BankAppGrupp7.UsersClasses
 
         public void AddCustomerInRegister(string username, string password, string fullName)
         {
-            //Should key and username be the same?
             UserList.Add(username, new Customer (username, password, fullName));
         }
 

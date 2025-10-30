@@ -112,7 +112,6 @@ namespace BankAppGrupp7.MenuClasses
                 if (!string.IsNullOrWhiteSpace(userInput)) 
                 {
                     value = userInput.Trim();
-                    value = value.ToLower();
                     stillValidating = false;
                 }
                 else

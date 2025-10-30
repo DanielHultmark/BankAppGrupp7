@@ -46,36 +46,20 @@ namespace BankAppGrupp7.UsersClasses
                 Console.Write("För- och efternamn: ");
                 string fullName = InputValidation.TrimmedString();
 
-                Console.Write("Är det en admin? Ja eller Nej");
-                string admin = InputValidation.TrimmedString();
-                if (admin == "ja")
-                {
-                    Console.WriteLine("Kan inte lägga till admin");
-                    Thread.Sleep(1000);
-                    continue;
-                }
-                else if (admin == "nej")
-                {
-                    Console.WriteLine("Skapar kund");
-                    users.AddCustomerInRegister(username, password, fullName);
-                }
-                else
-                {
-                    continue;
-                }
-                    
+                users.AddCustomerInRegister(username, password, fullName);
                 isRunning = false;
             }
         }
 
         public void ViewCustomer(UserRegister users)
         {
-            User currentUser = new();
-            //Doesn't show the password for user
+            
+            //Doesn't show the password when written out for security purposes
+            //KeyValuePair is needed for foreach with dictionaries
             foreach (KeyValuePair<string, User> userlist in users.UserList)
             {
-                currentUser = userlist.Value;
-                Console.WriteLine($"Roll: {userlist.Key}, Användarnamn: {currentUser.Username}, Namn: {currentUser.FullName}\n");
+                
+                Console.WriteLine($"Användarnamn: {userlist.Value.Username}, För- och efternamn: {userlist.Value.FullName}\n");
             }
 
         }
@@ -87,35 +71,49 @@ namespace BankAppGrupp7.UsersClasses
             while (isRunning)
             {
                 Console.Clear();
-                Console.WriteLine("Välj ett användarnamn som ska tas bort");
+                Console.WriteLine("Ta bort kund");
+                Console.Write("Skriv användarnamn: ");
                 
                 username = InputValidation.TrimmedString();
-                if (DoesUsernameExist(users, username))
+                if (DoesKeyExist(users, username))
                 {
-                    //This foreach-loop prevents admins deletion
-                    foreach (KeyValuePair<string, User> userlist in users.UserList)
+                    //Checks if the user is admin and then either stops if it is admin
+                    User user = users.UserList[username];
+                    if (user.IsAdmin)
                     {
-                        User currentUser = userlist.Value;
-                        string key = userlist.Key;
-                        if (currentUser.Username == username)
-                        {
-                            //Checks if the user is admin, admin class has it set to true so if the user trying to get removed is admin you come here
-                            if (currentUser.IsAdmin)
-                            {
-                                Console.WriteLine("Du får inte ta bort en admin!");
-                                isRunning = false;
-                            }
-                            else
-                            {
-                                //If it's a customer then it gets removed
-                                Thread.Sleep(1000);
-                                users.DeleteCustomerInRegister(key);
-                                isRunning = false;
-                            }
-                        }
-
+                        Thread.Sleep(1000);
+                        Console.WriteLine("Du kan inte ta bort admin!");
+                        isRunning=false;
                     }
-
+                    else
+                    {
+                        Thread.Sleep(1000);
+                        users.DeleteCustomerInRegister(username);
+                        isRunning=false;
+                    }
+                    //This foreach-loop prevents admin deletion
+                    //foreach (KeyValuePair<string, User> userlist in users.UserList)
+                    //{
+                    //    User currentUser = userlist.Value;
+                    //    string key = userlist.Key;
+                    //    if (currentUser.Username == username)
+                    //    {
+                    //        //Checks if the user is admin, admin class has it set to true so if the user trying to get removed is admin you come here
+                    //        if (currentUser.IsAdmin)
+                    //        {
+                    //            Console.WriteLine("Du får inte ta bort en admin!");
+                    //            Thread.Sleep(1000);
+                    //            isRunning = false;
+                    //        }
+                    //        else
+                    //        {
+                    //            //If it's a customer then it gets removed
+                    //            Thread.Sleep(1000);
+                    //            users.DeleteCustomerInRegister(key);
+                    //            isRunning = false;
+                    //        }
+                    //    }
+                    //}
                 }
                 else
                 {
@@ -138,7 +136,15 @@ namespace BankAppGrupp7.UsersClasses
                     return true;
                 }
             }
+            return false;
+        }
 
+        public bool DoesKeyExist (UserRegister users, string key)
+        {
+            if (users.UserList.ContainsKey(key))
+            {
+                return true;
+            }
             return false;
         }
         public bool IsPasswordValid(UserRegister users, string password)
