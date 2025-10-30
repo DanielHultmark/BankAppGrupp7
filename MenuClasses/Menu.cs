@@ -22,9 +22,9 @@ namespace BankAppGrupp7.MenuClasses
             Console.WriteLine("3. Lån översikt");
             Console.WriteLine("4. Ansök för ett Lån");
             Console.WriteLine("5. Logga ut");
-            Accounts account = new Accounts();
+            Account account = new Account();
             MainMenu mainMenu = new MainMenu();
-            Loans loan = new Loans();
+            Loan loan = new Loan();
             LogIn login = new LogIn();
             bool run = true;
             while (run)
@@ -57,7 +57,7 @@ namespace BankAppGrupp7.MenuClasses
                 }
             }
             //Return to login menu after logging out
-            login.LoginMenu();
+            login.LoginUI();
         }
         //Admin menu
         public void AdminMenu()
@@ -97,7 +97,7 @@ namespace BankAppGrupp7.MenuClasses
                 }
             }
             //Return to login menu after logging out
-            login.LoginMenu();
+            login.LoginUI();
         }
     }
 }
