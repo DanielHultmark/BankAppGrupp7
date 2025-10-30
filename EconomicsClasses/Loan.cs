@@ -52,7 +52,7 @@ namespace BankAppGrupp7.EconomicsClasses
         }
         public void ViewLoans()
         {
-            List<Loan> listOfLoans = new List<Loan>();
+            //Hämta lista på nåt sätt
             if (listOfLoans.Count == 0)
             {
                 Console.WriteLine("Du har inga lån för tillfället.");
