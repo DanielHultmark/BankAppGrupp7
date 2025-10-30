@@ -35,25 +35,30 @@ namespace BankAppGrupp7.MenuClasses
                 switch (choice)
                 {
                 case 1:
-                    BankRegister.CreateAccount(loggedInCustomer);
+                        Console.Clear();
+                        BankRegister.CreateAccount(loggedInCustomer);
                     break;
 
                 case 2:
-                    BankRegister.ViewAccount(loggedInCustomer);
+                        Console.Clear();
+                        //BankRegister.ViewAccount(loggedInCustomer);
                     break;
 
                 case 3:
-                    BankRegister.ViewLoans(loggedInCustomer);
+                        Console.Clear();
+                        BankRegister.ViewLoans(loggedInCustomer);
                     break;
 
                 case 4:
-                    BankRegister.ApplyForLoan(loggedInCustomer);
+                        Console.Clear();
+                        BankRegister.ApplyForLoan(loggedInCustomer);
                     break;
 
                 case 5:
-                    Console.WriteLine("Du loggas ut från kontot!");
-                    Thread.Sleep(2000);
-                    isRunnning = false;
+                    InputValidation.ShowFeedbackMessage("Du loggas ut från ditt konto!", ConsoleColor.Yellow, 2000);
+                        Thread.Sleep(2000);
+                        Console.Clear();
+                        isRunnning = false;
                     break;
 
                 default:
@@ -87,32 +92,37 @@ namespace BankAppGrupp7.MenuClasses
                 switch (choice)
                 {
                     case 1:
-                        loggedInAdmin.ViewCustomers(allUsers);
-                        
+                        Console.Clear();
+                        loggedInAdmin.ViewCustomers(allUsers);                        
                         break;
 
                     case 2:
+                        Console.Clear();
                         loggedInAdmin.CreateCustomer(allUsers);                        
                         break;
                                               
                     case 3:
-                        loggedInAdmin.DeleteCustomer(allUsers);
+                        Console.Clear();
+                        //loggedInAdmin.DeleteCustomer(allUsers);
                         break;
 
                     // Fattas UI för sätta daily exchange rate
                     case 4:
+                        Console.Clear();
                         var currencyConvert = new CurrencyConversion();
-                        currencyConvert.SetDailyExchangeRate();
+                        //currencyConvert.SetDailyExchangeRate();
                         break;
 
                     case 5:
-                        Console.WriteLine("Du loggas ut!");
+                        InputValidation.ShowFeedbackMessage("Du loggas ut från adminkontot!", ConsoleColor.Yellow, 2000);
                         isRunning = false;
+                        
                         break;
 
                     default:
                         Console.WriteLine("Felaktigt val, försök igen.");
                         Thread.Sleep(2000);
+                        Console.Clear();
                         break;
                 }
             }
