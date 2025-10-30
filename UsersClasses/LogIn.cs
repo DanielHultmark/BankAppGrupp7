@@ -30,14 +30,14 @@ namespace BankAppGrupp7.UsersClasses
                 Console.WriteLine("CIBA – där ekonomi möter innovation\n");
                 Console.WriteLine("Fyll i inloggningsuppgifter");
 
-                string username = ReadInput("Användarnamn:");
+                string username = InputValidation.ReadStringInput("Användarnamn:");
 
                 if (!IsUsernameValid(username))
                 {
                     continue;
                 }
                 
-                string password = ReadInput("Lösenord:");
+                string password = InputValidation.ReadStringInput("Lösenord:");
 
                 if (!IsPasswordValid(username, password))
                 {
@@ -49,24 +49,15 @@ namespace BankAppGrupp7.UsersClasses
             }    
         }
 
-        public string ReadInput(string prompt)
+        public bool IsUsernameValid(string username)
         {
-            Console.Write(prompt + " ");
-            string? userInput = Console.ReadLine().Trim();
-
-            if (string.IsNullOrWhiteSpace(userInput))
+            if (string.IsNullOrEmpty(username))
             {
-                Console.Write("\nOgiltig input, försök igen!");
-
-                Thread.Sleep(1000);
-                return string.Empty;
+                Console.Write("Ogiltig inmatning, försök igen!");
+                Thread.Sleep(2000);
+                return false;
             }
 
-            return userInput;
-        }
-        
-        public bool IsUsernameValid(string username)
-        {         
             bool usernameExists = Users.UserList.ContainsKey(username);
 
             if (!usernameExists)
@@ -94,42 +85,41 @@ namespace BankAppGrupp7.UsersClasses
         {
             if (string.IsNullOrEmpty(password))
             {
+                Console.Write("Ogiltig inmatning, försök igen!");
+                Thread.Sleep(2000);
                 return false;
             }
 
-            bool isPasswordCorrect = false;
+            var user = Users.UserList[username];
+            bool isPasswordCorrect = user.Password.Equals(password);
 
-            if (Users.UserList.TryGetValue(username, out User user))
+            if (isPasswordCorrect)
             {
-                isPasswordCorrect = user.Password.Equals(password);
-
-                if (!isPasswordCorrect)
-                {
-                    user.IncreaseNumberLoginAttempts();
-
-                    int remainingAttempts = MaxLoginAttempts - user.FailedLoginAttempts;
-
-                    Console.ForegroundColor = ConsoleColor.Red;
-
-                    if (remainingAttempts>0)
-                    {                        
-                        Console.Write($"Lösenordet är felaktigt, du har {remainingAttempts} försök kvar!");
-
-                        Thread.Sleep(2000);
-                    }
-                    
-                    else
-                    {
-                        Console.Write($"Användarkontot har låsts pga för många inloggningsförsök. Kontakta kundtjänst.");
-
-                        Thread.Sleep(5000);
-                    }
-
-                    Console.ResetColor();                    
-                }
+                return true;
             }
+
+            user.IncreaseNumberLoginAttempts();
+            int remainingAttempts = MaxLoginAttempts - user.FailedLoginAttempts;
+
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            if (remainingAttempts>0)
+            {                        
+                Console.Write($"Lösenordet är felaktigt, du har {remainingAttempts} försök kvar!");
+
+                Thread.Sleep(2000);
+            }
+                    
+            else
+            {
+                Console.Write($"Användarkontot har låsts pga för många inloggningsförsök. Kontakta kundtjänst.");
+
+                Thread.Sleep(4000);
+            }
+
+            Console.ResetColor();          
             
-            return isPasswordCorrect;
+            return false;
         }
 
         //Should user be sent back to start menu when the account is locked?
@@ -145,7 +135,7 @@ namespace BankAppGrupp7.UsersClasses
             Console.Write("\nDitt användarkonto är låst pga för många inloggningsförsök. Kontakta kundtjänst.");
             Console.ResetColor();
 
-            Thread.Sleep(5000);
+            Thread.Sleep(4000);
 
             return true;            
         }

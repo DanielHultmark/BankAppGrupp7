@@ -18,17 +18,21 @@ namespace BankAppGrupp7.UsersClasses
             IsAdmin = true;
         }
 
+        //Method for creating customer
         public void CreateCustomer(UserRegister users)
         {
             bool isRunning = true;
             while (isRunning)
             {
+                Console.Clear();
                 Console.WriteLine("Lägg till ny kund");
 
                 Console.Write("Användarnamn: ");
                 string username = InputValidation.TrimmedString();
-                if (!IsUsernameUnique(users, username))
+                //Checks if the username exist and then skips if it does by resetting the loop
+                if (DoesUsernameExist(users, username))
                 {
+                    Console.WriteLine($"{username} already exists");
                     continue;
                 }
 
@@ -45,35 +49,38 @@ namespace BankAppGrupp7.UsersClasses
                 users.AddCustomerInRegister(username, password, fullName);
                 isRunning = false;
             }
-           
-
         }
 
         public void DeleteCustomer(UserRegister users, string username)
         {
-            //Instruktioner för admin att ta bort en customer
-
-            // Vilka argument ska DelteteCustomerInRegister() ta?
-            Console.WriteLine("Ta bort kund");
-            username = InputValidation.TrimmedString();
-            if (!IsUsernameUnique(users, username))
+            bool isRunning = true;
+            while (isRunning)
             {
-
+                Console.Clear();
+                Console.WriteLine("Ta bort kund");
+                username = InputValidation.TrimmedString();
+                if (DoesUsernameExist(users, username))
+                {
+                    users.DeleteCustomerInRegister(username);
+                    isRunning = false;
+                }
+                else
+                {
+                    Console.WriteLine($"{username} finns inte. Försök igen!");
+                }
             }
 
-            users.DeleteCustomerInRegister(username);
         }
 
-        public bool IsUsernameUnique(UserRegister users, string userName)
+        public bool DoesUsernameExist(UserRegister users, string userName)
         {
             //Help to check if username/password is unique when adding a customer, compare with already excisting in CustomerRegister
             //Checks if the dictionary contains the specified key Username
             if (users.UserList.ContainsKey(userName)) 
             {
-                Console.WriteLine($"{userName} already exists");
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
         public bool IsPasswordValid(UserRegister users, string password)
@@ -86,6 +93,11 @@ namespace BankAppGrupp7.UsersClasses
             }
             return true;
             
+        }
+
+        public void ViewCustomers(UserRegister users)
+        {
+            //Print all customers in rows. What info to print; username and name? Account/Loan also?
         }
     }
 }

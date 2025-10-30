@@ -22,12 +22,47 @@ namespace BankAppGrupp7.EconomicsClasses
             InterestRate = interestRate;
             LengthOfLoan = lengthOfLoan;
 
-            
+            interestRate = 0.0254M; // Standard ränta på 5%
 
-                       
+            List<Loan> listOfLoans = new List<Loan>();            
         }
 
-        
-        
+        public void ApplyForLoan()
+        {
+            Console.WriteLine("Hur mycket önskar du att låna?");
+            
+            
+            Console.WriteLine("Under hur lånt tid önskar du att betala tillbaka lånet?");
+            if (!decimal.TryParse(Console.ReadLine(), out decimal amount))
+            {
+                Console.WriteLine("Felatkig inmatning, försök igen!");
+                return;
+            }
+            if (!decimal.TryParse(Console.ReadLine(), out decimal lengthOfLoan))
+            {
+                Console.WriteLine("Felaktig inmatning, försök igen!");
+                return;
+            }
+            decimal intrest = amount * InterestRate / 100;
+            decimal total = amount * InterestRate / 100;
+            Console.WriteLine($"Du har ansökt om ett lån på {amount} kr med en ränta på {InterestRate}%. Totalt att återbetala är {total} kr.");
+            Loan newLoan = new Loan(this.User, amount, InterestRate, lengthOfLoan);
+            //Lägg till lånet i listan över lån
+
+        }
+        public void ViewLoans()
+        {
+            //Hämta lista på nåt sätt
+            if (listOfLoans.Count == 0)
+            {
+                Console.WriteLine("Du har inga lån för tillfället.");
+                return;
+            }
+            Console.WriteLine("Dina lån:");
+            foreach (var loan in listOfLoans)
+            {
+                Console.WriteLine($"Lånebelopp: {loan.Amount} kr, Ränta: {loan.InterestRate}%, Längd på lån: {loan.LengthOfLoan} månader");
+            }
+        }
     }
 }
