@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BankAppGrupp7.AccountClasses
 {
-    internal abstract class Account
+    public abstract class Account
     {
         public string AccountNumber { get; set; }
         public Customer Owner { get; set; }

@@ -8,7 +8,7 @@ using BankAppGrupp7.UsersClasses;
 
 namespace BankAppGrupp7.EconomicsClasses
 {
-    internal class Loan
+    public class Loan
     {
         public Customer Customer { get; set; }
         public decimal Amount { get; set; }
