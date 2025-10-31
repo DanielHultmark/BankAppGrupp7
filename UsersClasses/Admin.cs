@@ -91,14 +91,14 @@ namespace BankAppGrupp7.UsersClasses
                         string choice = InputValidation.TrimmedStringToLower();
                         if(choice == "ja")
                         {
-                            Thread.Sleep(1000);
+                            InputValidation.ShowFeedbackMessage($"Tar bort {username}", ConsoleColor.Red, 1000);
                             Console.WriteLine($"Tar bort {username}");
                             users.DeleteCustomerInRegister(username);
                             isRunning = false;
                         }
                         else if (choice == "nej")
                         {
-                            Console.WriteLine($"Tar inte bort {username}");
+                            InputValidation.ShowFeedbackMessage($"Tar bort {username}", ConsoleColor.Yellow, 1000);
                             isRunning = false;
                         }
                         else
