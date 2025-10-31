@@ -52,7 +52,7 @@ namespace BankAppGrupp7.UsersClasses
             }
         }
 
-        public void ViewCustomer(UserRegister users)
+        public void ViewCustomer(UserRegister users) //Behöver en val för att gå tillbaka till menyn
         {
             
             //Doesn't show the password when written out for security purposes
@@ -62,6 +62,7 @@ namespace BankAppGrupp7.UsersClasses
                 
                 Console.WriteLine($"Användarnamn: {userlist.Value.Username}, För- och efternamn: {userlist.Value.FullName}\n");
             }
+            Console.ReadLine();
 
         }
         public void DeleteCustomer(UserRegister users)

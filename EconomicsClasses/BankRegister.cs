@@ -4,6 +4,7 @@ using BankAppGrupp7.UsersClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,18 +32,26 @@ namespace BankAppGrupp7.EconomicsClasses
             AllAccounts.Add(a);
         }
 
-        public static void CalculateLoanAmount() //Metod för att räkna ut lånebelopp
+        public static decimal CalculateLoanAmount(Customer loggedInUser) //Metod för att räkna ut lånebelopp
         {
-            List<Account> customerAccounts = AllAccounts.Where(a => a.loggedInUser is Customer).ToList();
-            foreach (var account in customerAccounts) {
-                //Exempel på enkel uträkning baserat på kontosaldo
-                decimal maxLoanAmount = account.Balance * 5; //Kunden kan låna upp till 5 gånger sitt kontosaldo
-                Console.WriteLine($"Kund {account.loggedInUser.FullName} kan låna upp till {maxLoanAmount} kr baserat på sitt konto med saldo {account.Balance} kr.");
-            }
-        public static void ApplyForLoan(Customer loggedInUser) //Ansök om lån för en användare
-        {
+            List<Account> customerAccounts = AllAccounts.Where(a => a.Owner == loggedInUser).ToList();
             
-            //Behöver en metod för att räkna ut hur mycket kunden får låna
+            decimal maxLoanAmount = 0;
+
+            foreach (var account in customerAccounts)
+            {
+                //Exempel på enkel uträkning baserat på kontosaldo
+                maxLoanAmount += account.Balance * 5; //Kunden kan låna upp till 5 gånger sitt kontosaldo
+                
+            }
+            Console.WriteLine($"Kund {loggedInUser.FullName} kan låna upp till {maxLoanAmount}");
+
+            return maxLoanAmount;
+        }
+        public static void ApplyForLoan(Customer loggedInUser) //Ansök om lån för en användare
+        {            
+            decimal maxLoanAmount = CalculateLoanAmount(loggedInUser);
+            
             Console.WriteLine("Lånansökan");
             
                 Console.WriteLine("Hur mycket önskar du att låna?");
@@ -51,21 +60,28 @@ namespace BankAppGrupp7.EconomicsClasses
                     Console.WriteLine("Felatkig inmatning, försök igen!");
                     return;
                 }
-                
-                    Console.WriteLine("Under hur lånt tid önskar du att betala tillbaka lånet? (Ange antal månader)");
-                    if (!decimal.TryParse(Console.ReadLine(), out decimal lengthOfLoan))
-                    {
-                        Console.WriteLine("Felaktig inmatning, försök igen!");
-                        return;
-                    }
-                    
-                
-                decimal interest = amount * InterestRate / 100;
-                decimal total = amount + interest;
-                decimal monthlyPayment = total / lengthOfLoan;
+                if (amount > maxLoanAmount)
+                {
+                    Console.WriteLine($"Du kan inte låna mer än {maxLoanAmount} kr. Försök igen!");
+                    return;
+                }
 
-                Console.WriteLine($"Du har ansökt om ett lån på {amount} kr med en ränta på {InterestRate}%. Totalt att återbetala är {total} kr.");
-                AddLoan(loggedInUser, amount, InterestRate, lengthOfLoan);        
+                Console.WriteLine("Under hur lånt tid önskar du att betala tillbaka lånet? (Ange antal månader)");
+                if (!int.TryParse(Console.ReadLine(), out int lengthOfLoan))
+                {
+                    Console.WriteLine("Felaktig inmatning, försök igen!");
+                    return;
+                }
+
+
+            decimal monthlyInterestRate = InterestRate / 100 / 12; // Ränta per månad
+            decimal totalInterest = amount * monthlyInterestRate * lengthOfLoan;
+            decimal total = amount + totalInterest;
+            decimal monthlyPayment = total / lengthOfLoan;
+
+            Console.WriteLine($"Totalt att återbetala under {lengthOfLoan} månader: {total} kr.");
+            Console.WriteLine($"Månadskostnad: {monthlyPayment:F2} kr.");
+            AddLoan(loggedInUser, amount, InterestRate, lengthOfLoan);        
             
             
             //Lägg till lånet i listan över lån
@@ -73,14 +89,15 @@ namespace BankAppGrupp7.EconomicsClasses
         }
         public static void ViewLoans(Customer loggedInUser) //Visa alla lån för en användare
         {
-            
-            if (AllLoans.Count == 0)
+            var customerLoans = AllLoans.Where(l => l.Customer == loggedInUser).ToList();
+
+            if (customerLoans.Count == 0)
             {
                 Console.WriteLine("Du har inga lån för tillfället.");
                 return;
             }
             Console.WriteLine("Dina lån:");
-            foreach (var loan in AllLoans)
+            foreach (var loan in customerLoans)
             {
                 Console.WriteLine($"Lånebelopp: {loan.Amount} kr, Ränta: {loan.InterestRate}%, Längd på lån: {loan.LengthOfLoan} månader");
             }
@@ -90,6 +107,8 @@ namespace BankAppGrupp7.EconomicsClasses
             Console.WriteLine("Anökan för Konto");
             Console.WriteLine("Ange kontotyp (1. Sparkonto, 2. Lönekonto):");
             string accountType = Console.ReadLine();
+            Console.WriteLine("Vilken valuta vill du ha? GBP, EUR, SEK");
+            string currencyType = Console.ReadLine();
             Console.WriteLine("Ange startbelopp:");//är det något vi ska ha?
             if (!decimal.TryParse(Console.ReadLine(), out decimal initialDeposit))
             {
@@ -97,21 +116,22 @@ namespace BankAppGrupp7.EconomicsClasses
                 return;
             }
             Account newAccount;
-            //switch (accountType)
-            //{
-            //    case "1":
-            //        newAccount = new SavingsAccount(GenerateAccountNumber(), loggedInUser, initialDeposit, Currency); //skall anropa currency med rätt valuta, väntar på kristin
-            //        break;
-            //    case "2":
-            //        newAccount = new SalaryAccount(GenerateAccountNumber(), loggedInUser, initialDeposit, Currency); //skall anropa currency med rätt valuta, väntar på kristin
-            //        break;
-            //    default:
-            //        Console.WriteLine("Felaktig kontotyp, försök igen!");
-            //        return;
-            //}
-            
-           // Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance} {newAccount.Currency}");
-           // AddAccount(newAccount);
+            switch (accountType)
+            {
+                case "1":
+                    newAccount = new SavingsAccount(GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType); //skall anropa currency med rätt valuta, väntar på kristin
+                    break;
+                case "2":
+                    newAccount = new SalaryAccount(GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType); //skall anropa currency med rätt valuta, väntar på kristin
+
+                    break;
+                default:
+                    Console.WriteLine("Felaktig kontotyp, försök igen!");
+                    return;
+            }
+
+            Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance} {newAccount.Currency}");
+            AddAccount(newAccount);
         }
         public static void ViewAccount() //Visa alla konton för en användare
         {
