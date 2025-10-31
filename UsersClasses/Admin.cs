@@ -92,12 +92,13 @@ namespace BankAppGrupp7.UsersClasses
                         if(choice == "ja")
                         {
                             Thread.Sleep(1000);
+                            Console.WriteLine($"Tar bort {username}");
                             users.DeleteCustomerInRegister(username);
                             isRunning = false;
                         }
                         else if (choice == "nej")
                         {
-                            Console.WriteLine("Tar inte bort användare");
+                            Console.WriteLine($"Tar inte bort {username}");
                             isRunning = false;
                         }
                         else
