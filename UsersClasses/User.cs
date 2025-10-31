@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankAppGrupp7.UsersClasses
 {
-    internal class User
+    public class User
     {
         public bool IsAdmin { get; set; }
         public string? Username { get; set; }

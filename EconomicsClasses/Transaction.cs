@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace BankAppGrupp7.EconomicsClasses
 {
-    internal class Transaction
+    public class Transaction
     {
+        BankRegister BankRegister = new BankRegister();
         //OBS! ur backlog: Som bankägare vill jag inte att transaktioner sker
         //direkt när användarna lägger in dem
         //utan i stället var 15:e minut så att vi har kontroll på när de sker.

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BankAppGrupp7.UsersClasses
 {
-    internal class Customer : User
+    public class Customer : User
     {
         //Constructor; set IsAdmin to false also making sure that every customer har username, password and a fullname.
         public Customer(string username, string password, string fullName)
