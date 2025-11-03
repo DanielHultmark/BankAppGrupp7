@@ -10,10 +10,14 @@ namespace BankAppGrupp7.EconomicsClasses
 {
     public class Currency
     {
-        //Variables for currency, so the currencyExchangeRate and the name(sek, euro or pound)
-        public decimal _Currency { get; set; }
-        public string? _CurrencyName { get; set; }
+        public CurrencyCode Code { get; }
+        public decimal SekToCurrencyRate { get; set; }
 
+        public Currency(CurrencyCode code, decimal sekToCurrencyRate)
+        {
+            Code = code;
+            SekToCurrencyRate = sekToCurrencyRate;
+        }
         
     }
 }

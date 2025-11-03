@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankAppGrupp7.UsersClasses
 {
-    internal class UserRegister
+    public class UserRegister
     {
          // Default users created to test the app easy
          //We only have one administrator and we dont want to be able to create any more when running the program

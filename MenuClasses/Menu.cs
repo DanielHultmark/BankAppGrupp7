@@ -11,8 +11,9 @@ using BankAppGrupp7.EconomicsClasses;
 
 namespace BankAppGrupp7.MenuClasses
 {
-    internal class Menu
+    public class Menu
     {
+        CustomerUI CustomerUI = new CustomerUI();
         // Alla metoder är ännu inte implementerade och kan behöva uppdateras. DeleteCustomer behöver ta bort parameter username i Admin.
 
         //Customer menu
@@ -36,22 +37,22 @@ namespace BankAppGrupp7.MenuClasses
                 {
                 case 1:
                         Console.Clear();
-                        BankRegister.CreateAccount(loggedInCustomer);
+                        CustomerUI.CreateAccount(loggedInCustomer);
                     break;
 
                 case 2:
                         Console.Clear();
-                        //BankRegister.ViewAccount(loggedInCustomer);
+                        CustomerUI.ViewAccount(loggedInCustomer);
                     break;
 
                 case 3:
                         Console.Clear();
-                        BankRegister.ViewLoans(loggedInCustomer);
+                        CustomerUI.ViewLoans(loggedInCustomer);
                     break;
 
                 case 4:
                         Console.Clear();
-                        BankRegister.ApplyForLoan(loggedInCustomer);
+                        CustomerUI.ApplyForLoan(loggedInCustomer);
                     break;
 
                 case 5:
