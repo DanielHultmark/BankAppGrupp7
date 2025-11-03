@@ -74,6 +74,7 @@ namespace BankAppGrupp7.MenuClasses
                 //Trims the string if the string isn't empty or a " " string
                 if (!string.IsNullOrWhiteSpace(userInput))
                 {
+                    //Trims the input and then makes it all in to lower 
                     value = userInput.Trim().ToLower();
                     stillValidating = false;
                 }
