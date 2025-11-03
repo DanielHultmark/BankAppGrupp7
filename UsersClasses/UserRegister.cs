@@ -18,7 +18,8 @@ namespace BankAppGrupp7.UsersClasses
                Password = "Admin123",
                FullName = "Sara Struktur"
            },
-            ["test"] = new Customer("test", "Test123", "Testa Testsson")
+            ["test"] = new Customer("test", "Test123", "Testa Testsson"),
+            ["oscar"] = new Customer("oscar" , "oscar1" ,"Oscar Norén")
            
         };
 
