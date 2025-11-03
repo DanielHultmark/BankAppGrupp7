@@ -9,11 +9,11 @@ using static BankAppGrupp7.AccountClasses.Account;
 
 namespace BankAppGrupp7.AccountClasses
 {
-    internal class SavingsAccount : Account
+    public class SavingsAccount : Account
     {
         public decimal InterestRate { get; set; }
 
-        public SavingsAccount(string accountNumber, Customer owner, decimal balance, Currency currency)
+        public SavingsAccount(string accountNumber, Customer owner, decimal balance, CurrencyCode currency)
             : base(accountNumber, owner, balance, currency)
         {
             InterestRate = 1.005M;

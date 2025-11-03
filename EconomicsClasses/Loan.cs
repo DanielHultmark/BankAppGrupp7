@@ -22,7 +22,7 @@ namespace BankAppGrupp7.EconomicsClasses
             InterestRate = interestRate;
             LengthOfLoan = lengthOfLoan;
 
-            interestRate = 0.0254M; // Standard ränta på 5%
+            interestRate = 0.0254M;
 
                         
         }
