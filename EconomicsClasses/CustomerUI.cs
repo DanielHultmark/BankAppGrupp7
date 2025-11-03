@@ -25,17 +25,16 @@ namespace BankAppGrupp7.EconomicsClasses
                 maxLoanAmount += account.Balance * 5; //Kunden kan låna upp till 5 gånger sitt kontosaldo
 
             }
-            Console.WriteLine($"Kund {loggedInUser.FullName} kan låna upp till {maxLoanAmount}");
+            Console.WriteLine($"Du kan låna upp till {maxLoanAmount}");
 
             return maxLoanAmount;
         }
         public void ApplyForLoan(Customer loggedInUser) //Ansök om lån för en användare
         {
-            decimal maxLoanAmount = CalculateLoanAmount(loggedInUser);
-
             Console.WriteLine("Lånansökan");
 
             Console.WriteLine("Hur mycket önskar du att låna?");
+            decimal maxLoanAmount = CalculateLoanAmount(loggedInUser);
             if (!decimal.TryParse(Console.ReadLine(), out decimal amount))
             {
                 Console.WriteLine("Felatkig inmatning, försök igen!");
@@ -63,7 +62,6 @@ namespace BankAppGrupp7.EconomicsClasses
             Console.WriteLine($"Totalt att återbetala under {lengthOfLoan} månader: {total} kr.");
             Console.WriteLine($"Månadskostnad: {monthlyPayment:F2} kr.");
             bankRegister.AddLoan(loggedInUser, amount, bankRegister.InterestRate, lengthOfLoan);
-
 
             //Lägg till lånet i listan över lån
 
@@ -110,8 +108,14 @@ namespace BankAppGrupp7.EconomicsClasses
                     Console.WriteLine("Felaktig kontotyp, försök igen!");
                     return;
             }
-
-            Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance} {newAccount.Currency}");
+            if (accountType == "1")
+            {
+                Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance} {newAccount.Currency} med räntan: 1.05%");
+            }
+            else
+            {
+                Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance} {newAccount.Currency}");
+            }
             bankRegister.AddAccount(newAccount);
         }
         public void ViewAccount(Customer loggedinUser) //Visa alla konton för en användare
@@ -136,9 +140,11 @@ namespace BankAppGrupp7.EconomicsClasses
             {
                 accountNumber = string.Concat(Enumerable.Range(0, 10).Select(_ => rand.Next(0, 10).ToString()));
             }
-            while (bankRegister.AllAccounts.Any(a => a.AccountNumber == accountNumber)) ;
-            accountNumber = bankRegister.AllAccounts.Any(a => a.AccountNumber == accountNumber) ? GenerateAccountNumber() : accountNumber;
-            return accountNumber;
+            while (bankRegister.AllAccounts.Any(a => a.AccountNumber == accountNumber));
+            {
+                accountNumber = bankRegister.AllAccounts.Any(a => a.AccountNumber == accountNumber) ? GenerateAccountNumber() : accountNumber;
+                return accountNumber;
+            }
         }
         public void ViewTransactions(Customer loggedInUser) //Visa alla transaktioner för en användare
         {

@@ -10,7 +10,7 @@ using BankAppGrupp7.MenuClasses;
 
 namespace BankAppGrupp7.UsersClasses
 {
-    internal class Admin : User
+    public class Admin : User
     {
         //Constructor; set IsAdmin to true
         public Admin()
