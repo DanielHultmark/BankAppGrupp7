@@ -52,11 +52,12 @@ namespace BankAppGrupp7.EconomicsClasses
             if (pendingTransactions.Count > 0)
             {
                 CurrencyConversion currencyConversion = new CurrencyConversion();
+                BankRegister bankRegister = new BankRegister();
                 
-                foreach (var transaction in pendingTransactions)
+                while (pendingTransactions.Count > 0)
                 {
-                    BankRegister bankRegister = new BankRegister();
-                    bankRegister.AddTransaction(pendingTransactions.Dequeue());
+                    var transaction = pendingTransactions.Dequeue();
+                    bankRegister.AddTransaction(transaction);
                     decimal convertedAmount = currencyConversion.ConvertCurrency(transaction.Amount, transaction.FromAccount.Currency, transaction.ToAccount.Currency);
 
                     transaction.FromAccount.Balance -= transaction.Amount;
