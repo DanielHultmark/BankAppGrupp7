@@ -52,7 +52,7 @@ namespace BankAppGrupp7.UsersClasses
             }
         }
 
-        public void ViewCustomer(UserRegister users) //Behöver en val för att gå tillbaka till menyn
+        public void ViewCustomers(UserRegister users)
         {
             
             //Doesn't show the password when written out for security purposes
@@ -62,8 +62,6 @@ namespace BankAppGrupp7.UsersClasses
                 
                 Console.WriteLine($"Användarnamn: {userlist.Value.Username}, För- och efternamn: {userlist.Value.FullName}\n");
             }
-            Console.ReadLine();
-
         }
         public void DeleteCustomer(UserRegister users)
         {
@@ -79,7 +77,7 @@ namespace BankAppGrupp7.UsersClasses
                 username = InputValidation.TrimmedString();
                 if (DoesKeyExist(users, username))
                 {
-                    //Checks if the user is admin and then either stops if it is admin
+                    //Checks if the user is admin and then either stops if it is admin or continues if it's user
                     User user = users.UserList[username];
                     if (user.IsAdmin)
                     {
@@ -88,9 +86,26 @@ namespace BankAppGrupp7.UsersClasses
                     }
                     else
                     {
-                        Thread.Sleep(1000);
-                        users.DeleteCustomerInRegister(username);
-                        isRunning=false;
+                        //Last check to see if the user should be deleted or not
+                        Console.WriteLine($"Vill du ta bort {username}? Ja eller Nej");
+                        string choice = InputValidation.TrimmedStringToLower();
+                        if(choice == "ja")
+                        {
+                            InputValidation.ShowFeedbackMessage($"Tar bort {username}", ConsoleColor.Red, 1000);
+                            Console.WriteLine($"Tar bort {username}");
+                            users.DeleteCustomerInRegister(username);
+                            isRunning = false;
+                        }
+                        else if (choice == "nej")
+                        {
+                            InputValidation.ShowFeedbackMessage($"Tar bort {username}", ConsoleColor.Yellow, 1000);
+                            isRunning = false;
+                        }
+                        else
+                        {
+                            InputValidation.ShowFeedbackMessage("Välj mellan Ja och Nej", ConsoleColor.Red, 1000);
+                        }
+                        
                     }
                     //This foreach-loop prevents admin deletion
                     //foreach (KeyValuePair<string, User> userlist in users.UserList)
@@ -159,9 +174,6 @@ namespace BankAppGrupp7.UsersClasses
             
         }
 
-        public void ViewCustomers(UserRegister users)
-        {
-            //Print all customers in rows. What info to print; username and name? Account/Loan also?
-        }
+        
     }
 }

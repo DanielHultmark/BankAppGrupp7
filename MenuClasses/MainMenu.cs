@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,18 +14,20 @@ namespace BankAppGrupp7.MenuClasses
         {
             bool isRunning = true;
             LogIn start = new LogIn();
-
+            
             while (isRunning)
             {
-                Console.Clear();
 
+                Console.Clear();
                 Grafik.DisplayLogo();
 
-                Console.WriteLine("Välkommen till CIBA - C# Investeringsbank AB!\n" +
-                    "\n1. Logga in" +
-                    "\n2. Avsluta programmet");
+                Console.Write("\n\nVälkommen till ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("CIBA - C# Investeringsbank AB!\n");
+                Console.ResetColor();
+                Console.Write("\n1. Logga in" + "\n2. Avsluta programmet");
 
-                int choice = InputValidation.ReadIntInput("\nVälj:");
+                int choice = InputValidation.ReadIntInput("\nVälj:"); 
 
                 switch (choice) 
                 {
@@ -33,13 +36,13 @@ namespace BankAppGrupp7.MenuClasses
                         break;
 
                     case 2:
-                        Console.WriteLine("Avslutar program...");
-                        Thread.Sleep(2000);
+                        InputValidation.ShowFeedbackMessage("Avslutar program...", ConsoleColor.Red, 1000);
                         isRunning = false;
+                        Environment.Exit(0);
                         break;
 
                     default:
-                        Console.Write("Felaktigt val, försök igen.");
+                        InputValidation.ShowFeedbackMessage("Felaktigt val, försök igen.", ConsoleColor.Red, 1000);
                         break;
                 }
             }
