@@ -53,8 +53,7 @@ namespace BankAppGrupp7.UsersClasses
         {
             if (string.IsNullOrEmpty(username))
             {
-                Console.Write("Ogiltig inmatning, försök igen!");
-                Thread.Sleep(2000);
+                InputValidation.ShowFeedbackMessage("Ogiltig inmatning, försök igen!", ConsoleColor.Red, 2000);
                 return false;
             }
 
@@ -62,9 +61,7 @@ namespace BankAppGrupp7.UsersClasses
 
             if (!usernameExists)
             {
-                Console.Write("Användarnamn saknas, försök igen!");
-
-                Thread.Sleep(1000);
+                InputValidation.ShowFeedbackMessage("Användarnamn saknas, försök igen!", ConsoleColor.Red, 1000);
 
                 return false;
             }
@@ -85,8 +82,7 @@ namespace BankAppGrupp7.UsersClasses
         {
             if (string.IsNullOrEmpty(password))
             {
-                Console.Write("Ogiltig inmatning, försök igen!");
-                Thread.Sleep(2000);
+                InputValidation.ShowFeedbackMessage("Ogiltig inmatning, försök igen!", ConsoleColor.Red, 2000);
                 return false;
             }
 
