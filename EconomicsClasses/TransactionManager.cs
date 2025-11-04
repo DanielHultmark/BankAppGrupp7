@@ -10,7 +10,7 @@ using BankAppGrupp7.MenuClasses;
 
 namespace BankAppGrupp7.EconomicsClasses
 {
-    public class TransactionScheduler
+    public class TransactionManager
     {
         Queue<Transaction> pendingTransactions { get; set; } = new Queue<Transaction>();
 
@@ -21,7 +21,7 @@ namespace BankAppGrupp7.EconomicsClasses
             pendingTransactions.Enqueue(pendningTransaction);
 
         }
-        // OM kl23?!
+        
         public async Task Start() 
         {
             DateTimeOffset now = DateTimeOffset.Now;
