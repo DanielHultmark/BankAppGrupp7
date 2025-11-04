@@ -8,25 +8,64 @@ using System.Threading.Tasks;
 
 namespace BankAppGrupp7.EconomicsClasses
 {
-    internal class CurrencyConversion
+    public class CurrencyConversion
     {
         public Currency Sek {  get; set; } = new Currency(CurrencyCode.SEK, 1);
         public Currency Eur { get; set; } = new Currency(CurrencyCode.EUR, 10.87M);
         public Currency Gbp { get; set; } = new Currency(CurrencyCode.GBP, 12.55M);
 
-        public Dictionary<string, decimal> Currencies { get; } 
+        public Dictionary<Currency, decimal> Currencies { get; } 
 
 
         public CurrencyConversion()
         {
-            Currencies = new Dictionary<string, decimal>
+            Currencies = new Dictionary<Currency, decimal>
+
             {
-                { Sek.Code, Sek.SekToCurrencyRate },
-                { Eur.Code, Eur.SekToCurrencyRate },
-                { Gbp.Code, Gbp.SekToCurrencyRate }
+                { Sek, Sek.SekToCurrencyRate },
+                { Eur, Eur.SekToCurrencyRate },
+                { Gbp, Gbp.SekToCurrencyRate }
             };
             
         }
+        public void SetDailyExchangeRate()
+        {
+            Console.WriteLine("Sätt den dagliga växelkursen");
+            bool isRunning = true;
+            while (isRunning)
+            {
+                Console.WriteLine("Välj dagens kurs för GBP");
+                decimal gbpRate = InputValidation.Decimal();
+                Gbp.SekToCurrencyRate = gbpRate;
+                Console.WriteLine("Välj dagens kurs för EURO");
+                decimal eurRate = InputValidation.Decimal();
+                Eur.SekToCurrencyRate = eurRate;
+                isRunning= false;
+            }
+            
+        }
+        public decimal ConvertCurrency(decimal amount, CurrencyCode fromCurrency, CurrencyCode toCurrency)
+        {
+
+            if (fromCurrency == toCurrency)
+            {
+                return amount;
+            }
+            
+            if (!Currencies.TryGetValue(fromCurrency, out var fromRate))
+                throw new ArgumentException($"Okänd frånvaluta: {fromCurrency}");
+
+            if (!Currencies.TryGetValue(toCurrency, out var toRate))
+                throw new ArgumentException($"Okänd tillvaluta: {toCurrency}");
+
+            
+            decimal amountInSek = amount * fromRate;
+
+            decimal convertedAmount = amountInSek / toRate;
+
+            return convertedAmount;
+        }
+        
 
 
 
