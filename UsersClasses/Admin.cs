@@ -61,8 +61,8 @@ namespace BankAppGrupp7.UsersClasses
             //KeyValuePair is needed for foreach with dictionaries
             foreach (KeyValuePair<string, User> userlist in users.UserList)
             {
-                
                 Console.WriteLine($"Användarnamn: {userlist.Value.Username}, För- och efternamn: {userlist.Value.FullName}\n");
+
             }
         }
         public void DeleteCustomer(UserRegister users)
@@ -94,7 +94,6 @@ namespace BankAppGrupp7.UsersClasses
                         if(choice == "ja")
                         {
                             InputValidation.ShowFeedbackMessage($"Tar bort {username}", ConsoleColor.Red, 1000);
-                            Console.WriteLine($"Tar bort {username}");
                             users.DeleteCustomerInRegister(username);
                             isRunning = false;
                         }

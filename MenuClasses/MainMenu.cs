@@ -36,7 +36,6 @@ namespace BankAppGrupp7.MenuClasses
                     case 2:
                         InputValidation.ShowFeedbackMessage("Avslutar program...", ConsoleColor.Red, 1000);
                         isRunning = false;
-                        Environment.Exit(0);
                         break;
 
                     default:
