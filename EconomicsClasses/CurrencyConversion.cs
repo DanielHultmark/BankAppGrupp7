@@ -51,14 +51,21 @@ namespace BankAppGrupp7.EconomicsClasses
             {
                 return amount;
             }
-            
-            if (!Currencies.TryGetValue(fromCurrency, out var fromRate))
+            foreach (var currency in Currencies)
+            {
+                Console.WriteLine(currency);
+            }
+            var fromEntry = Currencies.FirstOrDefault(c => c.Key.Code == fromCurrency);
+            if (fromEntry.Key == null)
                 throw new ArgumentException($"Okänd frånvaluta: {fromCurrency}");
+            var fromRate = fromEntry.Value;
 
-            if (!Currencies.TryGetValue(toCurrency, out var toRate))
+            var toEntry = Currencies.FirstOrDefault(c => c.Key.Code == toCurrency);
+            if (toEntry.Key == null)
                 throw new ArgumentException($"Okänd tillvaluta: {toCurrency}");
+            var toRate = toEntry.Value;
 
-            
+
             decimal amountInSek = amount * fromRate;
 
             decimal convertedAmount = amountInSek / toRate;
