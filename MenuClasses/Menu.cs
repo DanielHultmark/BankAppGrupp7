@@ -23,7 +23,7 @@ namespace BankAppGrupp7.MenuClasses
             {
                 Console.Clear();
 
-                Grafik.ShowHeader($"Välkommen {loggedInCustomer.FullName}");
+                ConsoleUI.ShowHeader($"Välkommen {loggedInCustomer.FullName}");
                 Console.WriteLine("1. Skapa ett konto");
                 Console.WriteLine("2. Kontoöversikt");
                 Console.WriteLine("3. Låneöversikt");
@@ -37,33 +37,33 @@ namespace BankAppGrupp7.MenuClasses
                 case 1:
                         Console.Clear();
                         CustomerUI.CreateAccount(loggedInCustomer);
-                        Grafik.ReturnToMenu();
+                        ConsoleUI.ReturnToMenu();
 
                     break;
 
                 case 2:
                         Console.Clear();
                         CustomerUI.ViewAccount(loggedInCustomer);
-                        Grafik.ReturnToMenu();
+                        ConsoleUI.ReturnToMenu();
 
                     break;
 
                 case 3:
                         Console.Clear();
                         CustomerUI.ViewLoans(loggedInCustomer);
-                        Grafik.ReturnToMenu();
+                        ConsoleUI.ReturnToMenu();
 
                     break;
 
                 case 4:
                         Console.Clear();
                         CustomerUI.ApplyForLoan(loggedInCustomer);
-                        Grafik.ReturnToMenu();
+                        ConsoleUI.ReturnToMenu();
 
                     break;
 
                 case 5:
-                    InputValidation.ShowFeedbackMessage("Du loggas ut från ditt konto!", ConsoleColor.Yellow, 2000);
+                    ConsoleUI.ShowFeedbackMessage("Du loggas ut från ditt konto!", ConsoleColor.Yellow, 2000);
                         Thread.Sleep(2000);
                         Console.Clear();
                         isRunnning = false;
@@ -85,7 +85,7 @@ namespace BankAppGrupp7.MenuClasses
             {
                 Console.Clear();
 
-                Grafik.ShowHeader($"Välkommen {loggedInAdmin.FullName}");
+                ConsoleUI.ShowHeader($"Välkommen {loggedInAdmin.FullName}");
                 Console.WriteLine("1. Kundöversikt ");
                 Console.WriteLine("2. Lägg till en kund");
                 Console.WriteLine("3. Ta bort en kund");
@@ -99,30 +99,30 @@ namespace BankAppGrupp7.MenuClasses
                     case 1:
                         Console.Clear();
                         loggedInAdmin.ViewCustomers(allUsers);
-                        Grafik.ReturnToMenu();
+                        ConsoleUI.ReturnToMenu();
                         break;
 
                     case 2:
                         Console.Clear();
                         loggedInAdmin.CreateCustomer(allUsers);  
-                        Grafik.ReturnToMenu();
+                        ConsoleUI.ReturnToMenu();
                         break;
                                               
                     case 3:
                         Console.Clear();
                         loggedInAdmin.DeleteCustomer(allUsers);
-                        Grafik.ReturnToMenu();
+                        ConsoleUI.ReturnToMenu();
                         break;
 
                     case 4:
                         Console.Clear();
                         var currencyConvert = new CurrencyConversion();
                         currencyConvert.SetDailyExchangeRate();
-                        Grafik.ReturnToMenu();                        
+                        ConsoleUI.ReturnToMenu();                        
                         break;
 
                     case 5:
-                        InputValidation.ShowFeedbackMessage("Du loggas ut från adminkontot!", ConsoleColor.Yellow, 2000);
+                        ConsoleUI.ShowFeedbackMessage("Du loggas ut från adminkontot!", ConsoleColor.Yellow, 2000);
                         isRunning = false;
                         
                         break;

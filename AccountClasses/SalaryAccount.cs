@@ -5,9 +5,10 @@ namespace BankAppGrupp7.AccountClasses
 {
     public class SalaryAccount : Account
     {
-        public SalaryAccount(string accountNumber, Customer owner, decimal balance, CurrencyCode currency)
-            : base(accountNumber, owner, balance, currency)
+        public SalaryAccount(string accountType, string accountNumber, Customer owner, decimal balance, CurrencyCode currency)
+            : base(accountType, accountNumber, owner, balance, currency)
         {
+            
         }
         
     }

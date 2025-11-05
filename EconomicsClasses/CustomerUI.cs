@@ -17,37 +17,37 @@ namespace BankAppGrupp7.EconomicsClasses
         public decimal CalculateLoanAmount(Customer loggedInUser) //Method to calculate maximum loan amount for a user
         {
             List<Account> customerAccounts = BankRegister.AllAccounts.Where(a => a.Owner == loggedInUser).ToList();
-
+            CurrencyConversion currencyConversion = new CurrencyConversion();
             decimal maxLoanAmount = 0;
 
             foreach (var account in customerAccounts)
             {
-                
-                maxLoanAmount += account.Balance * 5; 
+                decimal convertedAmount = currencyConversion.ConvertCurrency(account.Balance, account.Currency, CurrencyCode.SEK);
+                maxLoanAmount += convertedAmount * 5; 
 
             }
-            Console.WriteLine($"Du kan låna upp till {maxLoanAmount}");
+            Console.WriteLine($"Du kan låna upp till {maxLoanAmount:F2} SEK");
 
             return maxLoanAmount;
         }
         public void ApplyForLoan(Customer loggedInUser) //Customer applies for a loan
         {
-            Console.WriteLine("Lånansökan");
-
-            Console.WriteLine("Hur mycket önskar du att låna?");
+            Console.WriteLine("Låneansökan");
             decimal maxLoanAmount = CalculateLoanAmount(loggedInUser);
+            Console.WriteLine("Hur mycket önskar du att låna?");
+            
             if (!decimal.TryParse(InputValidation.TrimmedString(), out decimal amount))
             {
-                Console.WriteLine("Felatkig inmatning, försök igen!");
+                Console.WriteLine("Felaktig inmatning, försök igen!");
                 return;
             }
             if (amount > maxLoanAmount)
             {
-                Console.WriteLine($"Du kan inte låna mer än {maxLoanAmount} kr. Försök igen!");
+                Console.WriteLine($"Du kan inte låna mer än {maxLoanAmount:F2} kr. Försök igen!");
                 return;
             }
 
-            Console.WriteLine("Under hur lånt tid önskar du att betala tillbaka lånet? (Ange antal månader)");
+            Console.WriteLine("Under hur lång tid önskar du att betala tillbaka lånet? (Ange antal månader)");
             if (!int.TryParse(InputValidation.TrimmedString(), out int lengthOfLoan))
             {
                 Console.WriteLine("Felaktig inmatning, försök igen!");
@@ -60,7 +60,7 @@ namespace BankAppGrupp7.EconomicsClasses
             decimal total = amount + totalInterest;
             decimal monthlyPayment = total / lengthOfLoan;
 
-            Console.WriteLine($"Totalt att återbetala under {lengthOfLoan} månader: {total} kr.");
+            Console.WriteLine($"Totalt att återbetala under {lengthOfLoan} månader: {total:F2} kr.");
             Console.WriteLine($"Månadskostnad: {monthlyPayment:F2} kr.");
             BankRegister.AddLoan(loggedInUser, amount, BankRegister.InterestRate, lengthOfLoan);
 
@@ -106,10 +106,11 @@ namespace BankAppGrupp7.EconomicsClasses
             switch (accountType)
             {
                 case "1":
-                    newAccount = new SavingsAccount(GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType);
+                    
+                    newAccount = new SavingsAccount("Sparkonto", GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType);
                     break;
                 case "2":
-                    newAccount = new SalaryAccount(GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType);
+                    newAccount = new SalaryAccount("Lönekonto", GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType);
 
                     break;
                 default:
@@ -118,11 +119,11 @@ namespace BankAppGrupp7.EconomicsClasses
             }
             if (accountType == "1")
             {
-                Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance} {newAccount.Currency} med räntan: 1,05%");
+                Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance:F2} {newAccount.Currency} med räntan: 1,05%");
             }
             else
             {
-                Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance} {newAccount.Currency}");
+                Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance:F2} {newAccount.Currency}");
             }
             BankRegister.AddAccount(newAccount);
         }
@@ -135,9 +136,10 @@ namespace BankAppGrupp7.EconomicsClasses
                 return;
             }
             Console.WriteLine("Dina konton:");
+            
             foreach (var account in BankRegister.AllAccounts)
             {
-                Console.WriteLine($"Kontonummer: {account.AccountNumber}, Saldo: {account.Balance} {account.Currency}");
+                Console.WriteLine($"Kontotyp: {account.AccountType, -15}, Kontonummer: {account.AccountNumber, -15}, Saldo: {account.Balance:F2} {account.Currency,-15}");
             }
             bool isRunning = true;
             while (isRunning)
@@ -189,7 +191,10 @@ namespace BankAppGrupp7.EconomicsClasses
             }
             else
             {
-                Console.WriteLine($"Konton: {customerAccounts}\nTransaktioner: {customerTransactions}");
+                foreach (var transaction in customerTransactions)
+                {
+                    Console.WriteLine($"Från konto: {transaction.FromAccount.AccountNumber,-15}, Till konto: {transaction.ToAccount.AccountNumber, -15}, Belopp: {transaction.Amount:F2}");
+                }                
             }
         }
         public void MakeTransaction() //Make a transaction between two accounts
@@ -225,10 +230,10 @@ namespace BankAppGrupp7.EconomicsClasses
 
             if (amount > fromAccount.Balance)
             {
-                Console.WriteLine("Kontot saknar teckning!");
+                Console.WriteLine("Kontot saknar täckning!");
             }
 
-            InputValidation.ShowFeedbackMessage("Transaktionen lyckades, och görs var 15e minut!", ConsoleColor.Green, 2000);
+            ConsoleUI.ShowFeedbackMessage("Transaktionen mottagen, och utförs var 15e minut!", ConsoleColor.Green, 2000);
             TransactionManager.AddPendingTransaction(amount, fromAccount, toAccount);
         }
     }

@@ -25,14 +25,14 @@ namespace BankAppGrupp7.UsersClasses
             while (isRunning)
             {
                 Console.Clear();
-                Grafik.ShowHeader("Lägg till ny kund");
+                ConsoleUI.ShowHeader("Lägg till ny kund");
 
                 Console.Write("Användarnamn: ");
                 string username = InputValidation.TrimmedString();
                 //Checks if the username exist and then skips if it does by resetting the loop
                 if (DoesUsernameExist(users, username))
                 {
-                    InputValidation.ShowFeedbackMessage($"{username} finns redan", ConsoleColor.Red, 2000);
+                    ConsoleUI.ShowFeedbackMessage($"{username} finns redan", ConsoleColor.Red, 2000);
                     continue;
                 }
 
@@ -47,7 +47,7 @@ namespace BankAppGrupp7.UsersClasses
                 string fullName = InputValidation.TrimmedString();
 
                 users.AddCustomerInRegister(username, password, fullName);
-                InputValidation.ShowFeedbackMessage("Kund tillagd!", ConsoleColor.Green, 2000);
+                ConsoleUI.ShowFeedbackMessage("Kund tillagd!", ConsoleColor.Green, 2000);
                 isRunning = false;
             }
         }
@@ -55,14 +55,16 @@ namespace BankAppGrupp7.UsersClasses
         public void ViewCustomers(UserRegister users)
         {
             Console.Clear();
-            Grafik.ShowHeader("Visa alla kunder");
+            ConsoleUI.ShowHeader("Visa alla kunder");
 
             //Doesn't show the password when written out for security purposes
             //KeyValuePair is needed for foreach with dictionaries
             foreach (KeyValuePair<string, User> userlist in users.UserList)
             {
-                
-                Console.WriteLine($"Användarnamn: {userlist.Value.Username}, För- och efternamn: {userlist.Value.FullName}\n");
+                if (!userlist.Value.IsAdmin)
+                {
+                    Console.WriteLine($"Användarnamn: {userlist.Value.Username}, För- och efternamn: {userlist.Value.FullName}\n");
+                }                
             }
         }
         public void DeleteCustomer(UserRegister users)
@@ -73,7 +75,7 @@ namespace BankAppGrupp7.UsersClasses
             while (isRunning)
             {
                 Console.Clear();
-                Grafik.ShowHeader("Ta bort kund");
+                ConsoleUI.ShowHeader("Ta bort kund");
                 Console.Write("Skriv användarnamn: ");
                 
                 username = InputValidation.TrimmedString();
@@ -83,7 +85,7 @@ namespace BankAppGrupp7.UsersClasses
                     User user = users.UserList[username];
                     if (user.IsAdmin)
                     {
-                        InputValidation.ShowFeedbackMessage("Du kan inte ta bort admin!", ConsoleColor.Red, 2000);
+                        ConsoleUI.ShowFeedbackMessage("Du kan inte ta bort admin!", ConsoleColor.Red, 2000);
                         isRunning=false;
                     }
                     else
@@ -93,49 +95,27 @@ namespace BankAppGrupp7.UsersClasses
                         string choice = InputValidation.TrimmedStringToLower();
                         if(choice == "ja")
                         {
-                            InputValidation.ShowFeedbackMessage($"Tar bort {username}", ConsoleColor.Red, 1000);
+                            ConsoleUI.ShowFeedbackMessage($"Tar bort {username}", ConsoleColor.Red, 1000);
                             Console.WriteLine($"Tar bort {username}");
                             users.DeleteCustomerInRegister(username);
                             isRunning = false;
                         }
                         else if (choice == "nej")
                         {
-                            InputValidation.ShowFeedbackMessage($"Tar bort {username}", ConsoleColor.Yellow, 1000);
+                            ConsoleUI.ShowFeedbackMessage($"Tar bort {username}", ConsoleColor.Yellow, 1000);
                             isRunning = false;
                         }
                         else
                         {
-                            InputValidation.ShowFeedbackMessage("Välj mellan Ja och Nej", ConsoleColor.Red, 1000);
+                            ConsoleUI.ShowFeedbackMessage("Välj mellan Ja och Nej", ConsoleColor.Red, 1000);
                         }
                         
                     }
-                    //This foreach-loop prevents admin deletion
-                    //foreach (KeyValuePair<string, User> userlist in users.UserList)
-                    //{
-                    //    User currentUser = userlist.Value;
-                    //    string key = userlist.Key;
-                    //    if (currentUser.Username == username)
-                    //    {
-                    //        //Checks if the user is admin, admin class has it set to true so if the user trying to get removed is admin you come here
-                    //        if (currentUser.IsAdmin)
-                    //        {
-                    //            Console.WriteLine("Du får inte ta bort en admin!");
-                    //            Thread.Sleep(1000);
-                    //            isRunning = false;
-                    //        }
-                    //        else
-                    //        {
-                    //            //If it's a customer then it gets removed
-                    //            Thread.Sleep(1000);
-                    //            users.DeleteCustomerInRegister(key);
-                    //            isRunning = false;
-                    //        }
-                    //    }
-                    //}
+                    
                 }
                 else
                 {
-                    InputValidation.ShowFeedbackMessage($"{username} finns inte. Försök igen!", ConsoleColor.Red, 2000);
+                    ConsoleUI.ShowFeedbackMessage($"{username} finns inte. Försök igen!", ConsoleColor.Red, 2000);
                 }
             }
         }
@@ -169,7 +149,7 @@ namespace BankAppGrupp7.UsersClasses
             const int minLength = 5;
             if(minLength > password.Length)
             {
-                InputValidation.ShowFeedbackMessage($"Minsta längden för ett lösenord är: {minLength}\nDitt lösenord har bara {password.Length} tecken", ConsoleColor.Red, 2000);
+                ConsoleUI.ShowFeedbackMessage($"Minsta längden för ett lösenord är: {minLength}\nDitt lösenord har bara {password.Length} tecken", ConsoleColor.Red, 2000);
                 return false;
             }
             return true;
