@@ -13,8 +13,7 @@ namespace BankAppGrupp7.MenuClasses
 {
     public class Menu
     {
-        CustomerUI CustomerUI = new CustomerUI();
-        // Alla metoder är ännu inte implementerade och kan behöva uppdateras. DeleteCustomer behöver ta bort parameter username i Admin.
+        CustomerUI CustomerUI = new CustomerUI();      
 
         //Customer menu
         public void CustomerMenu(Customer loggedInCustomer)
@@ -95,7 +94,7 @@ namespace BankAppGrupp7.MenuClasses
                     case 1:
                         Console.Clear();
                         loggedInAdmin.ViewCustomers(allUsers);
-                        Console.ReadLine();
+                        Console.ReadKey();
                         break;
 
                     case 2:
@@ -108,11 +107,10 @@ namespace BankAppGrupp7.MenuClasses
                         loggedInAdmin.DeleteCustomer(allUsers);
                         break;
 
-                    // Fattas UI för sätta daily exchange rate
                     case 4:
                         Console.Clear();
                         var currencyConvert = new CurrencyConversion();
-                        //currencyConvert.SetDailyExchangeRate();
+                        currencyConvert.SetDailyExchangeRate();
                         break;
 
                     case 5:

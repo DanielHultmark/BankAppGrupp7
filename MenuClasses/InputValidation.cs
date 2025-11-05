@@ -63,6 +63,29 @@ namespace BankAppGrupp7.MenuClasses
 
             return value;
         }
+        //Just makes it so that the input becomes toLower so it isn't case sensitive
+        public static string TrimmedStringToLower()
+        {
+            string value = "";
+            bool stillValidating = true;
+            while (stillValidating)
+            {
+                string? userInput = Console.ReadLine();
+                //Trims the string if the string isn't empty or a " " string
+                if (!string.IsNullOrWhiteSpace(userInput))
+                {
+                    value = userInput.Trim().ToLower();
+                    stillValidating = false;
+                }
+                else
+                {
+                    Thread.Sleep(1000);
+                    Console.WriteLine("Välj rätt input, försök igen!");
+                }
+            }
+
+            return value;
+        }
 
         public static string ReadStringInput(string prompt)
         {
@@ -77,7 +100,7 @@ namespace BankAppGrupp7.MenuClasses
             return userInput;
         }
 
-        //Behöver fixas
+        //Int validation
         public static int ReadIntInput(string prompt)
         {
             Console.Write(prompt + " ");

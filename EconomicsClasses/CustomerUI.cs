@@ -1,4 +1,5 @@
 ﻿using BankAppGrupp7.AccountClasses;
+using BankAppGrupp7.MenuClasses;
 using BankAppGrupp7.UsersClasses;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace BankAppGrupp7.EconomicsClasses
         
         BankRegister bankRegister = new BankRegister();
         
-        public decimal CalculateLoanAmount(Customer loggedInUser) //Metod för att räkna ut lånebelopp
+        public decimal CalculateLoanAmount(Customer loggedInUser) //Method to calculate maximum loan amount for a user
         {
             List<Account> customerAccounts = bankRegister.AllAccounts.Where(a => a.Owner == loggedInUser).ToList();
 
@@ -21,21 +22,21 @@ namespace BankAppGrupp7.EconomicsClasses
 
             foreach (var account in customerAccounts)
             {
-                //Exempel på enkel uträkning baserat på kontosaldo
-                maxLoanAmount += account.Balance * 5; //Kunden kan låna upp till 5 gånger sitt kontosaldo
+                
+                maxLoanAmount += account.Balance * 5; 
 
             }
             Console.WriteLine($"Du kan låna upp till {maxLoanAmount}");
 
             return maxLoanAmount;
         }
-        public void ApplyForLoan(Customer loggedInUser) //Ansök om lån för en användare
+        public void ApplyForLoan(Customer loggedInUser) //Customer applies for a loan
         {
             Console.WriteLine("Lånansökan");
 
             Console.WriteLine("Hur mycket önskar du att låna?");
             decimal maxLoanAmount = CalculateLoanAmount(loggedInUser);
-            if (!decimal.TryParse(Console.ReadLine(), out decimal amount))
+            if (!decimal.TryParse(InputValidation.TrimmedString(), out decimal amount))
             {
                 Console.WriteLine("Felatkig inmatning, försök igen!");
                 return;
@@ -47,14 +48,14 @@ namespace BankAppGrupp7.EconomicsClasses
             }
 
             Console.WriteLine("Under hur lånt tid önskar du att betala tillbaka lånet? (Ange antal månader)");
-            if (!int.TryParse(Console.ReadLine(), out int lengthOfLoan))
+            if (!int.TryParse(InputValidation.TrimmedString(), out int lengthOfLoan))
             {
                 Console.WriteLine("Felaktig inmatning, försök igen!");
                 return;
             }
 
 
-            decimal monthlyInterestRate = bankRegister.InterestRate / 100 / 12; // Ränta per månad
+            decimal monthlyInterestRate = bankRegister.InterestRate / 100 / 12; //interest rate per month
             decimal totalInterest = amount * monthlyInterestRate * lengthOfLoan;
             decimal total = amount + totalInterest;
             decimal monthlyPayment = total / lengthOfLoan;
@@ -63,10 +64,9 @@ namespace BankAppGrupp7.EconomicsClasses
             Console.WriteLine($"Månadskostnad: {monthlyPayment:F2} kr.");
             bankRegister.AddLoan(loggedInUser, amount, bankRegister.InterestRate, lengthOfLoan);
 
-            //Lägg till lånet i listan över lån
-
+            
         }
-        public void ViewLoans(Customer loggedInUser) //Visa alla lån för en användare
+        public void ViewLoans(Customer loggedInUser) //show all loans for a user
         {
             var customerLoans = bankRegister.AllLoans.Where(l => l.Customer == loggedInUser).ToList();
 
@@ -81,15 +81,23 @@ namespace BankAppGrupp7.EconomicsClasses
                 Console.WriteLine($"Lånebelopp: {loan.Amount} kr, Ränta: {loan.InterestRate}%, Längd på lån: {loan.LengthOfLoan} månader");
             }
         }
-        public void CreateAccount(Customer loggedInUser) //Skapa konto för en användare
+        public void CreateAccount(Customer loggedInUser) //Create a new account for a user
         {
+
             Console.WriteLine("Anökan för Konto");
             Console.WriteLine("Ange kontotyp (1. Sparkonto, 2. Lönekonto):");
-            string accountType = Console.ReadLine();
+            string accountType = InputValidation.TrimmedString();
+
             Console.WriteLine("Vilken valuta vill du ha? GBP, EUR, SEK");
-            string currencyType = Console.ReadLine();
+            string currencyInput = InputValidation.TrimmedStringToUpper();
+            if (!Enum.TryParse(currencyInput, out CurrencyCode currencyType))
+            {
+                Console.WriteLine("Felaktig valuta, försök igen!");
+                return;
+            }
+
             Console.WriteLine("Ange startbelopp:");//är det något vi ska ha?
-            if (!decimal.TryParse(Console.ReadLine(), out decimal initialDeposit))
+            if (!decimal.TryParse(InputValidation.TrimmedString(), out decimal initialDeposit))
             {
                 Console.WriteLine("Felaktig inmatning, försök igen!");
                 return;
@@ -98,10 +106,10 @@ namespace BankAppGrupp7.EconomicsClasses
             switch (accountType)
             {
                 case "1":
-                    newAccount = new SavingsAccount(GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType); //skall anropa currency med rätt valuta, väntar på kristin
+                    newAccount = new SavingsAccount(GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType);
                     break;
                 case "2":
-                    newAccount = new SalaryAccount(GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType); //skall anropa currency med rätt valuta, väntar på kristin
+                    newAccount = new SalaryAccount(GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType);
 
                     break;
                 default:
@@ -110,7 +118,7 @@ namespace BankAppGrupp7.EconomicsClasses
             }
             if (accountType == "1")
             {
-                Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance} {newAccount.Currency} med räntan: 1.05%");
+                Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance} {newAccount.Currency} med räntan: 1,05%");
             }
             else
             {
@@ -118,7 +126,7 @@ namespace BankAppGrupp7.EconomicsClasses
             }
             bankRegister.AddAccount(newAccount);
         }
-        public void ViewAccount(Customer loggedinUser) //Visa alla konton för en användare
+        public void ViewAccount(Customer loggedinUser) //Show all accounts for a user
         {
             var customerAccounts = bankRegister.AllAccounts.Where(a => a.Owner == loggedinUser).ToList();
             if (bankRegister.AllAccounts.Count == 0)
@@ -131,8 +139,32 @@ namespace BankAppGrupp7.EconomicsClasses
             {
                 Console.WriteLine($"Kontonummer: {account.AccountNumber}, Saldo: {account.Balance} {account.Currency}");
             }
+            bool isRunning = true;
+            while (isRunning)
+            {
+                Console.WriteLine("1. Gör en överföring\n2. Se alla överföringar\n3. Gå tillbaka");
+                int choice = InputValidation.ReadIntInput("\nVälj:");
+
+                switch (choice)
+                {
+                    case 1:
+                        MakeTransaction();
+                        break;
+                    case 2:
+                        ViewTransactions(loggedinUser);
+                        break;
+                    case 3:
+                        isRunning = false;
+                        break;
+                    default:
+                        Console.WriteLine("Felaktigt val, försök igen.");
+                        Thread.Sleep(2000);
+                        break;
+
+                }
+            }
         }
-        public string GenerateAccountNumber() //Förslag på metod för att generera kontonummer
+        public string GenerateAccountNumber() //Generate a unique account number
         {
             Random rand = new Random();
             string accountNumber = "";
@@ -146,7 +178,7 @@ namespace BankAppGrupp7.EconomicsClasses
                 return accountNumber;
             }
         }
-        public void ViewTransactions(Customer loggedInUser) //Visa alla transaktioner för en användare
+        public void ViewTransactions(Customer loggedInUser) //Show all transactions for a user
         {
             var customerAccounts = bankRegister.AllAccounts.Where(a => a.Owner == loggedInUser).ToList();
             var customerTransactions = bankRegister.AllTransactions.Where(t => customerAccounts.Contains(t.FromAccount) || customerAccounts.Contains(t.ToAccount)).ToList();
@@ -155,6 +187,54 @@ namespace BankAppGrupp7.EconomicsClasses
                 Console.WriteLine("Du har inga transaktioner för tillfället.");
                 return;
             }
+        }
+        public void MakeTransaction() //Make a transaction between two accounts
+        {
+            
+
+            Console.WriteLine("Vilket konto vill du flytta pengar ifrån");
+            string fromAccountNumber = InputValidation.TrimmedString();
+            Account fromAccount = bankRegister.GetAccountByAccountNumber(fromAccountNumber);
+            if (fromAccount == null)
+            {
+                Console.WriteLine("Fel: Mottagarkontot hittades inte.");
+                return;
+            }
+
+            Console.WriteLine("Vilket konto vill du flytta pengar till");
+            string toAccountNumber = InputValidation.TrimmedString();
+            Account toAccount = bankRegister.GetAccountByAccountNumber(toAccountNumber);
+            if (toAccount == null)
+            {
+                Console.WriteLine("Fel: Mottagarkontot hittades inte.");
+                return;
+            }
+
+            if (fromAccount.AccountNumber == toAccount.AccountNumber)
+            {
+                Console.WriteLine("Fel: Du kan inte överföra till samma konto.");
+                return;
+            }
+
+            Console.WriteLine("Hur mycket pengar vill du flytta?");
+            decimal amount = InputValidation.Decimal();
+
+            if (amount > fromAccount.Balance)
+            {
+                throw new InvalidOperationException("Fel. Överstiger kontots saldo.");
+            }
+
+            CurrencyConversion currencyConversion = new CurrencyConversion();
+            decimal convertedAmount = currencyConversion.ConvertCurrency(amount, fromAccount.Currency, toAccount.Currency);
+
+            fromAccount.Balance -= amount;
+            toAccount.Balance += convertedAmount;
+
+            InputValidation.ShowFeedbackMessage("Transaktionen lyckades!", ConsoleColor.Green, 2000);
+            Transaction transaction = new Transaction(amount, fromAccount, toAccount);
+
+            bankRegister.AddTransaction(transaction);
+
         }
     }
 }
