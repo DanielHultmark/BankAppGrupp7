@@ -56,8 +56,7 @@ namespace BankAppGrupp7.MenuClasses
                 }
                 else
                 {
-                    Thread.Sleep(1000);
-                    Console.WriteLine("Välj rätt input, försök igen!");
+                    ShowFeedbackMessage("Välj rätt input, försök igen!", ConsoleColor.Red, 1000);
                 }
             }
 
@@ -80,8 +79,7 @@ namespace BankAppGrupp7.MenuClasses
                 }
                 else
                 {
-                    Thread.Sleep(1000);
-                    Console.WriteLine("Välj rätt input, försök igen!");
+                    ShowFeedbackMessage("Välj rätt input, försök igen!", ConsoleColor.Red, 1000);
                 }
             }
 
@@ -184,8 +182,7 @@ namespace BankAppGrupp7.MenuClasses
                 }
                 else
                 {
-                    Thread.Sleep(1000);
-                    Console.WriteLine("Välj rätt input, försök igen!");
+                    ShowFeedbackMessage("Välj rätt input, försök igen!", ConsoleColor.Red, 1000);
                 }
             }
 
