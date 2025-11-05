@@ -11,7 +11,8 @@ namespace BankAppGrupp7.MenuClasses
 
         public static void DisplayLogo()
         {
-            Console.WriteLine("\n\n\n\n\n");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\n\n\n");
             Console.WriteLine("       C#C#C#C#C#          C#C#C#C#C#C#C#         C#C#C#C#C#C#                     C#C#C#C#");
             Console.WriteLine("   C#C#C#C#C#C#C#C#C#         C#C#C#C#            C#C#C#C#C#C#C#                  C#C#C#C#C#");
             Console.WriteLine("  C#C#C#        C#C#C#        C#C#C#C#            C#C#       C#C#                C#        C#");
@@ -26,7 +27,7 @@ namespace BankAppGrupp7.MenuClasses
             Console.WriteLine("  C#C#C#        C#C#C#        C#C#C#C#            C#C#        C#C#       C#C#                    C#C#");
             Console.WriteLine("  C#C#C#C#C#C#C#C#C#C#        C#C#C#C#            C#C#C#C#C#C#          C#C#                      C#C#");
             Console.WriteLine("      C#C#C#C#C#            C#C#C#C#C#C#          C#C#C#C#C#          C#C#C#C#                   C#C#C#C#");
-            Console.WriteLine("\nC# Investerings Bank AB");
+            Console.ResetColor();
         }
     }
 }

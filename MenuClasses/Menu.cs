@@ -94,7 +94,7 @@ namespace BankAppGrupp7.MenuClasses
                     case 1:
                         Console.Clear();
                         loggedInAdmin.ViewCustomers(allUsers);
-                        Console.ReadLine();
+                        Console.ReadKey();
                         break;
 
                     case 2:
