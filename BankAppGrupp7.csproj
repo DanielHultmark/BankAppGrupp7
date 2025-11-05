@@ -9,7 +9,6 @@
 
 	<ItemGroup>
 		<Folder Include="AccountClasses\" />
-		<Folder Include="MenuClasses\" />
 		<Folder Include="UsersClasses\" />
 	</ItemGroup>
 	

@@ -19,9 +19,9 @@ namespace BankAppGrupp7.MenuClasses
             {
 
                 Console.Clear();
-                Grafik.DisplayLogo();
+                ConsoleUI.DisplayLogo();
 
-                Grafik.ShowHeader("CIBA - C# Investeringsbank AB");
+                ConsoleUI.ShowHeader("CIBA - C# Investeringsbank AB");
 
                 Console.Write("\n1. Logga in" + "\n2. Avsluta programmet");
 
@@ -34,13 +34,12 @@ namespace BankAppGrupp7.MenuClasses
                         break;
 
                     case 2:
-                        InputValidation.ShowFeedbackMessage("Avslutar program...", ConsoleColor.Red, 1000);
-                        isRunning = false;
-                        Environment.Exit(0);
+                        ConsoleUI.ShowFeedbackMessage("Avslutar program...", ConsoleColor.Red, 1000);
+                        isRunning = false;                        
                         break;
 
                     default:
-                        InputValidation.ShowFeedbackMessage("Felaktigt val, försök igen.", ConsoleColor.Red, 1000);
+                        ConsoleUI.ShowFeedbackMessage("Felaktigt val, försök igen.", ConsoleColor.Red, 1000);
                         break;
                 }
             }

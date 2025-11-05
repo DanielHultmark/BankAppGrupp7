@@ -13,10 +13,11 @@ namespace BankAppGrupp7.AccountClasses
     {
         public decimal InterestRate { get; set; }
 
-        public SavingsAccount(string accountNumber, Customer owner, decimal balance, CurrencyCode currency)
-            : base(accountNumber, owner, balance, currency)
+        public SavingsAccount(string accountType, string accountNumber, Customer owner, decimal balance, CurrencyCode currency)
+            : base(accountType, accountNumber, owner, balance, currency)
         {
             InterestRate = 1.005M;
+            
         }
 
     }

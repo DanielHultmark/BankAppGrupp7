@@ -50,11 +50,7 @@ namespace BankAppGrupp7.EconomicsClasses
             if (fromCurrency == toCurrency)
             {
                 return amount;
-            }
-            foreach (var currency in Currencies)
-            {
-                Console.WriteLine(currency);
-            }
+            }            
             var fromEntry = Currencies.FirstOrDefault(c => c.Key.Code == fromCurrency);
             if (fromEntry.Key == null)
                 throw new ArgumentException($"Okänd frånvaluta: {fromCurrency}");

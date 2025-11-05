@@ -27,8 +27,8 @@ namespace BankAppGrupp7.UsersClasses
             {
                 Console.Clear();
 
-                Grafik.ShowHeader("CIBA – där ekonomi möter innovation\n");
-                Grafik.ShowHeader("Fyll i inloggningsuppgifter");
+                ConsoleUI.ShowHeader("CIBA – där ekonomi möter innovation");
+                ConsoleUI.ShowHeader("Fyll i inloggningsuppgifter");
 
                 string username = InputValidation.ReadStringInput("Användarnamn:");
 
@@ -53,7 +53,7 @@ namespace BankAppGrupp7.UsersClasses
         {
             if (string.IsNullOrEmpty(username))
             {
-                InputValidation.ShowFeedbackMessage("Ogiltig inmatning, försök igen!", ConsoleColor.Red, 2000);
+                ConsoleUI.ShowFeedbackMessage("Ogiltig inmatning, försök igen!", ConsoleColor.Red, 2000);
                 return false;
             }
 
@@ -61,7 +61,7 @@ namespace BankAppGrupp7.UsersClasses
 
             if (!usernameExists)
             {
-                InputValidation.ShowFeedbackMessage("Användarnamn saknas, försök igen!", ConsoleColor.Red, 1000);
+                ConsoleUI.ShowFeedbackMessage("Användarnamn saknas, försök igen!", ConsoleColor.Red, 1000);
 
                 return false;
             }
@@ -82,7 +82,7 @@ namespace BankAppGrupp7.UsersClasses
         {
             if (string.IsNullOrEmpty(password))
             {
-                InputValidation.ShowFeedbackMessage("Ogiltig inmatning, försök igen!", ConsoleColor.Red, 2000);
+                ConsoleUI.ShowFeedbackMessage("Ogiltig inmatning, försök igen!", ConsoleColor.Red, 2000);
                 return false;
             }
 
