@@ -21,10 +21,8 @@ namespace BankAppGrupp7.MenuClasses
                 Console.Clear();
                 Grafik.DisplayLogo();
 
-                Console.Write("\n\nVälkommen till ");
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("CIBA - C# Investeringsbank AB!\n");
-                Console.ResetColor();
+                Grafik.ShowHeader("CIBA - C# Investeringsbank AB");
+
                 Console.Write("\n1. Logga in" + "\n2. Avsluta programmet");
 
                 int choice = InputValidation.ReadIntInput("\nVälj:"); 

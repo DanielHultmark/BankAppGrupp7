@@ -23,7 +23,7 @@ namespace BankAppGrupp7.MenuClasses
             {
                 Console.Clear();
 
-                Console.WriteLine($"Välkommen {loggedInCustomer.FullName}\n!");
+                Grafik.ShowHeader($"Välkommen {loggedInCustomer.FullName}");
                 Console.WriteLine("1. Skapa ett konto");
                 Console.WriteLine("2. Kontoöversikt");
                 Console.WriteLine("3. Låneöversikt");
@@ -37,21 +37,29 @@ namespace BankAppGrupp7.MenuClasses
                 case 1:
                         Console.Clear();
                         CustomerUI.CreateAccount(loggedInCustomer);
+                        Grafik.ReturnToMenu();
+
                     break;
 
                 case 2:
                         Console.Clear();
                         CustomerUI.ViewAccount(loggedInCustomer);
+                        Grafik.ReturnToMenu();
+
                     break;
 
                 case 3:
                         Console.Clear();
                         CustomerUI.ViewLoans(loggedInCustomer);
+                        Grafik.ReturnToMenu();
+
                     break;
 
                 case 4:
                         Console.Clear();
                         CustomerUI.ApplyForLoan(loggedInCustomer);
+                        Grafik.ReturnToMenu();
+
                     break;
 
                 case 5:
@@ -80,7 +88,7 @@ namespace BankAppGrupp7.MenuClasses
             {
                 Console.Clear();
 
-                Console.WriteLine($"Välkommen {loggedInAdmin.FullName}!");
+                Grafik.ShowHeader($"Välkommen {loggedInAdmin.FullName}");
                 Console.WriteLine("1. Kundöversikt ");
                 Console.WriteLine("2. Lägg till en kund");
                 Console.WriteLine("3. Ta bort en kund");
@@ -95,22 +103,26 @@ namespace BankAppGrupp7.MenuClasses
                         Console.Clear();
                         loggedInAdmin.ViewCustomers(allUsers);
                         Console.ReadKey();
+                        Grafik.ReturnToMenu();
                         break;
 
                     case 2:
                         Console.Clear();
-                        loggedInAdmin.CreateCustomer(allUsers);                        
+                        loggedInAdmin.CreateCustomer(allUsers);  
+                        Grafik.ReturnToMenu();
                         break;
                                               
                     case 3:
                         Console.Clear();
                         loggedInAdmin.DeleteCustomer(allUsers);
+                        Grafik.ReturnToMenu();
                         break;
 
                     case 4:
                         Console.Clear();
                         var currencyConvert = new CurrencyConversion();
                         currencyConvert.SetDailyExchangeRate();
+                        Grafik.ReturnToMenu();                        
                         break;
 
                     case 5:
