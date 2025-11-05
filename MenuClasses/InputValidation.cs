@@ -113,23 +113,6 @@ namespace BankAppGrupp7.MenuClasses
 
             return number;
         }
-
-        // Use to give feedback to user, for error or confirmation.
-        public static void ShowFeedbackMessage(string message, ConsoleColor color, int millisecondsDelay)
-        {
-            Console.ForegroundColor = color;
-            Console.Write("\n" + message);
-            Console.ResetColor();
-
-            Thread.Sleep(millisecondsDelay);
-        }
-
-        public static void ShowFeedbackMessage(string message, ConsoleColor color)
-        {
-            Console.ForegroundColor = color;
-            Console.Write("\n" + message);
-            Console.ResetColor();
-
            
         }
 
@@ -167,4 +150,3 @@ namespace BankAppGrupp7.MenuClasses
             return value;
         }
     }
-}
