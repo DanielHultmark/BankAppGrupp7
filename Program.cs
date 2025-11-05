@@ -1,4 +1,5 @@
-﻿using BankAppGrupp7.MenuClasses;
+﻿using BankAppGrupp7.EconomicsClasses;
+using BankAppGrupp7.MenuClasses;
 
 namespace BankAppGrupp7
 {
