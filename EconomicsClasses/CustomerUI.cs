@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BankAppGrupp7.MenuClasses;
 
 namespace BankAppGrupp7.EconomicsClasses
 {
@@ -117,7 +118,8 @@ namespace BankAppGrupp7.EconomicsClasses
                 Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance} {newAccount.Currency}");
             }
             bankRegister.AddAccount(newAccount);
-        }
+            // Grafik.ReturnToMenu(); men det förutsätter att metoden kan anropas från Grafik.cs. Alternativt en wrappermetod som implemmenteras här.
+            
         public void ViewAccount(Customer loggedinUser) //Visa alla konton för en användare
         {
             var customerAccounts = bankRegister.AllAccounts.Where(a => a.Owner == loggedinUser).ToList();

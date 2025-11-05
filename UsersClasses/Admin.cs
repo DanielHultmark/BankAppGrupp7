@@ -25,7 +25,7 @@ namespace BankAppGrupp7.UsersClasses
             while (isRunning)
             {
                 Console.Clear();
-                Console.WriteLine("Lägg till ny kund");
+                Grafik.ShowHeader("Lägg till ny kund");
 
                 Console.Write("Användarnamn: ");
                 string username = InputValidation.TrimmedString();
@@ -54,7 +54,9 @@ namespace BankAppGrupp7.UsersClasses
 
         public void ViewCustomers(UserRegister users)
         {
-            
+            Console.Clear();
+            Grafik.ShowHeader("Visa alla kunder");
+
             //Doesn't show the password when written out for security purposes
             //KeyValuePair is needed for foreach with dictionaries
             foreach (KeyValuePair<string, User> userlist in users.UserList)
@@ -71,7 +73,7 @@ namespace BankAppGrupp7.UsersClasses
             while (isRunning)
             {
                 Console.Clear();
-                Console.WriteLine("Ta bort kund");
+                Grafik.ShowHeader("Ta bort kund");
                 Console.Write("Skriv användarnamn: ");
                 
                 username = InputValidation.TrimmedString();

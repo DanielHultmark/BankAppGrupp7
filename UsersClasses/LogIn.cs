@@ -27,8 +27,8 @@ namespace BankAppGrupp7.UsersClasses
             {
                 Console.Clear();
 
-                Console.WriteLine("CIBA – där ekonomi möter innovation\n");
-                Console.WriteLine("Fyll i inloggningsuppgifter");
+                Grafik.ShowHeader("CIBA – där ekonomi möter innovation\n");
+                Grafik.ShowHeader("Fyll i inloggningsuppgifter");
 
                 string username = InputValidation.ReadStringInput("Användarnamn:");
 
