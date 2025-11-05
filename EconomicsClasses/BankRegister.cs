@@ -38,10 +38,14 @@ namespace BankAppGrupp7.EconomicsClasses
         {
             AllAccounts.Add(a);
         }
+        public Account GetAccountByAccountNumber(string accountNumber)
+        {
+            return AllAccounts.FirstOrDefault(a => a.AccountNumber == accountNumber);
+        }
 
-       
 
-        
+
+
     }
 }
 
