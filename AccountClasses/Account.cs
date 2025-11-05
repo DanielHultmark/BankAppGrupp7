@@ -13,10 +13,10 @@ namespace BankAppGrupp7.AccountClasses
         public string AccountNumber { get; set; }
         public Customer Owner { get; set; }
         public decimal Balance { get; set; }
-        public Currency Currency { get; set; }
+        public CurrencyCode Currency { get; set; }
         public List<Transaction> Transactions { get; set; } = new List<Transaction>();
 
-        public Account(string accountNumber, Customer owner, decimal balance, Currency currency)
+        public Account(string accountNumber, Customer owner, decimal balance, CurrencyCode currency)
         {
             AccountNumber = accountNumber;
             Owner = owner;
@@ -24,11 +24,11 @@ namespace BankAppGrupp7.AccountClasses
             Currency = currency;
         }
 
-        public void ShowBalance()
+        public void ShowBalance() //Behövs det?
         {
             Console.WriteLine($"Saldo för konto {AccountNumber}: {Balance} {Currency}");
         }
-
+        
       
     }
     

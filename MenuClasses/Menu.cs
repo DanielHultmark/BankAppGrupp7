@@ -13,8 +13,7 @@ namespace BankAppGrupp7.MenuClasses
 {
     public class Menu
     {
-        CustomerUI CustomerUI = new CustomerUI();
-        // Alla metoder är ännu inte implementerade och kan behöva uppdateras. DeleteCustomer behöver ta bort parameter username i Admin.
+        CustomerUI CustomerUI = new CustomerUI();      
 
         //Customer menu
         public void CustomerMenu(Customer loggedInCustomer)
@@ -24,7 +23,7 @@ namespace BankAppGrupp7.MenuClasses
             {
                 Console.Clear();
 
-                Design.ShowHeader($"Välkommen {loggedInCustomer.FullName}");
+                Grafik.ShowHeader($"Välkommen {loggedInCustomer.FullName}");
                 Console.WriteLine("1. Skapa ett konto");
                 Console.WriteLine("2. Kontoöversikt");
                 Console.WriteLine("3. Låneöversikt");
@@ -38,33 +37,33 @@ namespace BankAppGrupp7.MenuClasses
                 case 1:
                         Console.Clear();
                         CustomerUI.CreateAccount(loggedInCustomer);
-                        Design.ReturnToMenu();
+                        Grafik.ReturnToMenu();
 
                     break;
 
                 case 2:
                         Console.Clear();
                         CustomerUI.ViewAccount(loggedInCustomer);
-                        Design.ReturnToMenu();
+                        Grafik.ReturnToMenu();
 
                     break;
 
                 case 3:
                         Console.Clear();
                         CustomerUI.ViewLoans(loggedInCustomer);
-                        Design.ReturnToMenu();
+                        Grafik.ReturnToMenu();
 
                     break;
 
                 case 4:
                         Console.Clear();
                         CustomerUI.ApplyForLoan(loggedInCustomer);
-                        Design.ReturnToMenu();
+                        Grafik.ReturnToMenu();
 
                     break;
 
                 case 5:
-                    Design.ShowFeedbackMessage("Du loggas ut från ditt konto!", ConsoleColor.Yellow, 2000);
+                    InputValidation.ShowFeedbackMessage("Du loggas ut från ditt konto!", ConsoleColor.Yellow, 2000);
                         Thread.Sleep(2000);
                         Console.Clear();
                         isRunnning = false;
@@ -89,7 +88,7 @@ namespace BankAppGrupp7.MenuClasses
             {
                 Console.Clear();
 
-                Design.ShowHeader($"Välkommen {loggedInAdmin.FullName}");
+                Grafik.ShowHeader($"Välkommen {loggedInAdmin.FullName}");
                 Console.WriteLine("1. Kundöversikt ");
                 Console.WriteLine("2. Lägg till en kund");
                 Console.WriteLine("3. Ta bort en kund");
@@ -104,31 +103,30 @@ namespace BankAppGrupp7.MenuClasses
                         Console.Clear();
                         loggedInAdmin.ViewCustomers(allUsers);
                         Console.ReadKey();
-                        Design.ReturnToMenu();
+                        Grafik.ReturnToMenu();
                         break;
 
                     case 2:
                         Console.Clear();
                         loggedInAdmin.CreateCustomer(allUsers);  
-                        Design.ReturnToMenu();
+                        Grafik.ReturnToMenu();
                         break;
                                               
                     case 3:
                         Console.Clear();
                         loggedInAdmin.DeleteCustomer(allUsers);
-                        Design.ReturnToMenu();
+                        Grafik.ReturnToMenu();
                         break;
 
-                    // Fattas UI för sätta daily exchange rate
                     case 4:
                         Console.Clear();
                         var currencyConvert = new CurrencyConversion();
-                        //currencyConvert.SetDailyExchangeRate();
-                        Design.ReturnToMenu();
+                        currencyConvert.SetDailyExchangeRate();
+                        Grafik.ReturnToMenu();                        
                         break;
 
                     case 5:
-                        Design.ShowFeedbackMessage("Du loggas ut från adminkontot!", ConsoleColor.Yellow, 2000);
+                        InputValidation.ShowFeedbackMessage("Du loggas ut från adminkontot!", ConsoleColor.Yellow, 2000);
                         isRunning = false;
                         
                         break;
