@@ -75,9 +75,6 @@ namespace BankAppGrupp7.MenuClasses
                     break;
                 }
             }
-
-            //Return to main menu after logging out
-            MainMenu.DisplayMainMenu();
         }
 
         //Admin menu
@@ -102,7 +99,6 @@ namespace BankAppGrupp7.MenuClasses
                     case 1:
                         Console.Clear();
                         loggedInAdmin.ViewCustomers(allUsers);
-                        Console.ReadKey();
                         Grafik.ReturnToMenu();
                         break;
 
@@ -138,9 +134,6 @@ namespace BankAppGrupp7.MenuClasses
                         break;
                 }
             }
-
-            //Return to main menu after logging out
-            MainMenu.DisplayMainMenu();
         }
     }
 }

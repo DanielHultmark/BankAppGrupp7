@@ -12,7 +12,6 @@ namespace BankAppGrupp7.MenuClasses
         public static void DisplayLogo()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.BackgroundColor = ConsoleColor.Blue;
             Console.WriteLine("\n\n\n");
             Console.WriteLine("       C#C#C#C#C#          C#C#C#C#C#C#C#         C#C#C#C#C#C#                     C#C#C#C#");
             Console.WriteLine("   C#C#C#C#C#C#C#C#C#         C#C#C#C#            C#C#C#C#C#C#C#                  C#C#C#C#C#");
