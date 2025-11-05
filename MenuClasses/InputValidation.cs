@@ -56,8 +56,7 @@ namespace BankAppGrupp7.MenuClasses
                 }
                 else
                 {
-                    Thread.Sleep(1000);
-                    Console.WriteLine("Välj rätt input, försök igen!");
+                    ShowFeedbackMessage("Välj rätt input, försök igen!", ConsoleColor.Red, 1000);
                 }
             }
 
@@ -74,13 +73,13 @@ namespace BankAppGrupp7.MenuClasses
                 //Trims the string if the string isn't empty or a " " string
                 if (!string.IsNullOrWhiteSpace(userInput))
                 {
+                    //Trims the input and then makes it all in to lower 
                     value = userInput.Trim().ToLower();
                     stillValidating = false;
                 }
                 else
                 {
-                    Thread.Sleep(1000);
-                    Console.WriteLine("Välj rätt input, försök igen!");
+                    ShowFeedbackMessage("Välj rätt input, försök igen!", ConsoleColor.Red, 1000);
                 }
             }
 
@@ -164,6 +163,29 @@ namespace BankAppGrupp7.MenuClasses
                     Console.WriteLine("Välj ett nummer, försök igen!");
                 }
             }
+            return value;
+        }
+
+        public static string TrimmedStringToUpper()
+        {
+            string value = "";
+            bool stillValidating = true;
+            while (stillValidating)
+            {
+                string? userInput = Console.ReadLine();
+                //Trims the string if the string isn't empty or a " " string
+                if (!string.IsNullOrWhiteSpace(userInput))
+                {
+                    //Trims the input and then makes it all in to upper 
+                    value = userInput.Trim().ToUpper();
+                    stillValidating = false;
+                }
+                else
+                {
+                    ShowFeedbackMessage("Välj rätt input, försök igen!", ConsoleColor.Red, 1000);
+                }
+            }
+
             return value;
         }
     }
