@@ -155,6 +155,10 @@ namespace BankAppGrupp7.EconomicsClasses
                 Console.WriteLine("Du har inga transaktioner för tillfället.");
                 return;
             }
+            else
+            {
+                Console.WriteLine($"Konton: {customerAccounts}\nTransaktioner: {customerTransactions}");
+            }
         }
     }
 }
