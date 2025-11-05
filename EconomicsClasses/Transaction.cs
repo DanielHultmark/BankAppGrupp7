@@ -11,7 +11,7 @@ namespace BankAppGrupp7.EconomicsClasses
 {
     public class Transaction
     {
-        BankRegister BankRegister = new BankRegister();
+        
 
         public Guid Id { get; private set; } //private set, to avoid Id being changed
         public decimal Amount { get; set; }
