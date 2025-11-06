@@ -1,12 +1,13 @@
-﻿using BankAppGrupp7.AccountClasses;
-using BankAppGrupp7.MenuClasses;
-using BankAppGrupp7.UsersClasses;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using BankAppGrupp7.AccountClasses;
 using BankAppGrupp7.MenuClasses;
+using BankAppGrupp7.MenuClasses;
+using BankAppGrupp7.UsersClasses;
 
 namespace BankAppGrupp7.EconomicsClasses
 {
@@ -101,7 +102,7 @@ namespace BankAppGrupp7.EconomicsClasses
                 Console.WriteLine("Felaktig inmatning, försök igen!");
                 return;
             }
-            Account newAccount;
+            
             switch (accountType)
             {
                 case "1":                    
@@ -113,16 +114,7 @@ namespace BankAppGrupp7.EconomicsClasses
                 default:
                     Console.WriteLine("Felaktig kontotyp, försök igen!");
                     return;
-            }
-            if (accountType == "1")
-            {
-                Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance:F2} {newAccount.Currency} med räntan: 1,05%");
-            }
-            else
-            {
-                Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance:F2} {newAccount.Currency}");
-            }
-            BankRegister.AddAccount(newAccount);
+            }                        
         }
         public void ViewAccount(Customer loggedinUser) //Show all accounts for a user
         {
@@ -137,7 +129,7 @@ namespace BankAppGrupp7.EconomicsClasses
             
             foreach (var account in BankRegister.AllAccounts)
             {
-                Console.WriteLine($"Kontotyp: {account.AccountType, -15}, Kontonummer: {account.AccountNumber, -15}, Saldo: {account.Balance:F2} {account.Currency,-15}");
+                Console.WriteLine($"Kontotyp: {account.AccountType, -15} Kontonummer: {account.AccountNumber, -15} Saldo: {account.Balance:F2} {account.Currency,-15}");
             }
             bool isRunning = true;
             while (isRunning)
@@ -163,6 +155,7 @@ namespace BankAppGrupp7.EconomicsClasses
                 }
             }
         }
+
         public string GenerateAccountNumber() //Generate a unique account number
         {
             Random rand = new Random();
@@ -171,12 +164,14 @@ namespace BankAppGrupp7.EconomicsClasses
             {
                 accountNumber = string.Concat(Enumerable.Range(0, 10).Select(_ => rand.Next(0, 10).ToString()));
             }
+
             while (BankRegister.AllAccounts.Any(a => a.AccountNumber == accountNumber));
             {
                 accountNumber = BankRegister.AllAccounts.Any(a => a.AccountNumber == accountNumber) ? GenerateAccountNumber() : accountNumber;
                 return accountNumber;
             }
         }
+
         public void ViewTransactions(Customer loggedInUser) //Show all transactions for a user
         {
             var customerAccounts = BankRegister.AllAccounts.Where(a => a.Owner == loggedInUser).ToList();
@@ -186,14 +181,17 @@ namespace BankAppGrupp7.EconomicsClasses
                 Console.WriteLine("Du har inga transaktioner för tillfället.");
                 return;
             }
+
             else
             {
+                ConsoleUI.ShowHeader("Dina överföringar");
                 foreach (var transaction in customerTransactions)
                 {
-                    Console.WriteLine($"Från konto: {transaction.FromAccount.AccountNumber,-15}, Till konto: {transaction.ToAccount.AccountNumber, -15}, Belopp: {transaction.Amount:F2}");
+                    Console.WriteLine($"Från konto: {transaction.FromAccount.AccountNumber,-15} Till konto: {transaction.ToAccount.AccountNumber, -15} Belopp: {transaction.Amount:F2}");
                 }                
             }
         }
+
         public void MakeTransaction() //Make a transaction between two accounts
         {
             Console.WriteLine("Vilket konto vill du flytta pengar ifrån");
