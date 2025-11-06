@@ -43,8 +43,7 @@ namespace BankAppGrupp7.MenuClasses
 
                 case 2:
                         Console.Clear();
-                        CustomerUI.ViewAccount(loggedInCustomer);
-                        ConsoleUI.ReturnToMenu();
+                        CustomerUI.ViewAccount(loggedInCustomer);                        
 
                     break;
 

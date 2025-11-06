@@ -1,12 +1,13 @@
-﻿using BankAppGrupp7.AccountClasses;
-using BankAppGrupp7.MenuClasses;
-using BankAppGrupp7.UsersClasses;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using BankAppGrupp7.AccountClasses;
 using BankAppGrupp7.MenuClasses;
+using BankAppGrupp7.MenuClasses;
+using BankAppGrupp7.UsersClasses;
 
 namespace BankAppGrupp7.EconomicsClasses
 {
@@ -32,7 +33,8 @@ namespace BankAppGrupp7.EconomicsClasses
         }
         public void ApplyForLoan(Customer loggedInUser) //Customer applies for a loan
         {
-            Console.WriteLine("Låneansökan");
+            ConsoleUI.ShowHeader("Låneansökan");
+            
             decimal maxLoanAmount = CalculateLoanAmount(loggedInUser);
             Console.WriteLine("Hur mycket önskar du att låna?");
             
@@ -75,7 +77,9 @@ namespace BankAppGrupp7.EconomicsClasses
                 Console.WriteLine("Du har inga lån för tillfället.");
                 return;
             }
-            Console.WriteLine("Dina lån:");
+
+            ConsoleUI.ShowHeader("Dina lån");
+            
             foreach (var loan in customerLoans)
             {
                 Console.WriteLine($"Lånebelopp: {loan.Amount} kr, Ränta: {loan.InterestRate}%, Längd på lån: {loan.LengthOfLoan} månader");
@@ -83,8 +87,8 @@ namespace BankAppGrupp7.EconomicsClasses
         }
         public void CreateAccount(Customer loggedInUser) //Create a new account for a user
         {
-
-            Console.WriteLine("Anökan för Konto");
+            ConsoleUI.ShowHeader("Skapa nytt konto");
+            
             Console.WriteLine("Ange kontotyp (1. Sparkonto, 2. Lönekonto):");
             string accountType = InputValidation.TrimmedString();
 
@@ -102,30 +106,27 @@ namespace BankAppGrupp7.EconomicsClasses
                 Console.WriteLine("Felaktig inmatning, försök igen!");
                 return;
             }
-            Account newAccount;
+            
             switch (accountType)
             {
                 case "1":
                     
-                    newAccount = new SavingsAccount("Sparkonto", GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType);
+                    SavingsAccount newSavingsAccount = new SavingsAccount("Sparkonto", GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType);
+                    
+                    Console.WriteLine($"\nKonto skapat! Kontotyp: {newSavingsAccount.AccountType,-15} Kontonummer: {newSavingsAccount.AccountNumber,-15} Saldo: {newSavingsAccount.Balance:F2} {newSavingsAccount.Currency} med räntan: {newSavingsAccount.InterestRate}%");
+                    BankRegister.AddAccount(newSavingsAccount);
+
                     break;
                 case "2":
-                    newAccount = new SalaryAccount("Lönekonto", GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType);
+                    SalaryAccount newSalaryAccount = new SalaryAccount("Lönekonto", GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType);
+                    Console.WriteLine($"\nKonto skapat! Kontotyp: {newSalaryAccount.AccountType,-15} Kontonummer: {newSalaryAccount.AccountNumber,-15} Saldo: {newSalaryAccount.Balance:F2} {newSalaryAccount.Currency}");
+                    BankRegister.AddAccount(newSalaryAccount);
 
                     break;
                 default:
                     Console.WriteLine("Felaktig kontotyp, försök igen!");
                     return;
-            }
-            if (accountType == "1")
-            {
-                Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance:F2} {newAccount.Currency} med räntan: 1,05%");
-            }
-            else
-            {
-                Console.WriteLine($"Konto skapat! Kontonummer: {newAccount.AccountNumber}, Saldo: {newAccount.Balance:F2} {newAccount.Currency}");
-            }
-            BankRegister.AddAccount(newAccount);
+            }                        
         }
         public void ViewAccount(Customer loggedinUser) //Show all accounts for a user
         {
@@ -135,11 +136,12 @@ namespace BankAppGrupp7.EconomicsClasses
                 Console.WriteLine("Du har inga konton för tillfället.");
                 return;
             }
-            Console.WriteLine("Dina konton:");
-            
+
+            ConsoleUI.ShowHeader("Dina konton");
+
             foreach (var account in BankRegister.AllAccounts)
             {
-                Console.WriteLine($"Kontotyp: {account.AccountType, -15}, Kontonummer: {account.AccountNumber, -15}, Saldo: {account.Balance:F2} {account.Currency,-15}");
+                Console.WriteLine($"Kontotyp: {account.AccountType, -15} Kontonummer: {account.AccountNumber, -15} Saldo: {account.Balance:F2} {account.Currency,-15}");
             }
             bool isRunning = true;
             while (isRunning)
@@ -166,6 +168,7 @@ namespace BankAppGrupp7.EconomicsClasses
                 }
             }
         }
+
         public string GenerateAccountNumber() //Generate a unique account number
         {
             Random rand = new Random();
@@ -174,12 +177,14 @@ namespace BankAppGrupp7.EconomicsClasses
             {
                 accountNumber = string.Concat(Enumerable.Range(0, 10).Select(_ => rand.Next(0, 10).ToString()));
             }
+
             while (BankRegister.AllAccounts.Any(a => a.AccountNumber == accountNumber));
             {
                 accountNumber = BankRegister.AllAccounts.Any(a => a.AccountNumber == accountNumber) ? GenerateAccountNumber() : accountNumber;
                 return accountNumber;
             }
         }
+
         public void ViewTransactions(Customer loggedInUser) //Show all transactions for a user
         {
             var customerAccounts = BankRegister.AllAccounts.Where(a => a.Owner == loggedInUser).ToList();
@@ -189,17 +194,20 @@ namespace BankAppGrupp7.EconomicsClasses
                 Console.WriteLine("Du har inga transaktioner för tillfället.");
                 return;
             }
+
             else
             {
+                ConsoleUI.ShowHeader("Dina överföringar");
                 foreach (var transaction in customerTransactions)
                 {
-                    Console.WriteLine($"Från konto: {transaction.FromAccount.AccountNumber,-15}, Till konto: {transaction.ToAccount.AccountNumber, -15}, Belopp: {transaction.Amount:F2}");
+                    Console.WriteLine($"Från konto: {transaction.FromAccount.AccountNumber,-15} Till konto: {transaction.ToAccount.AccountNumber, -15} Belopp: {transaction.Amount:F2}");
                 }                
             }
         }
+
         public void MakeTransaction() //Make a transaction between two accounts
         {
-            
+            ConsoleUI.ShowHeader("Gör överföring");
 
             Console.WriteLine("Vilket konto vill du flytta pengar ifrån");
             string fromAccountNumber = InputValidation.TrimmedString();
