@@ -17,12 +17,11 @@ namespace BankAppGrupp7.EconomicsClasses
         public decimal CalculateLoanAmount(Customer loggedInUser) //Method to calculate maximum loan amount for a user
         {
             List<Account> customerAccounts = BankRegister.AllAccounts.Where(a => a.Owner == loggedInUser).ToList();
-            CurrencyConversion currencyConversion = new CurrencyConversion();
             decimal maxLoanAmount = 0;
 
             foreach (var account in customerAccounts)
             {
-                decimal convertedAmount = currencyConversion.ConvertCurrency(account.Balance, account.Currency, CurrencyCode.SEK);
+                decimal convertedAmount = CurrencyConversion.ConvertCurrency(account.Balance, account.Currency, CurrencyCode.SEK);
                 maxLoanAmount += convertedAmount * 5; 
 
             }
@@ -32,7 +31,7 @@ namespace BankAppGrupp7.EconomicsClasses
         }
         public void ApplyForLoan(Customer loggedInUser) //Customer applies for a loan
         {
-            Console.WriteLine("Låneansökan");
+            ConsoleUI.ShowHeader("LÅNEANSÖKAN");
             decimal maxLoanAmount = CalculateLoanAmount(loggedInUser);
             Console.WriteLine("Hur mycket önskar du att låna?");
             
@@ -75,7 +74,7 @@ namespace BankAppGrupp7.EconomicsClasses
                 Console.WriteLine("Du har inga lån för tillfället.");
                 return;
             }
-            Console.WriteLine("Dina lån:");
+            ConsoleUI.ShowHeader("DINA LÅN");
             foreach (var loan in customerLoans)
             {
                 Console.WriteLine($"Lånebelopp: {loan.Amount} kr, Ränta: {loan.InterestRate}%, Längd på lån: {loan.LengthOfLoan} månader");
@@ -84,7 +83,7 @@ namespace BankAppGrupp7.EconomicsClasses
         public void CreateAccount(Customer loggedInUser) //Create a new account for a user
         {
 
-            Console.WriteLine("Anökan för Konto");
+            ConsoleUI.ShowHeader("SKAPA NYTT KONTO");
             Console.WriteLine("Ange kontotyp (1. Sparkonto, 2. Lönekonto):");
             string accountType = InputValidation.TrimmedString();
 
@@ -133,7 +132,8 @@ namespace BankAppGrupp7.EconomicsClasses
                 Console.WriteLine("Du har inga konton för tillfället.");
                 return;
             }
-            Console.WriteLine("Dina konton:");
+            ConsoleUI.ShowHeader("DINA KONTON");
+
             
             foreach (var account in BankRegister.AllAccounts)
             {

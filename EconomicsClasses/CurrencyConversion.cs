@@ -8,15 +8,16 @@ using System.Threading.Tasks;
 
 namespace BankAppGrupp7.EconomicsClasses
 {
-    public class CurrencyConversion
+    public static class CurrencyConversion
     {
-        public Currency Sek {  get; set; } = new Currency(CurrencyCode.SEK, 1);
-        public Currency Eur { get; set; } = new Currency(CurrencyCode.EUR, 10.87M);
-        public Currency Gbp { get; set; } = new Currency(CurrencyCode.GBP, 12.55M);
+        public static Currency Sek {  get; set; } = new Currency(CurrencyCode.SEK, 1);
+        public static Currency Eur { get; set; } = new Currency(CurrencyCode.EUR, 10.87M);
+        public static Currency Gbp { get; set; } = new Currency(CurrencyCode.GBP, 12.55M);
 
-        public Dictionary<Currency, decimal> Currencies { get; } 
+        public static Dictionary<Currency, decimal> Currencies { get; } 
 
-        public CurrencyConversion()
+
+        static CurrencyConversion()
         {
             Currencies = new Dictionary<Currency, decimal>
             {
@@ -25,7 +26,7 @@ namespace BankAppGrupp7.EconomicsClasses
                 { Gbp, Gbp.SekToCurrencyRate }
             };            
         }
-        public void SetDailyExchangeRate()
+        public static void SetDailyExchangeRate()
         {
             Console.WriteLine("Sätt den dagliga växelkursen");
             bool isRunning = true;
@@ -42,7 +43,7 @@ namespace BankAppGrupp7.EconomicsClasses
                 isRunning= false;
             }            
         }
-        public decimal ConvertCurrency(decimal amount, CurrencyCode fromCurrency, CurrencyCode toCurrency)
+        public static decimal ConvertCurrency(decimal amount, CurrencyCode fromCurrency, CurrencyCode toCurrency)
         {
             if (fromCurrency == toCurrency)
             {
@@ -64,6 +65,7 @@ namespace BankAppGrupp7.EconomicsClasses
             decimal convertedAmount = amountInSek / toRate;
 
             return convertedAmount;
-        }        
+        }
+       
     }
 }
