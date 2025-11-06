@@ -20,13 +20,11 @@ namespace BankAppGrupp7.EconomicsClasses
         static CurrencyConversion()
         {
             Currencies = new Dictionary<Currency, decimal>
-
             {
                 { Sek, Sek.SekToCurrencyRate },
                 { Eur, Eur.SekToCurrencyRate },
                 { Gbp, Gbp.SekToCurrencyRate }
-            };
-            
+            };            
         }
         public static void SetDailyExchangeRate()
         {
@@ -34,19 +32,19 @@ namespace BankAppGrupp7.EconomicsClasses
             bool isRunning = true;
             while (isRunning)
             {
+                Console.WriteLine($"GBP kurs: {Gbp.SekToCurrencyRate:F2}");
                 Console.WriteLine("Välj dagens kurs för GBP");
                 decimal gbpRate = InputValidation.Decimal();
                 Gbp.SekToCurrencyRate = gbpRate;
+                Console.WriteLine($"EUR kurs: {Eur.SekToCurrencyRate:F2}");
                 Console.WriteLine("Välj dagens kurs för EURO");
                 decimal eurRate = InputValidation.Decimal();
                 Eur.SekToCurrencyRate = eurRate;
                 isRunning= false;
-            }
-            
+            }            
         }
         public static decimal ConvertCurrency(decimal amount, CurrencyCode fromCurrency, CurrencyCode toCurrency)
         {
-
             if (fromCurrency == toCurrency)
             {
                 return amount;
