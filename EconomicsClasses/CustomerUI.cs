@@ -17,12 +17,11 @@ namespace BankAppGrupp7.EconomicsClasses
         public decimal CalculateLoanAmount(Customer loggedInUser) //Method to calculate maximum loan amount for a user
         {
             List<Account> customerAccounts = BankRegister.AllAccounts.Where(a => a.Owner == loggedInUser).ToList();
-            CurrencyConversion currencyConversion = new CurrencyConversion();
             decimal maxLoanAmount = 0;
 
             foreach (var account in customerAccounts)
             {
-                decimal convertedAmount = currencyConversion.ConvertCurrency(account.Balance, account.Currency, CurrencyCode.SEK);
+                decimal convertedAmount = CurrencyConversion.ConvertCurrency(account.Balance, account.Currency, CurrencyCode.SEK);
                 maxLoanAmount += convertedAmount * 5; 
 
             }
