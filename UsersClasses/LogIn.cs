@@ -19,7 +19,7 @@ namespace BankAppGrupp7.UsersClasses
 
         // The log in view refreshes if the user has given invalid input in some way. 
         // As it is now the only way to get out of the log in view is to give valid login details. 
-        public void LoginUI()
+        public void LoginUI() //
         {
             bool stillEnteringLoginDetails = true;
 

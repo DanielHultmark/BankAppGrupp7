@@ -115,8 +115,7 @@ namespace BankAppGrupp7.MenuClasses
 
                     case 4:
                         Console.Clear();
-                        var currencyConvert = new CurrencyConversion();
-                        currencyConvert.SetDailyExchangeRate();
+                        CurrencyConversion.SetDailyExchangeRate();
                         ConsoleUI.ReturnToMenu();                        
                         break;
 

@@ -22,7 +22,7 @@ namespace BankAppGrupp7.EconomicsClasses
 
         }
         
-        public static async Task Start() 
+        public static async Task Start() //Method to start the timer that executes every quarter of an hour
         {
             DateTimeOffset now = DateTimeOffset.Now;
             int nextQuarterMinute = ((now.Minute / 15) + 1) * 15;
@@ -48,18 +48,15 @@ namespace BankAppGrupp7.EconomicsClasses
         }
                
 
-        public static void ExecuteTransactions(object? state)
+        public static void ExecuteTransactions(object? state) //Method that executes all pending transactions
         {
             if (pendingTransactions.Count > 0)
             {
-                CurrencyConversion currencyConversion = new CurrencyConversion();
-                
-                
                 while (pendingTransactions.Count > 0)
                 {
                     var transaction = pendingTransactions.Dequeue();
                     BankRegister.AddTransaction(transaction);
-                    decimal convertedAmount = currencyConversion.ConvertCurrency(transaction.Amount, transaction.FromAccount.Currency, transaction.ToAccount.Currency);
+                    decimal convertedAmount = CurrencyConversion.ConvertCurrency(transaction.Amount, transaction.FromAccount.Currency, transaction.ToAccount.Currency);
 
                     transaction.FromAccount.Balance -= transaction.Amount;
                     transaction.ToAccount.Balance += convertedAmount;

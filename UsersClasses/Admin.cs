@@ -17,7 +17,6 @@ namespace BankAppGrupp7.UsersClasses
         {
             IsAdmin = true;
         }
-
         //Method for creating customer
         public void CreateCustomer(UserRegister users)
         {
@@ -51,7 +50,6 @@ namespace BankAppGrupp7.UsersClasses
                 isRunning = false;
             }
         }
-
         public void ViewCustomers(UserRegister users)
         {
             Console.Clear();
@@ -95,23 +93,20 @@ namespace BankAppGrupp7.UsersClasses
                         string choice = InputValidation.TrimmedStringToLower();
                         if(choice == "ja")
                         {
-                            ConsoleUI.ShowFeedbackMessage($"Tar bort {username}", ConsoleColor.Red, 1000);
-                            Console.WriteLine($"Tar bort {username}");
+                            ConsoleUI.ShowFeedbackMessage($"Tar bort {username}", ConsoleColor.Red, 1000);                            
                             users.DeleteCustomerInRegister(username);
                             isRunning = false;
                         }
                         else if (choice == "nej")
                         {
-                            ConsoleUI.ShowFeedbackMessage($"Tar bort {username}", ConsoleColor.Yellow, 1000);
+                            ConsoleUI.ShowFeedbackMessage($"Tar inte bort {username}", ConsoleColor.Yellow, 1000);
                             isRunning = false;
                         }
                         else
                         {
                             ConsoleUI.ShowFeedbackMessage("Välj mellan Ja och Nej", ConsoleColor.Red, 1000);
-                        }
-                        
-                    }
-                    
+                        }                        
+                    }                    
                 }
                 else
                 {
