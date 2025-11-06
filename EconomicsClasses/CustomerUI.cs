@@ -55,7 +55,7 @@ namespace BankAppGrupp7.EconomicsClasses
             }
 
 
-            decimal monthlyInterestRate = BankRegister.InterestRate / 100 / 12; //interest rate per month
+            decimal monthlyInterestRate = BankRegister.InterestRate / 100 / 12; //Interest rate per month
             decimal totalInterest = amount * monthlyInterestRate * lengthOfLoan;
             decimal total = amount + totalInterest;
             decimal monthlyPayment = total / lengthOfLoan;
@@ -66,7 +66,7 @@ namespace BankAppGrupp7.EconomicsClasses
 
             
         }
-        public void ViewLoans(Customer loggedInUser) //show all loans for a user
+        public void ViewLoans(Customer loggedInUser) //Show all loans for a user
         {
             var customerLoans = BankRegister.AllLoans.Where(l => l.Customer == loggedInUser).ToList();
 
@@ -96,7 +96,7 @@ namespace BankAppGrupp7.EconomicsClasses
                 return;
             }
 
-            Console.WriteLine("Ange startbelopp:");//är det något vi ska ha?
+            Console.WriteLine("Ange startbelopp:");
             if (!decimal.TryParse(InputValidation.TrimmedString(), out decimal initialDeposit))
             {
                 Console.WriteLine("Felaktig inmatning, försök igen!");
@@ -105,13 +105,11 @@ namespace BankAppGrupp7.EconomicsClasses
             Account newAccount;
             switch (accountType)
             {
-                case "1":
-                    
+                case "1":                    
                     newAccount = new SavingsAccount("Sparkonto", GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType);
                     break;
                 case "2":
                     newAccount = new SalaryAccount("Lönekonto", GenerateAccountNumber(), loggedInUser, initialDeposit, currencyType);
-
                     break;
                 default:
                     Console.WriteLine("Felaktig kontotyp, försök igen!");
@@ -162,7 +160,6 @@ namespace BankAppGrupp7.EconomicsClasses
                         Console.WriteLine("Felaktigt val, försök igen.");
                         Thread.Sleep(2000);
                         break;
-
                 }
             }
         }
@@ -199,32 +196,27 @@ namespace BankAppGrupp7.EconomicsClasses
         }
         public void MakeTransaction() //Make a transaction between two accounts
         {
-            
-
             Console.WriteLine("Vilket konto vill du flytta pengar ifrån");
             string fromAccountNumber = InputValidation.TrimmedString();
             Account fromAccount = BankRegister.GetAccountByAccountNumber(fromAccountNumber);
             if (fromAccount == null)
             {
-                Console.WriteLine("Fel: Mottagarkontot hittades inte.");
+                Console.WriteLine("Fel: Kontot hittades inte.");
                 return;
             }
-
             Console.WriteLine("Vilket konto vill du flytta pengar till");
             string toAccountNumber = InputValidation.TrimmedString();
             Account toAccount = BankRegister.GetAccountByAccountNumber(toAccountNumber);
             if (toAccount == null)
             {
-                Console.WriteLine("Fel: Mottagarkontot hittades inte.");
+                Console.WriteLine("Fel: Kontot hittades inte.");
                 return;
             }
-
             if (fromAccount.AccountNumber == toAccount.AccountNumber)
             {
                 Console.WriteLine("Fel: Du kan inte överföra till samma konto.");
                 return;
             }
-
             Console.WriteLine("Hur mycket pengar vill du flytta?");
             decimal amount = InputValidation.Decimal();
 
@@ -232,7 +224,6 @@ namespace BankAppGrupp7.EconomicsClasses
             {
                 Console.WriteLine("Kontot saknar täckning!");
             }
-
             ConsoleUI.ShowFeedbackMessage("Transaktionen mottagen, och utförs var 15e minut!", ConsoleColor.Green, 2000);
             TransactionManager.AddPendingTransaction(amount, fromAccount, toAccount);
         }
