@@ -6,9 +6,8 @@ namespace BankAppGrupp7
     internal class Program
     {
         static async Task Main(string[] args)
-        {               
-               
-                await TransactionManager.Start();
+        {     
+            await TransactionManager.StartTransactionScheduling();
             
             MainMenu.DisplayMainMenu();
         }

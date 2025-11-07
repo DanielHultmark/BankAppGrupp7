@@ -14,7 +14,12 @@ namespace BankAppGrupp7.EconomicsClasses
     {
         public static List<Transaction> AllTransactions { get; set; } = new List<Transaction>();
         public static List<Loan> AllLoans { get; set; } = new List<Loan>();
-        public static List<Account> AllAccounts { get; set; } = new List<Account>();
+        public static List<Account> AllAccounts { get; set; } = new List<Account>() //Setting some default account to make it easier for presentation, the customers doesnt exist in UserList.
+        {
+            {new SalaryAccount("Lönekonto", "123123123", new Customer("Kattis", "Kattis100", "Katarina Holm"), 25000, CurrencyCode.GBP) },
+            {new SavingsAccount("Sparkonto", "123456789", new Customer("Daniel", "Daniel100", "Daniel Hiltmark"), 80000, CurrencyCode.EUR) }
+        };
+
         public static decimal InterestRate { get; private set; } = 2.54m;        
 
         public static void AddTransaction(Transaction t)
@@ -35,36 +40,6 @@ namespace BankAppGrupp7.EconomicsClasses
         {
             return AllAccounts.FirstOrDefault(a => a.AccountNumber == accountNumber);
         }
-
-
-
-
     }
 }
 
-// public void Withdraw(decimal amount)
-//        {
-//            if (amount > 0 && amount <= Balance)
-//            {
-//                Balance -= amount;
-//                new Transaction(amount, this, this);
-//            }
-//        }
-
-// public void DepositSalary(decimal salaryAmount)
-//        {
-//            if (salaryAmount > 0)
-//            {
-//                Balance += salaryAmount;
-//                new Transaction(salaryAmount, this, this);
-//            }
-//        }
-
-//public void DepositSalary(decimal salaryAmount)
-// {
-//     if (salaryAmount > 0)
-//     {
-//         Balance += salaryAmount;
-//         new Transaction(salaryAmount, this, this);
-//     }
-// }

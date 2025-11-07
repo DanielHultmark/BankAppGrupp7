@@ -17,7 +17,7 @@ namespace BankAppGrupp7.EconomicsClasses
         public decimal Amount { get; set; }
         public Account FromAccount { get; set; }
         public Account ToAccount { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime TimeOfTransaction { get; set; }
 
         public Transaction(decimal amount, Account fromAccount, Account toAccount)
         {
@@ -26,7 +26,7 @@ namespace BankAppGrupp7.EconomicsClasses
             Amount = amount;
             FromAccount = fromAccount;
             ToAccount = toAccount;
-            Date = DateTime.Now;
+            TimeOfTransaction = DateTime.Now;
 
 
         }
