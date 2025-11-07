@@ -28,7 +28,7 @@ namespace BankAppGrupp7.EconomicsClasses
         }
         public static void SetDailyExchangeRate()
         {
-            Console.WriteLine("Sätt den dagliga växelkursen");
+            ConsoleUI.ShowHeader("Sätt den dagliga växelkursen");
             bool isRunning = true;
             while (isRunning)
             {
@@ -36,10 +36,14 @@ namespace BankAppGrupp7.EconomicsClasses
                 Console.WriteLine("Välj dagens kurs för GBP");
                 decimal gbpRate = InputValidation.Decimal();
                 Gbp.SekToCurrencyRate = gbpRate;
+
                 Console.WriteLine($"EUR kurs: {Eur.SekToCurrencyRate:F2}");
                 Console.WriteLine("Välj dagens kurs för EURO");
                 decimal eurRate = InputValidation.Decimal();
                 Eur.SekToCurrencyRate = eurRate;
+
+                ConsoleUI.ShowFeedbackMessage("Växelkurser är uppdaterade!", ConsoleColor.Green);
+
                 isRunning= false;
             }            
         }

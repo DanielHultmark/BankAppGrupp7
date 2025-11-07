@@ -34,12 +34,12 @@ namespace BankAppGrupp7.MenuClasses
                         break;
 
                     case 2:
-                        ConsoleUI.ShowFeedbackMessage("Avslutar program...", ConsoleColor.Red, 1000);
+                        ConsoleUI.ShowFeedbackMessage("Avslutar program...", ConsoleColor.Yellow, 1500);
                         isRunning = false;                        
                         break;
 
                     default:
-                        ConsoleUI.ShowFeedbackMessage("Felaktigt val, försök igen.", ConsoleColor.Red, 1000);
+                        ConsoleUI.ShowFeedbackMessage("Felaktigt val, försök igen.", ConsoleColor.Red, 1500);
                         break;
                 }
             }

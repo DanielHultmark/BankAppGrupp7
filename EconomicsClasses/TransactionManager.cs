@@ -13,16 +13,17 @@ namespace BankAppGrupp7.EconomicsClasses
     public static class TransactionManager
     {
         static Queue<Transaction> pendingTransactions { get; set; } = new Queue<Transaction>();
+
         private static Timer? quarterTimer;
+
         public static void AddPendingTransaction(decimal amount, Account fromAccount, Account toAccount)
         {             
             Transaction pendningTransaction = new Transaction(amount, fromAccount, toAccount);
 
             pendingTransactions.Enqueue(pendningTransaction);
-
         }
         
-        public static async Task Start() //Method to start the timer that executes every quarter of an hour
+        public static async Task StartTransactionScheduling() //Method to start the timer that executes every quarter of an hour
         {
             DateTimeOffset now = DateTimeOffset.Now;
             int nextQuarterMinute = ((now.Minute / 15) + 1) * 15;
@@ -37,17 +38,14 @@ namespace BankAppGrupp7.EconomicsClasses
                     now.AddDays(1);
                 }
             }
-
-
+            
             DateTimeOffset nextQuarter = new DateTimeOffset(now.Year, now.Month, now.Day, now.Hour, nextQuarterMinute, 0, now.Offset);
-
             TimeSpan timeToStartTimer = nextQuarter - DateTimeOffset.Now;
 
             quarterTimer = new Timer(ExecuteTransactions, null, timeToStartTimer, TimeSpan.FromMinutes(15)); 
 
         }
                
-
         public static void ExecuteTransactions(object? state) //Method that executes all pending transactions
         {
             if (pendingTransactions.Count > 0)

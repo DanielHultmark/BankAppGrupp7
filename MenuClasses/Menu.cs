@@ -35,42 +35,38 @@ namespace BankAppGrupp7.MenuClasses
                 switch (choice)
                 {
                 case 1:
-                        Console.Clear();
-                        CustomerUI.CreateAccount(loggedInCustomer);
-                        ConsoleUI.ReturnToMenu();
-
+                    Console.Clear();
+                    CustomerUI.CreateAccount(loggedInCustomer);
+                    ConsoleUI.ReturnToMenu();
                     break;
 
                 case 2:
-                        Console.Clear();
-                        CustomerUI.ViewAccount(loggedInCustomer);                        
+                    Console.Clear();
+                    CustomerUI.ViewAccount(loggedInCustomer);                        
 
                     break;
 
                 case 3:
-                        Console.Clear();
-                        CustomerUI.ViewLoans(loggedInCustomer);
-                        ConsoleUI.ReturnToMenu();
+                    Console.Clear();
+                    CustomerUI.ViewLoans(loggedInCustomer);
+                    ConsoleUI.ReturnToMenu();
 
                     break;
 
                 case 4:
-                        Console.Clear();
-                        CustomerUI.ApplyForLoan(loggedInCustomer);
-                        ConsoleUI.ReturnToMenu();
+                    Console.Clear();
+                    CustomerUI.ApplyForLoan(loggedInCustomer);
+                    ConsoleUI.ReturnToMenu();
 
                     break;
 
                 case 5:
-                    ConsoleUI.ShowFeedbackMessage("Du loggas ut från ditt konto!", ConsoleColor.Yellow, 2000);
-                        Thread.Sleep(2000);
-                        Console.Clear();
-                        isRunnning = false;
+                    ConsoleUI.ShowFeedbackMessage("Du loggas ut från ditt konto!", ConsoleColor.Yellow, 2000);                    
+                    isRunnning = false;
                     break;
 
                 default:
-                    Console.WriteLine("Felaktigt val, försök igen.");
-                    Thread.Sleep(2000);
+                    ConsoleUI.ShowFeedbackMessage("Felaktigt val, försök igen.", ConsoleColor.Red, 1500);                    
                     break;
                 }
             }
@@ -120,15 +116,12 @@ namespace BankAppGrupp7.MenuClasses
                         break;
 
                     case 5:
-                        ConsoleUI.ShowFeedbackMessage("Du loggas ut från adminkontot!", ConsoleColor.Yellow, 2000);
-                        isRunning = false;
-                        
+                        ConsoleUI.ShowFeedbackMessage("Du loggas ut från adminkontot!", ConsoleColor.Yellow, 1500);
+                        isRunning = false;                        
                         break;
 
                     default:
-                        Console.WriteLine("Felaktigt val, försök igen.");
-                        Thread.Sleep(2000);
-                        Console.Clear();
+                        ConsoleUI.ShowFeedbackMessage("Felaktigt val, försök igen.", ConsoleColor.Red, 1500);                        
                         break;
                 }
             }
