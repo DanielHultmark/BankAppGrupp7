@@ -59,12 +59,24 @@ namespace BankAppGrupp7.EconomicsClasses
             decimal totalInterest = amount * monthlyInterestRate * lengthOfLoan;
             decimal total = amount + totalInterest;
             decimal monthlyPayment = total / lengthOfLoan;
+            Console.WriteLine("Är du säker på att du vill göra lånet? Ja eller Nej");
+            string choice = InputValidation.TrimmedStringToLower();
+            if(choice == "ja")
+            {
+                Console.WriteLine($"Totalt att återbetala under {lengthOfLoan} månader: {total:F2} kr.");
+                Console.WriteLine($"Månadskostnad: {monthlyPayment:F2} kr.");
+                BankRegister.AddLoan(loggedInUser, amount, BankRegister.InterestRate, lengthOfLoan);
+            }
+            else if(choice == "nej")
+            {
+                Console.WriteLine($"Du har valt {choice}, lån avbryts!");
+            }
+            else
+            {
+                ConsoleUI.ShowFeedbackMessage("Fel val, välj mellan Ja och Nej!", ConsoleColor.Red);
+                return;
+            }
 
-            Console.WriteLine($"Totalt att återbetala under {lengthOfLoan} månader: {total:F2} kr.");
-            Console.WriteLine($"Månadskostnad: {monthlyPayment:F2} kr.");
-            BankRegister.AddLoan(loggedInUser, amount, BankRegister.InterestRate, lengthOfLoan);
-
-            
         }
         public void ViewLoans(Customer loggedInUser) //show all loans for a user
         {
