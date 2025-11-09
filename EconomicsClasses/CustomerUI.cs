@@ -123,7 +123,7 @@ namespace BankAppGrupp7.EconomicsClasses
         public void ViewAccount(Customer loggedinUser) //Show all accounts for a user
         {
             var customerAccounts = BankRegister.AllAccounts.Where(a => a.Owner.Username == loggedinUser.Username).ToList();
-            if (BankRegister.AllAccounts.Count == 0)
+            if (customerAccounts.Count == 0)
             {
                 ConsoleUI.ShowFeedbackMessage("Du har inga konton för tillfället.", ConsoleColor.White);
                 ConsoleUI.ReturnToMenu();
@@ -136,7 +136,7 @@ namespace BankAppGrupp7.EconomicsClasses
                 Console.Clear();
                 ConsoleUI.ShowHeader("Dina konton");
 
-                PrintAccountDetails();                        
+                PrintAccountDetails(customerAccounts);                        
             
                 Console.WriteLine("\n1. Gör en överföring\n" +
                     "2. Se alla överföringar\n" +
@@ -147,12 +147,12 @@ namespace BankAppGrupp7.EconomicsClasses
                 switch (choice)
                 {
                     case 1:
-                        MakeTransaction();
+                        MakeTransaction(customerAccounts);
                         ConsoleUI.ReturnToMenu();
                         break;
 
                     case 2:
-                        ViewTransactions(loggedinUser);
+                        ViewTransactions(loggedinUser, customerAccounts);
                         ConsoleUI.ReturnToMenu();
                         break;
 
@@ -167,11 +167,10 @@ namespace BankAppGrupp7.EconomicsClasses
             }
         }
         
-        public void ViewTransactions(Customer loggedInUser) //Show all transactions for a user
+        public void ViewTransactions(Customer loggedInUser, List<Account> customerAccounts) //Show all transactions for a user
         {
             Console.Clear();
-
-            var customerAccounts = BankRegister.AllAccounts.Where(a => a.Owner == loggedInUser).ToList();
+            
             var customerTransactions = BankRegister.AllTransactions.Where(t => customerAccounts.Contains(t.FromAccount) || customerAccounts.Contains(t.ToAccount)).ToList();
 
             if (customerTransactions.Count == 0)
@@ -185,12 +184,12 @@ namespace BankAppGrupp7.EconomicsClasses
                 ConsoleUI.ShowHeader("Dina överföringar");
                 foreach (var transaction in customerTransactions)
                 {
-                    Console.WriteLine($"Från konto: {transaction.FromAccount.AccountNumber,-15} Till konto: {transaction.ToAccount.AccountNumber, -15} Belopp: {transaction.Amount:F2}");
+                    Console.WriteLine($"Från konto: {transaction.FromAccount.AccountNumber,-15} Till konto: {transaction.ToAccount.AccountNumber, -15} Belopp: {transaction.Amount:F2} {transaction.FromAccount.Currency}");
                 }                
             }
         }
 
-        public void MakeTransaction() //Make a transaction between two accounts
+        public void MakeTransaction(List<Account> customerAccounts) //Make a transaction between two accounts
         {
             bool isRunning = true;
             while (isRunning)
@@ -198,7 +197,7 @@ namespace BankAppGrupp7.EconomicsClasses
                 Console.Clear();
                 ConsoleUI.ShowHeader("Dina konton");
 
-                PrintAccountDetails();
+                PrintAccountDetails(customerAccounts);
                 Console.WriteLine();
 
                 ConsoleUI.ShowHeader("Gör överföring");
@@ -247,9 +246,9 @@ namespace BankAppGrupp7.EconomicsClasses
             }
         }
 
-        public void PrintAccountDetails()
+        public void PrintAccountDetails(List<Account> customerAccounts)
         {
-            foreach (var account in BankRegister.AllAccounts)
+            foreach (var account in customerAccounts)
             {
                 Console.WriteLine($"Kontotyp: {account.AccountType,-15} Kontonummer: {account.AccountNumber,-15} Saldo: {account.Balance:F2} {account.Currency,-15}");
             }

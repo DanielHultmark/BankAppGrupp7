@@ -61,7 +61,7 @@ namespace BankAppGrupp7.UsersClasses
             {
                 if (!userlist.Value.IsAdmin)
                 {
-                    Console.WriteLine($"Användarnamn: {userlist.Value.Username}, För- och efternamn: {userlist.Value.FullName}\n");
+                    Console.WriteLine($"Användarnamn: {userlist.Value.Username, -15} För- och efternamn: {userlist.Value.FullName}\n");
                 }                
             }
         }

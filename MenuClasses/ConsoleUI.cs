@@ -49,7 +49,7 @@ namespace BankAppGrupp7.MenuClasses
         public static void ShowFeedbackMessage(string message, ConsoleColor color, int millisecondsDelay)
         {
             Console.ForegroundColor = color;
-            Console.Write("\n" + message);
+            Console.WriteLine("\n" + message);
             Console.ResetColor();
 
             Thread.Sleep(millisecondsDelay);
@@ -58,7 +58,7 @@ namespace BankAppGrupp7.MenuClasses
         public static void ShowFeedbackMessage(string message, ConsoleColor color)
         {
             Console.ForegroundColor = color;
-            Console.Write("\n" + message);
+            Console.WriteLine("\n" + message);
             Console.ResetColor();
 
 

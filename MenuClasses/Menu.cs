@@ -23,7 +23,9 @@ namespace BankAppGrupp7.MenuClasses
             {
                 Console.Clear();
 
-                ConsoleUI.ShowHeader($"Välkommen {loggedInCustomer.FullName}");
+                ConsoleUI.ShowHeader("CIBA - C# Investeringsbank AB");
+                Console.WriteLine($"Välkommen {loggedInCustomer.FullName}!\n");
+
                 Console.WriteLine("1. Skapa ett konto");
                 Console.WriteLine("2. Kontoöversikt");
                 Console.WriteLine("3. Låneöversikt");
@@ -79,8 +81,9 @@ namespace BankAppGrupp7.MenuClasses
             while (isRunning)
             {
                 Console.Clear();
+                ConsoleUI.ShowHeader("CIBA - C# Investeringsbank AB");
+                Console.WriteLine($"Välkommen {loggedInAdmin.FullName}!\n");
 
-                ConsoleUI.ShowHeader($"Välkommen {loggedInAdmin.FullName}");
                 Console.WriteLine("1. Kundöversikt ");
                 Console.WriteLine("2. Lägg till en kund");
                 Console.WriteLine("3. Ta bort en kund");
