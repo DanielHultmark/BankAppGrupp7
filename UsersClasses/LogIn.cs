@@ -19,7 +19,7 @@ namespace BankAppGrupp7.UsersClasses
 
         // The log in view refreshes if the user has given invalid input in some way. 
         // As it is now the only way to get out of the log in view is to give valid login details. 
-        public void LoginUI()
+        public void LoginUI() //
         {
             bool stillEnteringLoginDetails = true;
 
@@ -28,7 +28,7 @@ namespace BankAppGrupp7.UsersClasses
                 Console.Clear();
 
                 ConsoleUI.ShowHeader("CIBA – där ekonomi möter innovation");
-                ConsoleUI.ShowHeader("Fyll i inloggningsuppgifter");
+                Console.WriteLine("Fyll i inloggningsuppgifter\n");
 
                 string username = InputValidation.ReadStringInput("Användarnamn:");
 
@@ -53,7 +53,7 @@ namespace BankAppGrupp7.UsersClasses
         {
             if (string.IsNullOrEmpty(username))
             {
-                ConsoleUI.ShowFeedbackMessage("Ogiltig inmatning, försök igen!", ConsoleColor.Red, 2000);
+                ConsoleUI.ShowFeedbackMessage("Ogiltig inmatning, försök igen!", ConsoleColor.Red, 1500);
                 return false;
             }
 
@@ -61,7 +61,7 @@ namespace BankAppGrupp7.UsersClasses
 
             if (!usernameExists)
             {
-                ConsoleUI.ShowFeedbackMessage("Användarnamn saknas, försök igen!", ConsoleColor.Red, 1000);
+                ConsoleUI.ShowFeedbackMessage("Användarnamn saknas, försök igen!", ConsoleColor.Red, 1500);
 
                 return false;
             }
@@ -82,7 +82,7 @@ namespace BankAppGrupp7.UsersClasses
         {
             if (string.IsNullOrEmpty(password))
             {
-                ConsoleUI.ShowFeedbackMessage("Ogiltig inmatning, försök igen!", ConsoleColor.Red, 2000);
+                ConsoleUI.ShowFeedbackMessage("Ogiltig inmatning, försök igen!", ConsoleColor.Red, 1500);
                 return false;
             }
 
@@ -100,20 +100,20 @@ namespace BankAppGrupp7.UsersClasses
             Console.ForegroundColor = ConsoleColor.Red;
 
             if (remainingAttempts>0)
-            {                        
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write($"Lösenordet är felaktigt, du har {remainingAttempts} försök kvar!");
+                Console.ResetColor();
 
                 Thread.Sleep(2000);
             }
                     
             else
             {
-                Console.Write($"Användarkontot har låsts pga för många inloggningsförsök. Kontakta kundtjänst.");
-
-                Thread.Sleep(4000);
+                ConsoleUI.ShowFeedbackMessage("Användarkontot har låsts pga för många inloggningsförsök. Kontakta kundtjänst.", ConsoleColor.DarkRed, 4000);               
             }
 
-            Console.ResetColor();          
+                   
             
             return false;
         }
@@ -127,26 +127,17 @@ namespace BankAppGrupp7.UsersClasses
                 return false;
             }
 
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("\nDitt användarkonto är låst pga för många inloggningsförsök. Kontakta kundtjänst.");
-            Console.ResetColor();
-
-            Thread.Sleep(4000);
+            ConsoleUI.ShowFeedbackMessage("Ditt användarkonto är låst pga för många inloggningsförsök. Kontakta kundtjänst.", ConsoleColor.DarkRed, 4000);         
 
             return true;            
         }
 
         public void LoggedIn(string username)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\nInloggning lyckades!");
-            Console.ResetColor();
-
-            Thread.Sleep(2000);
-
-            var loggedInUser = Users.UserList[username];
-
+            ConsoleUI.ShowFeedbackMessage("Du loggas in!", ConsoleColor.Green, 1500);
             
+            var loggedInUser = Users.UserList[username];
+                        
             if (loggedInUser.IsAdmin.Equals(true))
             {
                 Admin loggedInAdmin = (Admin)loggedInUser;

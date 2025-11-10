@@ -29,6 +29,7 @@ namespace BankAppGrupp7.MenuClasses
             Console.WriteLine("      C#C#C#C#C#            C#C#C#C#C#C#          C#C#C#C#C#          C#C#C#C#                   C#C#C#C#");
             Console.ResetColor();
         }
+
         public static void ShowHeader(string header)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -40,14 +41,15 @@ namespace BankAppGrupp7.MenuClasses
         public static void ReturnToMenu()
         {
             Console.WriteLine();
-            Console.WriteLine("Tryck Enter för att gå tillbaka");
+            Console.Write("Tryck Enter för att gå tillbaka");
             Console.ReadKey();
         }
+
         // Use to give feedback to user, for error or confirmation.
         public static void ShowFeedbackMessage(string message, ConsoleColor color, int millisecondsDelay)
         {
             Console.ForegroundColor = color;
-            Console.Write("\n" + message);
+            Console.WriteLine("\n" + message);
             Console.ResetColor();
 
             Thread.Sleep(millisecondsDelay);
@@ -56,7 +58,7 @@ namespace BankAppGrupp7.MenuClasses
         public static void ShowFeedbackMessage(string message, ConsoleColor color)
         {
             Console.ForegroundColor = color;
-            Console.Write("\n" + message);
+            Console.WriteLine("\n" + message);
             Console.ResetColor();
 
 

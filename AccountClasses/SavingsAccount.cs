@@ -16,7 +16,7 @@ namespace BankAppGrupp7.AccountClasses
         public SavingsAccount(string accountType, string accountNumber, Customer owner, decimal balance, CurrencyCode currency)
             : base(accountType, accountNumber, owner, balance, currency)
         {
-            InterestRate = 1.005M;
+            InterestRate = 1.05M;
             
         }
 
